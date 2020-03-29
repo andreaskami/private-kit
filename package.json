@@ -20,11 +20,6 @@
       "pre-commit": "lint-staged"
     }
   },
-  "rnpm": {
-    "assets": [
-      "app/assets/fonts"
-    ]
-  },
   "dependencies": {
     "@bam.tech/react-native-component-map-clustering": "^1.1.1",
     "@mauron85/react-native-background-geolocation": "^0.6.3",
