@@ -3,7 +3,7 @@ import FormWork from './views/FormWork';
 import FormGeneralNew from './views/FormGeneralNew';
 import FormGeneralActive from './views/FormGeneralActive';
 import Privacy from './views/Privacy';
-import Acknowledgment from './views/Acknowledgment';
+import Acknowledgement from './views/Acknowledgement';
 
 export function getIxnilatisScreens(Stack) {
   return [
@@ -34,7 +34,7 @@ export function getIxnilatisScreens(Stack) {
     <Stack.Screen
       key="AckScreen"
       name="AckScreen"
-      component={Acknowledgment}
+      component={Acknowledgement}
       options={{ headerShown: false }}
     />,
   ];
