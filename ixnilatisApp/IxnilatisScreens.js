@@ -28,14 +28,14 @@ export function getIxnilatisScreens(Stack) {
       <Stack.Screen
           key="PrivacyScreen"
           name="PrivacyScreen"
-         component={Privacy}
-         options={{ headerShown: false }}
+          component={Privacy}
+          options={{ headerShown: false }}
       />,
       <Stack.Screen
           key="AckScreen"
           name="AckScreen"
-         component={Acknowledgment}
-         options={{ headerShown: false }}
+          component={Acknowledgment}
+          options={{ headerShown: false }}
       />
     ];
 }

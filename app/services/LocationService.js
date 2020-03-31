@@ -225,8 +225,8 @@ export default class LocationServices {
 
     BackgroundGeolocation.on('stop', () => {
       PushNotification.localNotification({
-        title: 'Location Tracking Was Disabled',
-        message: 'CovTracer requires location services.',
+        title: languages.t('label.TRACKDISABLED'),
+        message: languages.t('label.NEEDSLOCSERVICES'),
       });
       console.log('[INFO] stop');
     });
