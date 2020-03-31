@@ -34,7 +34,7 @@ export function getIxnilatisScreens(Stack) {
       <Stack.Screen
           key="AckScreen"
           name="AckScreen"
-         component={getPrivacyScreens}
+         component={getAcknowledgmentScreens}
          options={{ headerShown: false }}
       />
     ];
