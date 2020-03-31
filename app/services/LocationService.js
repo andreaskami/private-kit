@@ -307,8 +307,8 @@ export default class LocationServices {
   static stop(nav) {
     // unregister all event listeners
     PushNotification.localNotification({
-      title: 'Location Tracking Was Disabled',
-      message: 'CovTracer requires location services.',
+      title: languages.t('label.TRACKDISABLED'),
+      message: languages.t('label.NEEDSLOCSERVICES'),
     });
     BackgroundGeolocation.removeAllListeners();
     BackgroundGeolocation.stop();
