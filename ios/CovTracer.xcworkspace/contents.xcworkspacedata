@@ -2,9 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PrivateKit.xcodeproj">
+      location = "group:/Users/MacBookPro1/Work/Projects/Covid19/private-kit/ios/CovTracer.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CovTracer.xcodeproj">
    </FileRef>
 </Workspace>
