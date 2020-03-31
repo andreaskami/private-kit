@@ -16,7 +16,7 @@ import languages from '../../app/locales/languages';
 
 const width = Dimensions.get('window').width;
 
-class getPrivacyScreens extends Component {
+class Privacy extends Component {
   constructor(props) {
     super(props);
   }
@@ -144,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default getPrivacyScreens;
+export default Privacy;

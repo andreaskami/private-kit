@@ -50,7 +50,7 @@ class ExportScreen extends Component {
       const jsonData = base64.encode(JSON.stringify(locationData));
       const title = 'PrivateKit_.json';
       const filename = 'PrivacyKit_.json';
-      const message = 'Here is my location log from Private Kit.';
+      const message = 'Here is my location log from CovTracer.';
       const url = 'data:application/json;base64,' + jsonData;
       const options = Platform.select({
         ios: {

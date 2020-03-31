@@ -2,8 +2,8 @@ import React, {Component } from 'react';
 import FormWork from "./views/FormWork";
 import FormGeneralNew from "./views/FormGeneralNew";
 import FormGeneralActive from "./views/FormGeneralActive";
-import getPrivacyScreens from './views/Privacy';
-import getAcknowledgmentScreens from './views/Acknowledgment';
+import Privacy from './views/Privacy';
+import Acknowledgment from './views/Acknowledgment';
 
 export function getIxnilatisScreens(Stack) {
     return [
@@ -28,13 +28,13 @@ export function getIxnilatisScreens(Stack) {
       <Stack.Screen
           key="PrivacyScreen"
           name="PrivacyScreen"
-         component={getPrivacyScreens}
+         component={Privacy}
          options={{ headerShown: false }}
       />,
       <Stack.Screen
           key="AckScreen"
           name="AckScreen"
-         component={getPrivacyScreens}
+         component={Acknowledgment}
          options={{ headerShown: false }}
       />
     ];
