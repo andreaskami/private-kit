@@ -36,7 +36,7 @@ const Intro2 = (props) => {
             (styles.sectionDescription, { color: 'blue', textAlign: 'center' })
           }
           onPress={() =>
-            Linking.openURL('http://superworld.rise.org.cy/COVID19/')
+            Linking.openURL('http://covid-19.rise.org.cy')
           }
           style={[
             styles.infoCardBodyText,
