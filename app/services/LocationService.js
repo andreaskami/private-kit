@@ -180,7 +180,7 @@ export default class LocationServices {
           () =>
             Alert.alert(
               languages.t('label.ACCESS1'),
-              'Would you like to open app settings?',
+              languages.t('label.ACCESS3'),
               [
                 {
                   text: languages.t('label.YES'),
@@ -226,7 +226,7 @@ export default class LocationServices {
     BackgroundGeolocation.on('stop', () => {
       PushNotification.localNotification({
         title: 'Location Tracking Was Disabled',
-        message: 'Private Kit requires location services.',
+        message: 'CovTracer requires location services.',
       });
       console.log('[INFO] stop');
     });
@@ -277,7 +277,7 @@ export default class LocationServices {
           () =>
             Alert.alert(
               languages.t('label.ACCESS1'),
-              'Would you like to open app settings?',
+              languages.t('label.ACCESS3'),
               [
                 {
                   text: languages.t('label.YES'),
@@ -308,7 +308,7 @@ export default class LocationServices {
     // unregister all event listeners
     PushNotification.localNotification({
       title: 'Location Tracking Was Disabled',
-      message: 'Private Kit requires location services.',
+      message: 'CovTracer requires location services.',
     });
     BackgroundGeolocation.removeAllListeners();
     BackgroundGeolocation.stop();
