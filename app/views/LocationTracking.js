@@ -29,7 +29,6 @@ import pkLogo from './../assets/images/PKLogo.png';
 import { GetStoreData, SetStoreData } from '../helpers/General';
 import languages from './../locales/languages';
 
-import FormButtons from '../../ixnilatisApp/views/FormButtons';
 import Version from '../../ixnilatisApp/views/Version';
 
 const width = Dimensions.get('window').width;
@@ -114,6 +113,14 @@ class LocationTracking extends Component {
     this.props.navigation.navigate('LicensesScreen', {});
   }
 
+  privacy() {
+    this.props.navigation.navigate('PrivacyScreen', {});
+  }
+
+  acknowledgement() {
+    this.props.navigation.navigate('AckScreen', {});
+  }
+
   willParticipate = () => {
     SetStoreData('PARTICIPATE', 'true').then(() => {
       LocationServices.start();
@@ -161,6 +168,18 @@ class LocationTracking extends Component {
                 }}>
                 <Text style={styles.menuOptionText}>Licenses</Text>
               </MenuOption>
+              <MenuOption
+                onSelect={() => {
+                  this.privacy();
+                }}>
+                <Text style={styles.menuOptionText}>Privacy</Text>
+              </MenuOption>
+              <MenuOption
+                onSelect={() => {
+                  this.acknowledgement();
+                }}>
+                <Text style={styles.menuOptionText}>Acknowledgements</Text>
+              </MenuOption>
             </MenuOptions>
           </Menu>
           <Text style={styles.headerTitle}>
@@ -184,13 +203,6 @@ class LocationTracking extends Component {
                   style={styles.stopLoggingButtonTouchable}>
                   <Text style={styles.stopLoggingButtonText}>
                     {languages.t('label.stop_logging')}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.overlap()}
-                  style={styles.startLoggingButtonTouchable}>
-                  <Text style={styles.startLoggingButtonText}>
-                    {languages.t('label.overlap')}
                   </Text>
                 </TouchableOpacity>
               </>
@@ -226,8 +238,6 @@ class LocationTracking extends Component {
               </Text>
             )}
           </View>
-
-          <FormButtons navigation={this.props.navigation} />
 
           <View style={styles.actionButtonsView}>
             <TouchableOpacity
