@@ -180,7 +180,7 @@ export default class LocationServices {
           () =>
             Alert.alert(
               languages.t('label.ACCESS1'),
-              'Would you like to open app settings?',
+              languages.t('label.ACCESS3'),
               [
                 {
                   text: languages.t('label.YES'),
@@ -225,8 +225,8 @@ export default class LocationServices {
 
     BackgroundGeolocation.on('stop', () => {
       PushNotification.localNotification({
-        title: 'Location Tracking Was Disabled',
-        message: 'Private Kit requires location services.',
+        title: languages.t('label.TRACKDISABLED'),
+        message: languages.t('label.NEEDSLOCSERVICES'),
       });
       console.log('[INFO] stop');
     });
@@ -256,7 +256,7 @@ export default class LocationServices {
           () =>
             Alert.alert(
               languages.t('label.ACCESS2'),
-              'Would you like to open location settings?',
+              languages.t('label.ACCESS3'),
               [
                 {
                   text: languages.t('label.YES'),
@@ -277,7 +277,7 @@ export default class LocationServices {
           () =>
             Alert.alert(
               languages.t('label.ACCESS1'),
-              'Would you like to open app settings?',
+              languages.t('label.ACCESS3'),
               [
                 {
                   text: languages.t('label.YES'),
@@ -307,8 +307,8 @@ export default class LocationServices {
   static stop(nav) {
     // unregister all event listeners
     PushNotification.localNotification({
-      title: 'Location Tracking Was Disabled',
-      message: 'Private Kit requires location services.',
+      title: languages.t('label.TRACKDISABLED'),
+      message: languages.t('label.NEEDSLOCSERVICES'),
     });
     BackgroundGeolocation.removeAllListeners();
     BackgroundGeolocation.stop();
