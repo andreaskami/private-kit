@@ -30,12 +30,6 @@ const Intro2 = (props) => {
         <Text style={styles.infoCardBodyText}>
           {languages.t('label.intro2_para2')}
         </Text>
-        <Text style={styles.infoCardHeadText}>
-          {languages.t('label.INTRO25')}
-        </Text>
-        <Text style={styles.infoCardBodyText}>
-          {languages.t('label.INTRO26')}{' '}
-        </Text>
         <View style={styles.rowContainer}>
           <Image source={logo1} style={styles.infoCardLogo} />
           <Image source={logo2} style={styles.infoCardLogo} />
