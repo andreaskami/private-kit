@@ -1,9 +1,0 @@
-Alessandro Artusi 01/04/2020
-
-Philosophy and Instructions for Covtracer project:
-
-- The idea here is that we keep the original Privatekit files and folders of the master branch and create our own project files and folders now named Covtracer.
-
-- This will facilitate the further merges.
-
-- When using the Covtracer project you need to remove the podfile and podfile.lock because they refer to the Privatekit project and rename the podileCovTracer and podfile.lock Covtracer as podile and podfile.lock respectively.
