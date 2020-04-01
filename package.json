@@ -17,7 +17,7 @@
     "@mauron85/react-native-background-geolocation": "^0.6.3",
     "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/cli-platform-ios": "^3.0.0",
-    "@react-native-community/datetimepicker": "2.3.3",
+    "@react-native-community/datetimepicker": "^2.3.0",
     "@react-native-community/masked-view": "0.1.5",
     "@react-native-community/viewpager": "^3.3.0",
     "@react-navigation/native": "5.0.9",
