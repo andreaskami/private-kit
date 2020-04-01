@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppState, Linking, StyleSheet, Text, View } from 'react-native';
 import VersionNumber from 'react-native-version-number';
+import { getLanguages } from 'react-native-i18n';
 
 export default class IxnilatisVersionChecker extends React.Component {
   state = {
@@ -8,14 +9,11 @@ export default class IxnilatisVersionChecker extends React.Component {
     url: null,
   };
 
-  getLatestVersion = () => {
-    return Promise.resolve({
-      version: '1.0.1',
-      message:
-        'CovTracer has a new version! Please download it from the link below',
-      url: 'http://covid-19.rise.org.cy',
-    });
-    //return fetch('http://covid-19.rise.org.cy/version/').then(r => r.json());
+  getLatestVersion = lang => {
+    const langSafe = new Set(['gr', 'en']).has(lang) ? lang : 'en';
+    return fetch(
+      `http://covid-19.rise.org.cy/version/current_${langSafe}.json`,
+    ).then(r => r.json());
   };
 
   checkVersion = async () => {
@@ -23,7 +21,10 @@ export default class IxnilatisVersionChecker extends React.Component {
       return;
     }
 
-    this.getLatestVersion()
+    const languages = await getLanguages();
+    const userLang = languages[0].split('-')[0]; // ['en-US' will become 'en']
+
+    this.getLatestVersion(userLang)
       .then(response => {
         if (response.version !== VersionNumber.appVersion) {
           this.setState({ message: response.message, url: response.url });

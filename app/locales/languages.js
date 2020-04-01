@@ -21,10 +21,10 @@ import grlabels from './gr';
 
 // This will fetch the user's language
 let userLang = undefined;
-getLanguages().then((languages) => {
+getLanguages().then(languages => {
   userLang = languages[0].split('-')[0]; // ['en-US' will become 'en']
   i18next.changeLanguage(userLang);
-  i18next.changeLanguage('gr');
+  //i18next.changeLanguage('gr');
 });
 
 i18next.init({
@@ -62,13 +62,13 @@ i18next.init({
     },
     pt: {
       translation: {
-        label: ptlabels
-      }
+        label: ptlabels,
+      },
     },
     mr: {
       translation: {
-        label: mrlabels
-      }
+        label: mrlabels,
+      },
     },
     nl: {
       translation: {
