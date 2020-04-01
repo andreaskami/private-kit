@@ -109,6 +109,7 @@ function generateNewUUIDAndBroadcast() {
 
 export default class BroadcastingServices {
     static start() {
+        return;
         loadLastUUIDAndBroadcast();
 
         BackgroundTimer.runBackgroundTimer(() => { 
@@ -119,6 +120,7 @@ export default class BroadcastingServices {
     }
     
     static stop(nav) {
+        return;
         console.log("Stopping Bluetooth");
         BackgroundTimer.stopBackgroundTimer();
     }
