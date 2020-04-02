@@ -164,7 +164,11 @@ class LocationTracking extends Component {
                   this.notifications();
                 }}>
                 <Text style={styles.menuOptionText}>Notifications</Text>
-                this.privacy(); }}>
+              </MenuOption>
+              <MenuOption
+                onSelect={() => {
+                  this.privacy();
+                }}>
                 <Text style={styles.menuOptionText}>Privacy</Text>
               </MenuOption>
               <MenuOption

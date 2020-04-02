@@ -4,6 +4,7 @@ import { Alert, Platform, Linking } from 'react-native';
 import { PERMISSIONS, check, RESULTS, request } from 'react-native-permissions';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
+import languages from '../locales/languages';
 
 let instanceCount = 0;
 
