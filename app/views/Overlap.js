@@ -319,7 +319,7 @@ class OverlapScreen extends Component {
             <CustomCircle
               center={circle.center}
               radius={circle.radius}
-              fillColor="rgba(163, 47, 163, 0.3)"
+              fillColor='rgba(163, 47, 163, 0.3)'
               zIndex={2}
               strokeWidth={0}
             />
