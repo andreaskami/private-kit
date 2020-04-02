@@ -14,7 +14,7 @@ import logo3 from './../../assets/images/logo3.png';
 const width = Dimensions.get('window').width;
 import languages from './../../locales/languages';
 
-const Intro2 = (props) => {
+const Intro2 = props => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.infoCard}>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     height: '70%',
     borderRadius: 12,
     alignSelf: 'center',
-    marginTop: '7%',
+    marginTop: '9%',
     justifyContent: 'center',
   },
   infoCardImage: {
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   infoCardHeadText: {
     fontFamily: 'OpenSans-Bold',
     fontSize: 24,
-    lineHeight: 45,
+    lineHeight: 55,
     letterSpacing: 0,
     textAlign: 'center',
     color: '#ffffff',

@@ -46,8 +46,6 @@ class LocationTracking extends Component {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     GetStoreData('PARTICIPATE')
       .then(isParticipating => {
-        console.log(isParticipating);
-
         if (isParticipating === 'true') {
           this.setState({
             isLogging: true,
@@ -113,6 +111,10 @@ class LocationTracking extends Component {
     this.props.navigation.navigate('LicensesScreen', {});
   }
 
+  notifications() {
+    this.props.navigation.navigate('NotificationScreen', {});
+  }
+
   privacy() {
     this.props.navigation.navigate('PrivacyScreen', {});
   }
@@ -120,16 +122,6 @@ class LocationTracking extends Component {
   acknowledgement() {
     this.props.navigation.navigate('AckScreen', {});
   }
-
-  willParticipate = () => {
-    SetStoreData('PARTICIPATE', 'true').then(() => {
-      LocationServices.start();
-      BroadcastingServices.start();
-    });
-    this.setState({
-      isLogging: true,
-    });
-  };
 
   setOptOut = () => {
     LocationServices.stop(this.props.navigation);
@@ -157,7 +149,6 @@ class LocationTracking extends Component {
                   width: 15,
                   height: 28,
                   padding: 14,
-                  opacity: 0.6,
                 }}
               />
             </MenuTrigger>
@@ -170,8 +161,10 @@ class LocationTracking extends Component {
               </MenuOption>
               <MenuOption
                 onSelect={() => {
-                  this.privacy();
+                  this.notifications();
                 }}>
+                <Text style={styles.menuOptionText}>Notifications</Text>
+                this.privacy(); }}>
                 <Text style={styles.menuOptionText}>Privacy</Text>
               </MenuOption>
               <MenuOption
@@ -203,6 +196,13 @@ class LocationTracking extends Component {
                   style={styles.stopLoggingButtonTouchable}>
                   <Text style={styles.stopLoggingButtonText}>
                     {languages.t('label.stop_logging')}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.overlap()}
+                  style={styles.startLoggingButtonTouchable}>
+                  <Text style={styles.startLoggingButtonText}>
+                    {languages.t('label.overlap')}
                   </Text>
                 </TouchableOpacity>
               </>
@@ -353,18 +353,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     padding: 4,
     paddingBottom: 10,
-  },
-  intro: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'stretch',
+    justifyContent: 'flex-end',
   },
   sectionDescription: {
-    textAlign: 'center',
     fontSize: 12,
     lineHeight: 24,
     fontFamily: 'OpenSans-Regular',
-    marginTop: 20,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -402,12 +396,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     textAlign: 'center',
     color: '#ffffff',
-  },
-  actionButtonsView: {
-    width: width * 0.7866,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 64,
   },
   actionButtonsTouchable: {
     height: 76,

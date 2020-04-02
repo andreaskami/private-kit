@@ -4,7 +4,6 @@ import {
   Text,
   Dimensions,
   Image,
-  Button,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
@@ -16,7 +15,7 @@ import logo3 from './../../assets/images/logo3.png';
 
 const width = Dimensions.get('window').width;
 
-const Intro1 = (props) => {
+const Intro1 = props => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.infoCard}>

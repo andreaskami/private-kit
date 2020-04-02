@@ -17,6 +17,14 @@ import itlabels from './it';
 import ptlabels from './pt';
 import mrlabels from './mr';
 import nllabels from './nl';
+import htlabels from './ht';
+import pt_BRlabels from './pt_BR';
+import eslabels from './es';
+import urlabels from './ur';
+import knlabels from './kn';
+import calabels from './ca';
+import gjlabels from './gj';
+import cslabels from './cs';
 import grlabels from './gr';
 
 // This will fetch the user's language
@@ -24,7 +32,7 @@ let userLang = undefined;
 getLanguages().then(languages => {
   userLang = languages[0].split('-')[0]; // ['en-US' will become 'en']
   i18next.changeLanguage(userLang);
-  //i18next.changeLanguage('gr');
+  i18next.changeLanguage('gr');
 });
 
 i18next.init({
@@ -73,6 +81,46 @@ i18next.init({
     nl: {
       translation: {
         label: nllabels,
+      },
+    },
+    ht: {
+      translation: {
+        label: htlabels,
+      },
+    },
+    pt_BR: {
+      translation: {
+        label: pt_BRlabels,
+      },
+    },
+    kn: {
+      translation: {
+        label: knlabels,
+      },
+    },
+    es: {
+      translation: {
+        label: eslabels,
+      },
+    },
+    ur: {
+      translation: {
+        label: urlabels,
+      },
+    },
+    ca: {
+      translation: {
+        label: calabels,
+      },
+    },
+    gj: {
+      translation: {
+        label: gjlabels,
+      },
+    },
+    cs: {
+      translation: {
+        label: cslabels,
       },
     },
     gr: {

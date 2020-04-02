@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Linking,
-  View,
-  Text,
-} from 'react-native';
+import { SafeAreaView, StyleSheet, Linking, View, Text } from 'react-native';
 
 import colors from '../constants/colors';
 import Button from '../components/Button';
@@ -45,7 +38,7 @@ class Welcome extends Component {
             <View style={styles.intro}>
               <Text style={styles.headerTitle}>CovTracer</Text>
 
-              <Text style={styles.headerTitle}>
+              <Text style={styles.sectionDescription}>
                 {languages.t('label.private_kit')}
               </Text>
               <Text style={styles.sectionDescription}>
@@ -113,8 +106,6 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   block: {
-    margin: 3,
-    width: '80%',
     margin: 20,
     width: '100%',
   },

@@ -10,8 +10,9 @@ import ExportScreen from './views/Export';
 import ImportScreen from './views/Import';
 import OverlapScreen from './views/Overlap';
 import LicencesScreen from './views/Licenses';
+import NotificationScreen from './views/Notification';
 import Slider from './views/welcomeScreens/Slider';
-import { GetStoreData, SetStoreData } from './helpers/General';
+import { GetStoreData } from './helpers/General';
 import { getIxnilatisScreens } from '../ixnilatisApp/IxnilatisScreens';
 import FlashMessage from 'react-native-flash-message';
 
@@ -87,6 +88,11 @@ class Entry extends Component {
             <Stack.Screen
               name='LicensesScreen'
               component={LicencesScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='NotificationScreen'
+              component={NotificationScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen

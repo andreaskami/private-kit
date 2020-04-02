@@ -2,23 +2,26 @@ import React, { Component } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   Image,
   View,
   Text,
   TouchableOpacity,
   BackHandler,
+  Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 
 import colors from '../constants/colors';
 import { WebView } from 'react-native-webview';
-import Button from '../components/Button';
 import backArrow from './../assets/images/backArrow.png';
 import languages from './../locales/languages';
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 class NewsScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = { visible: true };
   }
 
   backToMain() {
@@ -29,6 +32,10 @@ class NewsScreen extends Component {
     this.props.navigation.navigate('LocationTrackingScreen', {});
     return true;
   };
+
+  hideSpinner() {
+    this.setState({ visible: false });
+  }
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
@@ -55,7 +62,14 @@ class NewsScreen extends Component {
         <WebView
           source={{ uri: 'http://covid-19.rise.org.cy/news/' }}
           style={{ marginTop: 15 }}
+          onLoad={() => this.hideSpinner()}
         />
+        {this.state.visible && (
+          <ActivityIndicator
+            style={{ position: 'absolute', top: height / 2, left: width / 2 }}
+            size='large'
+          />
+        )}
       </SafeAreaView>
     );
   }
@@ -68,22 +82,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     color: colors.PRIMARY_TEXT,
     backgroundColor: colors.WHITE,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-  },
-  backArrow: {
-    fontSize: 60,
-    lineHeight: 60,
-    fontWeight: '400',
-    marginRight: 5,
-    textAlignVertical: 'center',
-  },
-  sectionDescription: {
-    fontSize: 24,
-    lineHeight: 24,
-    fontWeight: '800',
-    textAlignVertical: 'center',
   },
   web: {
     flex: 1,
@@ -110,7 +108,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 24,
-    lineHeight: 24,
     fontFamily: 'OpenSans-Bold',
   },
   sectionDescription: {

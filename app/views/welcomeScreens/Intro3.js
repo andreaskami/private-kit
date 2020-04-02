@@ -15,7 +15,7 @@ import logo3 from './../../assets/images/logo3.png';
 const width = Dimensions.get('window').width;
 import languages from './../../locales/languages';
 
-const Intro2 = (props) => {
+const Intro2 = props => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.infoCard}>
@@ -32,17 +32,12 @@ const Intro2 = (props) => {
         </View>
 
         <Text
-          style={
-            (styles.sectionDescription, { color: 'blue', textAlign: 'center' })
-          }
-          onPress={() =>
-            Linking.openURL('http://covid-19.rise.org.cy')
-          }
+          onPress={() => Linking.openURL('http://covid-19.rise.org.cy')}
           style={[
             styles.infoCardBodyText,
             { fontFamily: 'OpenSans-Bold', opacity: 1, marginTop: 12 },
           ]}>
-          {languages.t('label.url_info')} {languages.t('label.private_kit_url')}
+          {languages.t('label.intro3_para2')}
         </Text>
       </View>
 
