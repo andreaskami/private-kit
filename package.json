@@ -9,11 +9,11 @@
     "format:all": "prettier --write ./app/**/*.js",
     "test": "jest test"
   },
+  "rnpm": {
+    "assets": ["app/assets/fonts"]
+  },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "git add --force"
-    ]
+    "*.js": ["prettier --write", "git add --force"]
   },
   "husky": {
     "hooks": {
@@ -79,8 +79,6 @@
   },
   "jest": {
     "preset": "react-native",
-    "setupFiles": [
-      "./jestSetupFile.js"
-    ]
+    "setupFiles": ["./jestSetupFile.js"]
   }
 }
