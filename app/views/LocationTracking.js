@@ -159,12 +159,7 @@ class LocationTracking extends Component {
                 }}>
                 <Text style={styles.menuOptionText}>Licenses</Text>
               </MenuOption>
-              <MenuOption
-                onSelect={() => {
-                  this.notifications();
-                }}>
-                <Text style={styles.menuOptionText}>Notifications</Text>
-              </MenuOption>
+              {/* IX Hide notifications temporarily */}
               <MenuOption
                 onSelect={() => {
                   this.privacy();
@@ -365,6 +360,9 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans-Regular',
     marginLeft: 10,
     marginRight: 10,
+    //IX
+    textAlign: 'center',
+    marginBottom: 20,
   },
   startLoggingButtonTouchable: {
     borderRadius: 12,
