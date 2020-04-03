@@ -53,7 +53,8 @@
   "YES": "Ναι",
   "TRACKDISABLED": "Η ιχνηλάτηση τοποθεσίας απενεργοποιήθηκε",
   "NEEDSLOCSERVICES": "Η εφαρμογή ΙΧΝΗΛΑΤΗΣ χρειάζεται υπηρεσίες τοποθεσίας.",
-   "EXPORTFILE": "Εδώ βρίσκεται το log τοποθεσιών από την εφαρμογή ΙΧΝΗΛΑΤΗΣ.",
+  "EXPORTFILE": "Εδώ βρίσκεται το log τοποθεσιών από την εφαρμογή ΙΧΝΗΛΑΤΗΣ.",
+  "incidents_data": "http://covid-19.rise.org.cy/incidents/latestdata_small.csv",
   "privacy_placeholder": "Η εφαρμογή σχεδιάστηκε έτσι ώστε τα δεδομένα χρήστη να παραμένουν ΜΟΝΟ στη συσκευή και ο χρήστης να μπορεί να επιλέξει εάν θέλει να εξάγει τα δεδομένα και σε ποιον να τα προμηθεύσει. Δείτε περισσότερες πληροφορίες εδώ: http://covid-19.rise.org.cy/",
   "ack_placeholder": "This project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No. 739578.\n\n \nThis project has also received funding from the Government of the Republic of Cyprus through the Directorate General for European Programmes, Coordination and Development."
 }

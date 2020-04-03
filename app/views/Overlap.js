@@ -35,9 +35,10 @@ const base64 = RNFetchBlob.base64;
 // The dataset is now hosted on Github due to the high demand for it.  The
 // first Google Doc holding data (https://docs.google.com/spreadsheets/d/1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008/edit#gid=0)
 // points to this souce but no longer holds the actual data.
-const public_data =
-  'https://raw.githubusercontent.com/beoutbreakprepared/nCoV2019/master/latest_data/latestdata.csv';
+const public_data = languages.t('label.incidents_data');
+
 const show_button_text = languages.t('label.show_overlap');
+
 const overlap_true_button_text = languages.t(
   'label.overlap_found_button_label',
 );

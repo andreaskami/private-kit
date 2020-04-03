@@ -9,9 +9,18 @@
   "next": "Next",
   "not_logging_message": "NOTE: After clicking this button you may be prompted to grant CovTracer access to your location.",
   "private_kit": "CovTracer",
-  "private_kit_url":"superworld.rise.org.cy/COVID19",
+  "private_kit_url":"http://covid-19.rise.org.cy",
   "start": "Start",
   "start_logging": "Start Logging",
   "stop_logging": "Stop Logging",
-  "url_info": "Learn More"
+  "overlap": "Visualize movements",
+  "overlap_title": "Visualize movements",
+  "show_overlap": "Check my movements",
+  "overlap_para_1": "Red markers are your recorded locations. After many Cypriots use this app, you will be able to compare your traces with confirmed cases of COVID19.",
+  "overlap_no_results_button_label": "Location data not yet available",
+  "overlap_found_button_label": "Location data loaded",
+  "url_info": "Learn More",
+  "nCoV2019_url_info": "This map is only visible to you. Location data is still available at your device only.",
+  "nCoV2019_url": "",
+  "license_placeholder": "CovTracer was built under MIT license. It fully respects your privacy and provides security to storage, use and management of your data."
 }

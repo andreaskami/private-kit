@@ -4,6 +4,7 @@ import {
   Text,
   Dimensions,
   Image,
+  Button,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
@@ -27,8 +28,6 @@ const Intro1 = props => {
           {languages.t('label.intro1_para1')}
         </Text>
         <View style={styles.rowContainer}>
-          <Image source={logo1} style={styles.infoCardLogo} />
-          <Image source={logo2} style={styles.infoCardLogo} />
           <Image source={logo3} style={styles.infoCardLogo} />
         </View>
       </View>
@@ -78,8 +77,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: '1%',
     flex: 1,
-    width: 150,
-    height: 100,
+    width: 85,
+    height: 60,
     resizeMode: 'contain',
   },
   rowContainer: {

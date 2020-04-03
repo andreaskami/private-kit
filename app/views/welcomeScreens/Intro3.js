@@ -26,18 +26,19 @@ const Intro2 = props => {
           {languages.t('label.intro3_para1')}
         </Text>
         <View style={styles.rowContainer}>
-          <Image source={logo1} style={styles.infoCardLogo} />
-          <Image source={logo2} style={styles.infoCardLogo} />
           <Image source={logo3} style={styles.infoCardLogo} />
         </View>
 
         <Text
+          style={
+            (styles.sectionDescription, { color: 'blue', textAlign: 'center' })
+          }
           onPress={() => Linking.openURL('http://covid-19.rise.org.cy')}
           style={[
             styles.infoCardBodyText,
             { fontFamily: 'OpenSans-Bold', opacity: 1, marginTop: 12 },
           ]}>
-          {languages.t('label.intro3_para2')}
+          {languages.t('label.url_info')} {languages.t('label.private_kit_url')}
         </Text>
       </View>
 
@@ -121,8 +122,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: '1%',
     flex: 1,
-    width: 150,
-    height: 100,
+    width: 85,
+    height: 60,
     resizeMode: 'contain',
   },
   rowContainer: {
