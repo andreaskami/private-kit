@@ -59,5 +59,7 @@
   "ack_placeholder": "This project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No. 739578.\n\n \nThis project has also received funding from the Government of the Republic of Cyprus through the Directorate General for European Programmes, Coordination and Development.",
   "jsonFilename": "CovTracer.json",
   "jsonFilenameMessage": "Here is my location log from CovTracer.",
-  "privacy": "Privacy"
+  "privacy": "Privacy",
+  "Acknowledgements": "Acknowledgements",
+  "Licenses": "Licenses"
 }
