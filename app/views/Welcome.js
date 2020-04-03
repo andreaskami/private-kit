@@ -68,7 +68,7 @@ class Welcome extends Component {
           </Text>
           <Text
             style={
-              (styles.sectionDescription,
+              (styles.sectionDescriptionLow,
               { color: 'blue', textAlign: 'center' })
             }
             onPress={() =>
@@ -127,9 +127,17 @@ const styles = StyleSheet.create({
   },
   sectionDescription: {
     fontSize: 18,
-    lineHeight: 24,
+    lineHeight: 14,
     fontWeight: '400',
     marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  sectionDescriptionLow: {
+    fontSize: 18,
+    lineHeight: 14,
+    fontWeight: '400',
+    marginTop: 5,
     marginLeft: 10,
     marginRight: 10,
   },

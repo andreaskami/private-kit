@@ -79,7 +79,7 @@ function OverlapScreen() {
   const [circles, setCircles] = useState([]);
   const [showButton, setShowButton] = useState({
     disabled: false,
-    text: show_button_text,
+    text: languages.t('label.show_overlap'),
   });
   const [initialRegion, setInitialRegion] = useState(INITIAL_REGION);
   const { navigate } = useNavigation();
