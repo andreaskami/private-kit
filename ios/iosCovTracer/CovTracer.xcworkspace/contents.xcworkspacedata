@@ -10,4 +10,7 @@
    <FileRef
       location = "group:/Users/pitops/projects/businesses/private-kit/ios/CovTracer.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:CovTracer.xcodeproj">
+   </FileRef>
 </Workspace>
