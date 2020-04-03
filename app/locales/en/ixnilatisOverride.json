@@ -19,7 +19,7 @@
   "overlap_para_1": "Red markers are your recorded locations. After many Cypriots use this app, you will be able to compare your traces with confirmed cases of COVID19.",
   "overlap_no_results_button_label": "Location data not yet available",
   "overlap_found_button_label": "Location data loaded",
-  "url_info": "Learn More",
+  "url_info": "Learn More:\n",
   "nCoV2019_url_info": "This map is only visible to you. Location data is still available at your device only.",
   "nCoV2019_url": "",
   "license_placeholder": "CovTracer was built under MIT license. It fully respects your privacy and provides security to storage, use and management of your data."

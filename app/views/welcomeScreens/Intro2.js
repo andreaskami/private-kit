@@ -30,12 +30,6 @@ const Intro2 = props => {
         <Text style={styles.infoCardBodyText}>
           {languages.t('label.intro2_para2')}
         </Text>
-        <Text style={styles.infoCardHeadText}>
-          {languages.t('label.INTRO25')}
-        </Text>
-        <Text style={styles.infoCardBodyText}>
-          {languages.t('label.INTRO26')}{' '}
-        </Text>
         <View style={styles.rowContainer}>
           <Image source={logo3} style={styles.infoCardLogo} />
         </View>
@@ -98,7 +92,7 @@ const styles = StyleSheet.create({
   },
   infoCardLogo: {
     alignSelf: 'center',
-    marginTop: '1%',
+    marginTop: '10%',
     flex: 1,
     width: 85,
     height: 60,
@@ -112,6 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 45,
     letterSpacing: 0,
+    marginTop: 5,
     textAlign: 'center',
     color: '#ffffff',
   },

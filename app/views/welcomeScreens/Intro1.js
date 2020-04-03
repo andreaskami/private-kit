@@ -21,9 +21,6 @@ const Intro1 = props => {
     <View style={styles.mainContainer}>
       <View style={styles.infoCard}>
         <Image source={welcome1} style={styles.infoCardImage} />
-        <Text style={styles.infoCardHeadText}>
-          {languages.t('label.private_kit')}
-        </Text>
         <Text style={styles.infoCardBodyText}>
           {languages.t('label.intro1_para1')}
         </Text>
@@ -75,7 +72,7 @@ const styles = StyleSheet.create({
   },
   infoCardLogo: {
     alignSelf: 'center',
-    marginTop: '1%',
+    marginTop: '5%',
     flex: 1,
     width: 85,
     height: 60,

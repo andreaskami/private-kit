@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: width * 0.5,
     height: width * 0.5,
-    marginTop: '16%',
+    margin: '16%',
   },
   infoCardHeadText: {
     fontFamily: 'OpenSans-Bold',
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   infoCardLogo: {
     alignSelf: 'center',
-    marginTop: '1%',
+    marginTop: '10%',
     flex: 1,
     width: 85,
     height: 60,
