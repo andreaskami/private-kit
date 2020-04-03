@@ -1,5 +1,11 @@
 import React from 'react';
-import { AppState, Linking, StyleSheet, Text, View } from 'react-native';
+import {
+  AppState,
+  Linking,
+  StyleSheet,
+  Text,
+  SafeAreaView,
+} from 'react-native';
 import VersionNumber from 'react-native-version-number';
 import { getLanguages } from 'react-native-i18n';
 
@@ -41,14 +47,14 @@ export default class IxnilatisVersionChecker extends React.Component {
   }
   render() {
     return this.state.message !== null ? (
-      <View>
+      <SafeAreaView>
         <Text style={styles.message}>{this.state.message}</Text>
         <Text
           style={styles.url}
           onPress={() => Linking.openURL(this.state.url)}>
           {this.state.url}
         </Text>
-      </View>
+      </SafeAreaView>
     ) : (
       this.props.children
     );
