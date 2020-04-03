@@ -82,7 +82,7 @@ class LocationTracking extends Component {
   willParticipate = () => {
     SetStoreData('PARTICIPATE', 'true').then(() => {
       LocationServices.start();
-      BroadcastingServices.start();
+      // BroadcastingServices.start();
     });
 
     // Check and see if they actually authorized in the system dialog.
@@ -301,7 +301,7 @@ class LocationTracking extends Component {
                 { color: 'blue', textAlign: 'center', marginTop: 0 },
               ]}
               onPress={() =>
-                Linking.openURL('http://superworld.rise.org.cy/COVID19/')
+                Linking.openURL(languages.t('label.private_kit_url'))
               }>
               {languages.t('label.private_kit_url')}
             </Text>

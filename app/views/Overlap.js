@@ -46,10 +46,10 @@ const no_overlap_button_text = languages.t(
   'label.overlap_no_results_button_label',
 );
 const INITIAL_REGION = {
-  latitude: 36.56,
-  longitude: 20.39,
-  latitudeDelta: 50,
-  longitudeDelta: 50,
+  latitude: 35.185,
+  longitude: 33.382,
+  latitudeDelta: 10,
+  longitudeDelta: 10,
 };
 
 function distance(lat1, lon1, lat2, lon2) {
@@ -135,8 +135,8 @@ function OverlapScreen() {
           setInitialRegion({
             latitude,
             longitude,
-            latitudeDelta: 10.10922,
-            longitudeDelta: 10.20421,
+            latitudeDelta: 0.010922,
+            longitudeDelta: 0.020421,
           });
           populateMarkers([
             {
@@ -357,9 +357,7 @@ function OverlapScreen() {
             styles.sectionFooter,
             { textAlign: 'center', paddingTop: 15, color: 'blue' },
           ]}
-          onPress={() =>
-            Linking.openURL('https://github.com/beoutbreakprepared/nCoV2019')
-          }>
+          onPress={() => Linking.openURL(languages.t('private_kit_url'))}>
           {languages.t('label.nCoV2019_url_info')}{' '}
         </Text>
       </View>

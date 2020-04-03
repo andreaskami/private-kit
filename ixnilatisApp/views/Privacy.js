@@ -47,7 +47,7 @@ class Privacy extends Component {
             onPress={() => this.backToMain()}>
             <Image style={styles.backArrow} source={backArrow} />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Privacy</Text>
+          <Text style={styles.headerTitle}>{languages.t('label.privacy')}</Text>
         </View>
 
         <View style={styles.main}>
