@@ -32,7 +32,7 @@ let userLang = undefined;
 getLanguages().then(languages => {
   userLang = languages[0].split('-')[0]; // ['en-US' will become 'en']
   i18next.changeLanguage(userLang);
-  // i18next.changeLanguage('gr');
+  // i18next.changeLanguage('el');
 });
 
 i18next.init({
@@ -123,7 +123,7 @@ i18next.init({
         label: cslabels,
       },
     },
-    gr: {
+    el: {
       translation: {
         label: grlabels,
       },
