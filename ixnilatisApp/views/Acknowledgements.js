@@ -35,10 +35,12 @@ export const Acknowledgements = ({ navigation }) => {
       <View style={styles.headerContainer}>
         <TouchableOpacity
           style={styles.backArrowTouchable}
-          onPress={backToMain}>
+          onPress={() => this.backToMain()}>
           <Image style={styles.backArrow} source={backArrow} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Acknowledgements</Text>
+        <Text style={styles.headerTitle}>
+          {languages.t('label.Acknowledgements')}
+        </Text>
       </View>
 
       <View style={styles.main}>
