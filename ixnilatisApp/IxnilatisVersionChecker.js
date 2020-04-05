@@ -21,9 +21,9 @@ export const IxnilatisVersionChecker = ({ children }) => {
 
   const getLatestVersion = lang => {
     const langSafe = new Set(['gr', 'en']).has(lang) ? lang : 'en';
-    return window
-      .fetch(`http://covid-19.rise.org.cy/version/current_${langSafe}.json`)
-      .then(r => r.json());
+    return fetch(
+      `http://covid-19.rise.org.cy/version/current_${langSafe}.json`,
+    ).then(r => r.json());
   };
 
   const checkVersion = async () => {
