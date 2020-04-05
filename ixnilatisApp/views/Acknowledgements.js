@@ -35,7 +35,7 @@ export const Acknowledgements = ({ navigation }) => {
       <View style={styles.headerContainer}>
         <TouchableOpacity
           style={styles.backArrowTouchable}
-          onPress={() => this.backToMain()}>
+          onPress={backToMain}>
           <Image style={styles.backArrow} source={backArrow} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
