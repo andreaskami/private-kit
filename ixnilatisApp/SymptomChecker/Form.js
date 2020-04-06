@@ -28,10 +28,18 @@ export default function Form() {
         {steps[currentStep] == 'exposure' && <Exposure />}
       </View>
       <View style={styles.buttonContainer}>
-        <Text onPress={previousStep} style={styles.button}>
+        <Text
+          onPress={previousStep}
+          style={currentStep > 0 ? styles.button : styles.disabledButton}>
           Previous
         </Text>
-        <Text onPress={nextStep} style={styles.button}>
+        <Text
+          onPress={nextStep}
+          style={
+            currentStep < steps.length - 1
+              ? styles.button
+              : styles.disabledButton
+          }>
           Next
         </Text>
       </View>
@@ -63,5 +71,14 @@ const styles = StyleSheet.create({
     padding: 10,
     color: colors.WHITE,
     backgroundColor: colors.DODGER_BLUE,
+  },
+  disabledButton: {
+    height: '30%',
+    width: '30%',
+    textAlign: 'center',
+    borderRadius: 12,
+    padding: 10,
+    color: colors.WHITE,
+    backgroundColor: colors.SILVER,
   },
 });

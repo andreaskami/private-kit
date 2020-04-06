@@ -13,7 +13,7 @@ export default function SymptomChecker(props) {
     <View style={styles.container}>
       <Header
         navigation={props.navigation}
-        title={languages.t('label.Acknowledgements')}
+        title={languages.t('label.SYMPTOM_CHECKER')}
       />
       {results === null ? <Form /> : <Results results={results} />}
     </View>
