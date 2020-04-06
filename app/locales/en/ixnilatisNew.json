@@ -61,5 +61,6 @@
   "jsonFilenameMessage": "Here is my location log from CovTracer.",
   "privacy": "Privacy",
   "Acknowledgements": "Acknowledgements",
-  "Licenses": "Licenses"
+  "Licenses": "Licenses",
+  "SYMPTOM_CHECKER": "Symptom Checker"
 }
