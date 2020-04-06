@@ -55,7 +55,7 @@
   "NEEDSLOCSERVICES": "CovTracer requires location services.",
   "EXPORTFILE": "Here is my location log from CovTracer.",
   "incidents_data": "http://covid-19.rise.org.cy/incidents/latestdata_small.csv",
-  "privacy_placeholder": "The application was designed so that these data cannot be normally accessed outside the user’s devise and the user alone may choose when to export the data and to whom to supply them to. As such, data never leaves the user’s device without their consent. See more information here: http://covid-19.rise.org.cy/",
+  "privacy_placeholder": "The application was designed so that these data cannot be normally accessed outside the user’s devise and the user alone may choose when to export the data and to whom to supply them to. As such, data never leaves the user’s device without their consent. The application fully respects its provisions on the Protection of Individuals Against the Processing of Personal Data and the Free Movement of this Data Law of 2018 (Law 125 (I) / 2018) and the General Data Protection Regulation (2016 / 679). See more information here: http://covid-19.rise.org.cy/",
   "ack_placeholder": "CovTracer has been implemented by RISE, based on the MIT Private-Kit, with the support of XM.com. This project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No. 739578.\n\n \nThis project has also received funding from the Government of the Republic of Cyprus through the Directorate General for European Programmes, Coordination and Development.",
   "jsonFilename": "CovTracer.json",
   "jsonFilenameMessage": "Here is my location log from CovTracer.",

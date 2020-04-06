@@ -24,9 +24,6 @@ const Intro1 = props => {
         <Text style={styles.infoCardBodyText}>
           {languages.t('label.intro1_para1')}
         </Text>
-        <View style={styles.rowContainer}>
-          <Image source={logo3} style={styles.infoCardLogo} />
-        </View>
       </View>
       <View style={styles.navigationDotsView}>
         <View style={styles.activeIndicator} />
@@ -43,7 +40,7 @@ const Intro1 = props => {
         onPress={() => props.swipe(1)}
         style={styles.primaryButtonTouchable}>
         <Text style={styles.primaryButtonText}>
-          {languages.t('label.next')}
+          {languages.t('label.start')}
         </Text>
       </TouchableOpacity>
       {/* <TouchableOpacity><Text style={{marginTop:12,fontFamily:'OpenSans-SemiBold',alignSelf:'center',color:'#665eff'}}>Skip this</Text></TouchableOpacity> */}
@@ -60,22 +57,22 @@ const styles = StyleSheet.create({
     width: width * 0.7866,
     backgroundColor: '#3497fc',
     height: '70%',
-    borderRadius: 12,
+    borderRadius: 7,
     alignSelf: 'center',
     marginTop: '9%',
   },
   infoCardImage: {
     alignSelf: 'center',
-    width: width * 0.5,
-    height: width * 0.5,
-    marginTop: '16%',
+    width: width * 0.3,
+    height: width * 0.3,
+    marginTop: '7%',
   },
   infoCardLogo: {
     alignSelf: 'center',
     marginTop: '5%',
     flex: 1,
-    width: 85,
-    height: 60,
+    width: 65,
+    height: 50,
     resizeMode: 'contain',
   },
   rowContainer: {
@@ -97,7 +94,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     textAlign: 'center',
     color: '#ffffff',
-    maxWidth: '84%',
+    maxWidth: '90%',
     alignSelf: 'center',
     marginTop: 20,
   },
