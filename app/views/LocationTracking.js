@@ -239,7 +239,7 @@ class LocationTracking extends Component {
             )}
           </View>
 
-          <CheckerButton />
+          <CheckerButton navigation={this.props.navigation} />
 
           <View style={styles.actionButtonsView}>
             <TouchableOpacity
