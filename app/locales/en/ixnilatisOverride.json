@@ -7,7 +7,7 @@
   "private_kit": "CovTracer",
   "private_kit_url":"http://covid-19.rise.org.cy",
   "start":"Accept",
-  "intro1_para1":"Designed to prevent the spread of the COVID-19 epidemic, allowing for a more accurate tracking of patients. You have complete control over your data, which exclusively concerns the geospatial sites you have visited, recorded through GPS technology on your phone. You can choose when to export the data and to whom to supply it. Data never leaves your device without your consent.",
+  "intro1_para1":"Designed to prevent the spread of the COVID-19 epidemic, allowing for a more accurate tracking of patients. You have absolute control over your data, which is limited only to the geospatial sites you have visited, recorded through GPS technology on your phone. You can choose when to export the data and who shall have access. Data never leaves your device without your consent.",
   "intro2_title1":"Secure tracking",
   "intro2_para1":"Secure location tracking for fighting COVID19 together. The app logs your device’s location data in under 100KB of space.",
   "intro2_title2":"You are in charge",
