@@ -2,5 +2,5 @@ import React from 'react';
 import { Text } from 'react-native';
 
 export default function Travel() {
-  return <Text>TODO</Text>;
+  return <Text>Travel</Text>;
 }
