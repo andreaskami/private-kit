@@ -63,5 +63,15 @@
   "Acknowledgements": "Acknowledgements",
   "Licenses": "Licenses",
   "SYMPTOM_CHECKER": "Symptom Checker",
-  "demographics": "Demographics"
+  "demographics": "Demographics",
+  "symptom_fever":"Fever",
+  "symptom_malaise":"Malaise",
+  "symptom_myalgia":"Myalgia",
+  "symptom_cough":"Cough",
+  "symptom_breathing_difficulties":"Breathing Difficulties",
+  "symptom_chest_pain":"Chest Pain",
+  "symptom_loss_of_taste":"Loss of Taste",
+  "symptom_loss_of_smell":"Loss of Smell",
+  "symptom_other":"Other (e.g. diarrhea)",
+  "symptom_none_of_the_above":"None of the above"
 }

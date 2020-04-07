@@ -18,7 +18,16 @@ function formReducer(state, action) {
 
 export default function Form() {
   const [currentStep, setCurrentStep] = React.useState(0);
-  const [data, dispatch] = React.useReducer(formReducer, {});
+  const [data, dispatch] = React.useReducer(formReducer, {
+    age: '',
+    gender: '',
+    postalCode: '',
+    country: '',
+    hasMedicalCondition: false,
+    hasTravelled: false,
+    travelCountry: '',
+    symptoms: new Set([]),
+  });
 
   function nextStep() {
     setCurrentStep(curr => (curr + 1 < steps.length ? curr + 1 : curr));
@@ -48,7 +57,14 @@ export default function Form() {
             dispatch={dispatch}
           />
         )}
-        {steps[currentStep] == 'symptoms' && <Symptoms />}
+        {steps[currentStep] == 'symptoms' && (
+          <Symptoms
+            nextStep={nextStep}
+            previousStep={previousStep}
+            data={data}
+            dispatch={dispatch}
+          />
+        )}
         {steps[currentStep] == 'exposure' && <Exposure />}
       </View>
     </View>

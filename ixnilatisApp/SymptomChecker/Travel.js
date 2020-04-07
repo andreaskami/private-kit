@@ -32,8 +32,8 @@ export default function Travel(props) {
           </Text>
           <Picker
             style={styles.input}
-            selectedValue={props.data.country}
-            onValueChange={country => props.dispatch({ country })}>
+            selectedValue={props.data.travelCountry}
+            onValueChange={travelCountry => props.dispatch({ travelCountry })}>
             <Picker.Item label='' value='' />
             <Picker.Item label='Cyprus' value='cy' />
             <Picker.Item label='Greece' value='gr' />
