@@ -30,7 +30,7 @@ export default function Form() {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         {steps[currentStep] == 'demographics' && (
-          <Demographics nextStep={nextStep} />
+          <Demographics nextStep={nextStep} data={data} dispatch={dispatch} />
         )}
         {steps[currentStep] == 'medical' && (
           <Medical

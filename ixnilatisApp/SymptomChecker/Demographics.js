@@ -10,12 +10,19 @@ export default function Demographics(props) {
 
       <View style={styles.inputContainer}>
         <Text style={styles.label}>{languages.t('label.age')}</Text>
-        <TextInput style={styles.input} />
+        <TextInput
+          value={props.data.age}
+          onChangeText={age => props.dispatch({ age })}
+          style={styles.input}
+        />
       </View>
 
       <View style={styles.inputContainer}>
         <Text style={styles.label}>{languages.t('label.gender')}</Text>
-        <Picker style={styles.input}>
+        <Picker
+          selectedValue={props.data.gender}
+          onValueChange={gender => props.dispatch({ gender })}
+          style={styles.input}>
           <Picker.Item label='' value='' />
           <Picker.Item label='Male' value='male' />
           <Picker.Item label='Female' value='female' />
@@ -25,12 +32,19 @@ export default function Demographics(props) {
 
       <View style={styles.inputContainer}>
         <Text style={styles.label}>{languages.t('label.postal_code')}</Text>
-        <TextInput style={styles.input} />
+        <TextInput
+          value={props.data.postalCode}
+          onChangeText={postalCode => props.dispatch({ postalCode })}
+          style={styles.input}
+        />
       </View>
 
       <View style={styles.inputContainer}>
         <Text style={styles.label}>{languages.t('label.country')}</Text>
-        <Picker style={styles.input}>
+        <Picker
+          style={styles.input}
+          selectedValue={props.data.country}
+          onValueChange={country => props.dispatch({ country })}>
           <Picker.Item label='' value='' />
           <Picker.Item label='Cyprus' value='cy' />
           <Picker.Item label='Greece' value='gr' />
