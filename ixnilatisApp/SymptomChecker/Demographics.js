@@ -1,8 +1,9 @@
 import React from 'react';
 import { Picker, StyleSheet, Text, TextInput, View } from 'react-native';
 import languages from '../../app/locales/languages';
+import PreviousNextButtons from './PreviousNextButtons';
 
-export default function Demographics() {
+export default function Demographics(props) {
   return (
     <View>
       <Text style={styles.header}>{languages.t('label.demographics')}</Text>
@@ -35,6 +36,13 @@ export default function Demographics() {
           <Picker.Item label='Greece' value='gr' />
         </Picker>
       </View>
+
+      <PreviousNextButtons
+        nextCallback={props.nextStep}
+        nextDisabled={false}
+        previousCallback={() => true}
+        previousDisabled
+      />
     </View>
   );
 }

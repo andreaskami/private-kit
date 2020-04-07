@@ -9,8 +9,16 @@ import Exposure from './Exposure';
 
 const steps = ['demographics', 'medical', 'travel', 'symptoms', 'exposure'];
 
+function formReducer(state, action) {
+  return {
+    ...state,
+    ...action,
+  };
+}
+
 export default function Form() {
   const [currentStep, setCurrentStep] = React.useState(0);
+  const [data, dispatch] = React.useReducer(formReducer, {});
 
   function nextStep() {
     setCurrentStep(curr => (curr + 1 < steps.length ? curr + 1 : curr));
@@ -21,27 +29,20 @@ export default function Form() {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        {steps[currentStep] == 'demographics' && <Demographics />}
-        {steps[currentStep] == 'medical' && <Medical />}
+        {steps[currentStep] == 'demographics' && (
+          <Demographics nextStep={nextStep} />
+        )}
+        {steps[currentStep] == 'medical' && (
+          <Medical
+            nextStep={nextStep}
+            previousStep={previousStep}
+            data={data}
+            dispatch={dispatch}
+          />
+        )}
         {steps[currentStep] == 'travel' && <Travel />}
         {steps[currentStep] == 'symptoms' && <Symptoms />}
         {steps[currentStep] == 'exposure' && <Exposure />}
-      </View>
-      <View style={styles.buttonContainer}>
-        <Text
-          onPress={previousStep}
-          style={currentStep > 0 ? styles.button : styles.disabledButton}>
-          Previous
-        </Text>
-        <Text
-          onPress={nextStep}
-          style={
-            currentStep < steps.length - 1
-              ? styles.button
-              : styles.disabledButton
-          }>
-          Next
-        </Text>
       </View>
     </View>
   );
@@ -57,28 +58,5 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     height: '80%',
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-  button: {
-    height: '30%',
-    width: '30%',
-    textAlign: 'center',
-    borderRadius: 12,
-    padding: 10,
-    color: colors.WHITE,
-    backgroundColor: colors.DODGER_BLUE,
-  },
-  disabledButton: {
-    height: '30%',
-    width: '30%',
-    textAlign: 'center',
-    borderRadius: 12,
-    padding: 10,
-    color: colors.WHITE,
-    backgroundColor: colors.SILVER,
   },
 });
