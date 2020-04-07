@@ -3,8 +3,12 @@ import FormWork from './views/FormWork';
 import FormGeneralNew from './views/FormGeneralNew';
 import FormGeneralActive from './views/FormGeneralActive';
 import Privacy from './views/Privacy';
+<<<<<<< HEAD
 import Acknowledgement from './views/Acknowledgement';
 import SymptomChecker from './SymptomChecker/SymptomChecker';
+=======
+import { Acknowledgements } from './views/Acknowledgements';
+>>>>>>> develop
 
 export function getIxnilatisScreens(Stack) {
   return [
@@ -35,7 +39,7 @@ export function getIxnilatisScreens(Stack) {
     <Stack.Screen
       key='AckScreen'
       name='AckScreen'
-      component={Acknowledgement}
+      component={Acknowledgements}
       options={{ headerShown: false }}
     />,
     <Stack.Screen
