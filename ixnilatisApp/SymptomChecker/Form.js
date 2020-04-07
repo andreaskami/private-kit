@@ -40,7 +40,14 @@ export default function Form() {
             dispatch={dispatch}
           />
         )}
-        {steps[currentStep] == 'travel' && <Travel />}
+        {steps[currentStep] == 'travel' && (
+          <Travel
+            nextStep={nextStep}
+            previousStep={previousStep}
+            data={data}
+            dispatch={dispatch}
+          />
+        )}
         {steps[currentStep] == 'symptoms' && <Symptoms />}
         {steps[currentStep] == 'exposure' && <Exposure />}
       </View>
