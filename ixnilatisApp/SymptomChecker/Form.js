@@ -16,7 +16,7 @@ function formReducer(state, action) {
   };
 }
 
-export default function Form() {
+export default function Form(props) {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [data, dispatch] = React.useReducer(formReducer, {
     age: '',
@@ -67,7 +67,7 @@ export default function Form() {
         )}
         {steps[currentStep] == 'exposure' && (
           <Exposure
-            nextStep={nextStep}
+            nextStep={() => props.onSubmit(data)}
             previousStep={previousStep}
             data={data}
             dispatch={dispatch}

@@ -9,13 +9,21 @@ import languages from '../../app/locales/languages';
 export default function SymptomChecker(props) {
   const [results, setResults] = React.useState(null);
 
+  function submitForm(data) {
+    console.log(data);
+  }
+
   return (
     <View style={styles.container}>
       <Header
         navigation={props.navigation}
         title={languages.t('label.SYMPTOM_CHECKER')}
       />
-      {results === null ? <Form /> : <Results results={results} />}
+      {results === null ? (
+        <Form onSubmit={submitForm} />
+      ) : (
+        <Results results={results} />
+      )}
     </View>
   );
 }
