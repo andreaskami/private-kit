@@ -8,6 +8,8 @@ import {
   Dimensions,
   TouchableOpacity,
   BackHandler,
+  ScrollView,
+  Linking,
 } from 'react-native';
 
 import colors from '../../app/constants/colors';
@@ -50,12 +52,20 @@ class Privacy extends Component {
           <Text style={styles.headerTitle}>{languages.t('label.privacy')}</Text>
         </View>
 
-        <View style={styles.main}>
+        <ScrollView style={styles.main}>
           <Text style={styles.sectionDescription}>
             {/* This screen is a placeholder for complete license content, or a link */}
             {languages.t('label.privacy_placeholder')}
           </Text>
-        </View>
+          <Text
+            style={[
+              styles.sectionDescription,
+              { color: 'blue', textAlign: 'center', marginTop: 0 },
+            ]}
+            onPress={() => Linking.openURL(languages.t('label.privacy_url'))}>
+            covid-19.rise.org.cy.privacy
+          </Text>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -72,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     textAlignVertical: 'top',
-    padding: 20,
+    padding: 0,
     width: '96%',
     alignSelf: 'center',
   },
