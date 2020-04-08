@@ -1,6 +1,7 @@
 {
   "back": "Back",
   "import_step_1": "1. In case you wish to import previous locations (before you installed the app), then login to your Google account and download your location history.",
+  
   "logging_message": "The app logs your location privately every five minutes. Location information does NOT leave your phone.",
   "next": "Next",
   "not_logging_message": "NOTE: After clicking this button you may be prompted to grant CovTracer access to your location.",
@@ -11,7 +12,7 @@
   "intro2_title1":"Secure tracking",
   "intro2_para1":"Secure location tracking for fighting COVID19 together. The app logs your device’s location data in under 100KB of space.",
   "intro2_title2":"You are in charge",
-  "intro2_para2": "Data Never Leaves Your Device Without Your Consent",
+  "intro2_para2": "Data never leaves your device without your consent.",
   "intro3_title1":"Ηelp Cypriots",
   "intro3_para1": "By logging your location trail, you help the authorities to track COVID19 with higher accuracy.",
   "intro3_para2":"Learn More: http://covid-19.rise.org.cy",

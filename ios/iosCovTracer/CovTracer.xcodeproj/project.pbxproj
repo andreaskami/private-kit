@@ -30,6 +30,7 @@
 		6828C7F4BF9544B791DB8E0F /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C692EBDB3E8541C7A282FF93 /* OpenSans-SemiBold.ttf */; };
 		75BAC977B4F77DF80248F817 /* libPods-CovTracerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BA400EE1300DAFFBFCCD76 /* libPods-CovTracerTests.a */; };
 		8130315107624C06A0D02817 /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53F9F2C225904506967FEB4E /* OpenSans-ExtraBoldItalic.ttf */; };
+		91A26405243641B7002E8806 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A26404243641B7002E8806 /* Default-568h@2x.png */; };
 		97228E7463B2629181015A2E /* libPods-CovTracer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35EB8C195B9E6ED553C6B4FE /* libPods-CovTracer.a */; };
 		B4013ADB6F02420A88004767 /* OpenSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07DA2C9CA83F4C21B7D133C5 /* OpenSans-LightItalic.ttf */; };
 		B6CCB74110A247D2AB228197 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A6F5A32624649CC837BA571 /* OpenSans-Light.ttf */; };
@@ -78,12 +79,12 @@
 		08445F6724284A52008754AC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0DA5F38AAA9DAD3DC7E25DFE /* Pods-PrivateKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrivateKitTests.release.xcconfig"; path = "Target Support Files/Pods-PrivateKitTests/Pods-PrivateKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* CovTracer.temp_caseinsensitive_rename.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CovTracer.temp_caseinsensitive_rename.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = CoveTracer.h/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = CoveTracer.h/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = CovTracer/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = CovTracer/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = CoveTracer.h/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CoveTracer.h/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CoveTracer.h/main.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = CovTracer/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CovTracer/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CovTracer/main.m; sourceTree = "<group>"; };
 		15BC3454A2F9586A393CABF5 /* Pods-CovTracer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CovTracer.debug.xcconfig"; path = "Target Support Files/Pods-CovTracer/Pods-CovTracer.debug.xcconfig"; sourceTree = "<group>"; };
 		35EB8C195B9E6ED553C6B4FE /* libPods-CovTracer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CovTracer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E10CA5A72D06133B886B461 /* libPods-PrivateKit-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PrivateKit-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +92,8 @@
 		6A6F5A32624649CC837BA571 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Light.ttf"; path = "../app/assets/fonts/OpenSans-Light.ttf"; sourceTree = "<group>"; };
 		71D1C872DB0CCC3BBC3D907E /* Pods-PrivateKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrivateKit.debug.xcconfig"; path = "Target Support Files/Pods-PrivateKit/Pods-PrivateKit.debug.xcconfig"; sourceTree = "<group>"; };
 		7932FB5F9EEA459987375700 /* OpenSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-SemiBoldItalic.ttf"; path = "../app/assets/fonts/OpenSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		911576B0243A420200550D93 /* CovTracer.temp_caseinsensitive_rename.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = CovTracer.temp_caseinsensitive_rename.entitlements; path = CovTracer/CovTracer.temp_caseinsensitive_rename.entitlements; sourceTree = "<group>"; };
+		91A26404243641B7002E8806 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		93BA400EE1300DAFFBFCCD76 /* libPods-CovTracerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CovTracerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9440D638E4331481079AE235 /* Pods-PrivateKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrivateKit.release.xcconfig"; path = "Target Support Files/Pods-PrivateKit/Pods-PrivateKit.release.xcconfig"; sourceTree = "<group>"; };
 		9B686523B4164257AD651CE2 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-ExtraBold.ttf"; path = "../app/assets/fonts/OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
@@ -203,6 +206,7 @@
 		13B07FAE1A68108700A75B9A /* CovTracer */ = {
 			isa = PBXGroup;
 			children = (
+				911576B0243A420200550D93 /* CovTracer.temp_caseinsensitive_rename.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -252,6 +256,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				91A26404243641B7002E8806 /* Default-568h@2x.png */,
 				08445F4924283AB5008754AC /* GoogleMaps.bundle */,
 				08445F4724283A46008754AC /* GoogleMapsCore.framework */,
 				08445F4524283A40008754AC /* GoogleMaps.framework */,
@@ -380,6 +385,7 @@
 				E48B0565CDD44328BEF2F063 /* OpenSans-Italic.ttf in Resources */,
 				B6CCB74110A247D2AB228197 /* OpenSans-Light.ttf in Resources */,
 				B4013ADB6F02420A88004767 /* OpenSans-LightItalic.ttf in Resources */,
+				91A26405243641B7002E8806 /* Default-568h@2x.png in Resources */,
 				D86C551F0DF249ED8BC98C36 /* OpenSans-Regular.ttf in Resources */,
 				6828C7F4BF9544B791DB8E0F /* OpenSans-SemiBold.ttf in Resources */,
 				E798329A430E40B786B42CBC /* OpenSans-SemiBoldItalic.ttf in Resources */,
@@ -401,7 +407,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		79BCB21305F66BDB3C2F3F2F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -521,6 +527,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = CovTracer;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -576,7 +583,9 @@
 			baseConfigurationReference = 15BC3454A2F9586A393CABF5 /* Pods-CovTracer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CovTracer/CovTracer.temp_caseinsensitive_rename.entitlements;
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 19;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = T96XH3HTPU;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -585,8 +594,9 @@
 					"$(PROJECT_DIR)/GoogleMaps-3.8.0/Maps/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/CoveTracer.h/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/CovTracer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -604,7 +614,9 @@
 			baseConfigurationReference = F540D82621F10DDA5ECBC847 /* Pods-CovTracer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CovTracer/CovTracer.temp_caseinsensitive_rename.entitlements;
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 19;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = T96XH3HTPU;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -613,8 +625,9 @@
 					"$(PROJECT_DIR)/GoogleMaps-3.8.0/Maps/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/CoveTracer.h/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/CovTracer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
