@@ -53,7 +53,7 @@ export default function Demographics(props) {
 
       <PreviousNextButtons
         nextCallback={props.nextStep}
-        nextDisabled={false}
+        nextDisabled={props.data.age === '' || props.data.postalCode === ''}
         previousCallback={() => true}
         previousDisabled
       />

@@ -7,12 +7,12 @@ export default function PreviousNextButtons(props) {
   return (
     <View style={styles.buttonContainer}>
       <Text
-        onPress={props.previousCallback}
+        onPress={!props.previousDisabled ? props.previousCallback : () => null}
         style={props.previousDisabled ? styles.disabledButton : styles.button}>
-        {languages.t('label.previous')}
+        {languages.t('label.back')}
       </Text>
       <Text
-        onPress={props.nextCallback}
+        onPress={!props.nextDisabled ? props.nextCallback : () => null}
         style={props.nextDisabled ? styles.disabledButton : styles.button}>
         {languages.t('label.next')}
       </Text>

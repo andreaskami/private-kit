@@ -48,9 +48,9 @@
   "FROM": "from",
   "INTRO25": "Fill the declaration easily",
   "INTRO26": "Request a short movement outside your home conveniently, with only a few clicks.",
-  "NO": "No",
+  "no": "No",
   "TO": "till",
-  "YES": "Yes",
+  "yes": "Yes",
   "TRACKDISABLED": "Location Tracking Was Disabled",
   "NEEDSLOCSERVICES": "CovTracer requires location services.",
   "EXPORTFILE": "Here is my location log from CovTracer.",
@@ -73,5 +73,15 @@
   "symptom_loss_of_taste":"Loss of Taste",
   "symptom_loss_of_smell":"Loss of Smell",
   "symptom_other":"Other (e.g. diarrhea)",
-  "symptom_none_of_the_above":"None of the above"
+  "symptom_none_of_the_above":"None of the above",
+  "exposure":"Exposure",
+  "exposure_question":"Have you been in close contact during the past two weeks or 14 days preceding your symptoms with someone who, before or after was diagnosed with the COVID-19 virus?",
+  "close_contact_definition":"Close Contact Definition",
+  "close_contact_definition_1":"A person living in the same household as a COVID-19 case",
+  "close_contact_definition_2":"A person having had direct physical contact with a COVID-19 case (e.g. shaking hands)",
+  "close_contact_definition_3":"A person having unprotected direct contact with infectious secretions of a COVID-19 case (e.g. being coughed on, touching used paper tissues with a bare hand)",
+  "close_contact_definition_4":"A person having had face-to-face contact with a COVID-19 case within 2 metres and > 15 minutes",
+  "close_contact_definition_5":"A person who was in a closed environment (e.g. classroom, meeting room, hospital waiting room, etc.) with a COVID-19 case for 15 minutes or more and at a distance of less than 2 metres",
+  "close_contact_definition_6":"A healthcare worker (HCW) or other person providing direct care for a COVID-19 case, or laboratory workers handling specimens from a COVID-19 case without recommended personal protective equipment (PPE) or with a possible breach of PPE",
+  "close_contact_definition_7":"A contact in an aircraft sitting within two seats (in any direction) of the COVID-19 case, travel companions or persons providing care, and crew members serving in the section of the aircraft where the index case was seated (if severity of symptoms or movement of the case indicate more extensive exposure, passengers seated in the entire section or all passengers on the aircraft may be considered close contacts)"
 }

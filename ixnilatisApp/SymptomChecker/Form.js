@@ -1,6 +1,6 @@
 import React from 'react';
 import colors from '../../app/constants/colors';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Demographics from './Demographics';
 import Medical from './Medical';
 import Travel from './Travel';
@@ -65,7 +65,14 @@ export default function Form() {
             dispatch={dispatch}
           />
         )}
-        {steps[currentStep] == 'exposure' && <Exposure />}
+        {steps[currentStep] == 'exposure' && (
+          <Exposure
+            nextStep={nextStep}
+            previousStep={previousStep}
+            data={data}
+            dispatch={dispatch}
+          />
+        )}
       </View>
     </View>
   );
