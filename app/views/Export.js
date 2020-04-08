@@ -70,7 +70,7 @@ function ExportScreen({ shareButtonDisabled }) {
       const filename = unixtimeUTC + '.json';
       const message = languages.t('label.jsonFilenameMessage');
       if (Platform.OS === 'ios') {
-        var url = RNFS.Bundle + '/' + filename;
+        var url = RNFS.DocumentDirectoryPath + '/' + filename;
         await RNFS.writeFile(url, jsonData, 'utf8')
           .then(success => {
             options = {
