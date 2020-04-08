@@ -58,11 +58,10 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   inputContainer: {
-    marginTop: 20,
     paddingLeft: 10,
   },
   label: {
-    width: '50%',
+    marginTop: 10,
   },
   switchContainer: {
     flex: 1,

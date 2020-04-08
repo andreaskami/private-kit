@@ -13,22 +13,22 @@ export default function Medical(props) {
           {languages.t('label.medical_condition_question')}
         </Text>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>
+          <Text style={styles.condition}>
             {languages.t('label.medical_condition_cardiovascular')}
           </Text>
-          <Text style={styles.label}>
+          <Text style={styles.condition}>
             {languages.t('label.medical_condition_diabetes')}
           </Text>
-          <Text style={styles.label}>
+          <Text style={styles.condition}>
             {languages.t('label.medical_condition_lung')}
           </Text>
-          <Text style={styles.label}>
+          <Text style={styles.condition}>
             {languages.t('label.medical_condition_respiratory')}
           </Text>
-          <Text style={styles.label}>
+          <Text style={styles.condition}>
             {languages.t('label.medical_condition_cancer')}
           </Text>
-          <Text style={styles.label}>
+          <Text style={styles.condition}>
             {languages.t('label.medical_condition_immunodeficiency')}
           </Text>
         </View>
@@ -68,9 +68,12 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginTop: 20,
     paddingLeft: 10,
+    paddingRight: 10,
   },
-  label: {
-    width: '50%',
+  label: {},
+  condition: {
+    marginBottom: 10,
+    borderBottomWidth: 1,
   },
   switchContainer: {
     flex: 1,

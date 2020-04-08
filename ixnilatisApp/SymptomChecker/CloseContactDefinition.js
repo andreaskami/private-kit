@@ -33,7 +33,7 @@ export default function Exposure() {
                   backgroundColor: colors.DODGER_BLUE,
                 }}
                 onPress={() => setShowModal(show => !show)}>
-                Close
+                {languages.t('label.close')}
               </Text>
             </View>
           </View>

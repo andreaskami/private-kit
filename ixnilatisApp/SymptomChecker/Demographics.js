@@ -14,6 +14,7 @@ export default function Demographics(props) {
           value={props.data.age}
           onChangeText={age => props.dispatch({ age })}
           style={styles.input}
+          keyboardType='number-pad'
         />
       </View>
 
@@ -24,9 +25,12 @@ export default function Demographics(props) {
           onValueChange={gender => props.dispatch({ gender })}
           style={styles.input}>
           <Picker.Item label='' value='' />
-          <Picker.Item label='Male' value='male' />
-          <Picker.Item label='Female' value='female' />
-          <Picker.Item label='Prefer not to say' value='nosay' />
+          <Picker.Item label={languages.t('label.male')} value='male' />
+          <Picker.Item label={languages.t('label.female')} value='female' />
+          <Picker.Item
+            label={languages.t('label.prefer_not_to_say')}
+            value='nosay'
+          />
         </Picker>
       </View>
 
@@ -36,6 +40,7 @@ export default function Demographics(props) {
           value={props.data.postalCode}
           onChangeText={postalCode => props.dispatch({ postalCode })}
           style={styles.input}
+          keyboardType='number-pad'
         />
       </View>
 
@@ -70,12 +75,10 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginTop: 20,
     paddingLeft: 10,
+    paddingRight: 10,
   },
   input: {
     borderWidth: 1,
-    width: '50%',
   },
-  label: {
-    width: '50%',
-  },
+  label: {},
 });

@@ -107,7 +107,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 22,
   },
-  label: {
-    width: '50%',
-  },
+  label: {},
 });
