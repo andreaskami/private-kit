@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Switch, Text, View } from 'react-native';
 
 export default function Symptom(props) {
-  console.log(props.disabled);
   return (
     <View style={styles.switchContainer}>
       <Switch
@@ -10,7 +9,9 @@ export default function Symptom(props) {
         value={props.symptoms.has(props.id)}
         onValueChange={() => props.onChange(props.id)}
       />
-      <Text style={{ fontSize: 20 }}>{props.title}</Text>
+      <Text onPress={() => props.onChange(props.id)} style={{ fontSize: 20 }}>
+        {props.title}
+      </Text>
     </View>
   );
 }
