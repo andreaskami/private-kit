@@ -8,10 +8,11 @@ A personal location vault that nobody else can access. Log your location private
 
 **Home page:** http://privatekit.mit.edu
 
+
 ## Behavior
 
 1. Get consent to locally track location and send an encoded version online.
-2. Locally cache loction info once every 5 minutes: `Time | GPS Lat | GPS Lon`
+2. Locally cache loction info once every 5 minutes: ```	Time  |  GPS Lat  |  GPS Lon ```
 
 # Development Overview
 
@@ -34,39 +35,18 @@ Refer to and run the dev_setup.sh for needed tools.
 ## Running
 
 Install modules:
-`npm install` or `yarn install` (note `yarn` does a better job at installing dependencies on macOS)
+```npm install``` or ```yarn install``` (note ```yarn``` does a better job at installing dependencies on macOS)
 
 To run, do:
-
 ```
 npx react-native run-android
 ```
-
 or
-
 ```
 npx react-native run-ios --simulator="iPhone 8 Plus"
 ```
 
 NOTE: In some cases, the abovementioned procedure leads to the error 'Failed to load bundle - Could not connect to development server'. In these cases, kill all other react-native processes and try it again.
-
-## Troubleshooting
-
-### Pods fail to install
-
-Error message
-
-```bash
-xcrun:_ error: SDK "iphoneos" cannot be located
-xcrun: error: SDK "iphoneos" cannot be located
-xcrun: error: unable to lookup item 'Path' in SDK 'iphoneos'
-```
-
-Solution:
-
-```
-sudo xcode-select --switch /Applications/Xcode.app
-```
 
 ## Contributing
 
@@ -74,3 +54,5 @@ Read the [contribution guidelines](CONTRIBUTING.md).
 
 WhatsApp: https://chat.whatsapp.com/HXonYGVeAwQIKxO0HYlxYL
 Slack: https://safepathsprivatekit.slack.com/
+
+

@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Alert,
   Dimensions,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import languages from '../../app/locales/languages';
+import { GetStoreData } from '../../app/helpers/General';
 import { hasFormsLeft, getWaitTimeLeft } from '../formLimitations';
 
 const width = Dimensions.get('window').width;
 
-export const FormButtons = ({ navigation }) => {
-  const newForm = async () => {
+class FormButtons extends Component {
+  newForm = async () => {
     const hasForms = await hasFormsLeft();
     if (!hasForms) {
       Alert.alert(
@@ -34,42 +36,48 @@ export const FormButtons = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('FormGeneralNewScreen', {});
+    this.props.navigation.navigate('FormGeneralNewScreen', {});
   };
 
-  return (
-    <View style={styles.actionButtonsView}>
-      {false && (
+  render() {
+    return (
+      <View style={styles.actionButtonsView}>
+        {false && (
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('FormWorkScreen', {})}
+            style={styles.actionButtonsTouchable}>
+            <Text style={styles.actionButtonHead}>
+              {languages.t('label.FORM_A')}
+            </Text>
+            <Text style={styles.actionButtonText}>
+              {languages.t('label.FORMWORK')}
+            </Text>
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity
-          onPress={() => navigation.navigate('FormWorkScreen', {})}
+          onPress={this.newForm}
           style={styles.actionButtonsTouchable}>
-          <Text style={styles.actionButtonHead}>
-            {languages.t('label.FORM_A')}
-          </Text>
+          <Text style={styles.actionButtonHead}>&#9997;</Text>
           <Text style={styles.actionButtonText}>
-            {languages.t('label.FORMWORK')}
+            {languages.t('label.FORMGENERAL_NEW')}
           </Text>
         </TouchableOpacity>
-      )}
 
-      <TouchableOpacity onPress={newForm} style={styles.actionButtonsTouchable}>
-        <Text style={styles.actionButtonHead}>&#9997;</Text>
-        <Text style={styles.actionButtonText}>
-          {languages.t('label.FORMGENERAL_NEW')}
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate('FormGeneralActiveScreen', {})}
-        style={styles.actionButtonsTouchable}>
-        <Text style={styles.actionButtonHead}>&#128196;</Text>
-        <Text style={styles.actionButtonText}>
-          {languages.t('label.FORMGENERAL_ACTIVE')}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.navigate('FormGeneralActiveScreen', {})
+          }
+          style={styles.actionButtonsTouchable}>
+          <Text style={styles.actionButtonHead}>&#128196;</Text>
+          <Text style={styles.actionButtonText}>
+            {languages.t('label.FORMGENERAL_ACTIVE')}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   actionButtonsView: {
@@ -111,3 +119,5 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
 });
+
+export default FormButtons;

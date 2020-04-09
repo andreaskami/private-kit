@@ -1,32 +1,22 @@
-import React, { useState, useLayoutEffect } from 'react';
-import {
-  AppState,
-  Linking,
-  StyleSheet,
-  Text,
-  SafeAreaView,
-} from 'react-native';
+import React from 'react';
+import { AppState, Linking, StyleSheet, Text, View } from 'react-native';
 import VersionNumber from 'react-native-version-number';
 import { getLanguages } from 'react-native-i18n';
 
-export const IxnilatisVersionChecker = ({ children }) => {
-  const [downloadNewVersion, setDownloadNewVersion] = useState();
+export default class IxnilatisVersionChecker extends React.Component {
+  state = {
+    message: null,
+    url: null,
+  };
 
-  useLayoutEffect(() => {
-    checkVersion();
-    AppState.addEventListener('change', checkVersion);
-
-    return () => AppState.removeEventListener('change', checkVersion);
-  }, []);
-
-  const getLatestVersion = lang => {
+  getLatestVersion = lang => {
     const langSafe = new Set(['gr', 'en']).has(lang) ? lang : 'en';
     return fetch(
       `http://covid-19.rise.org.cy/version/current_${langSafe}.json`,
     ).then(r => r.json());
   };
 
-  const checkVersion = async () => {
+  checkVersion = async () => {
     if (AppState.currentState === 'background') {
       return;
     }
@@ -34,41 +24,36 @@ export const IxnilatisVersionChecker = ({ children }) => {
     const languages = await getLanguages();
     const userLang = languages[0].split('-')[0]; // ['en-US' will become 'en']
 
-    try {
-      const { version, message, url } =
-        (await getLatestVersion(userLang)) || {};
-      if (!version) {
-        console.log('Version not received');
-        return;
-      }
-
-      if (version !== VersionNumber.appVersion) {
-        setDownloadNewVersion({
-          message,
-          url,
-        });
-      }
-    } catch (err) {
-      console.error(err.message);
-    }
+    this.getLatestVersion(userLang)
+      .then(response => {
+        if (response.version !== VersionNumber.appVersion) {
+          this.setState({ message: response.message, url: response.url });
+        }
+      })
+      .catch(e => console.log(e));
   };
-
-  return (
-    <>
-      {downloadNewVersion && (
-        <SafeAreaView>
-          <Text style={styles.message}>{downloadNewVersion.message}</Text>
-          <Text
-            style={styles.url}
-            onPress={() => Linking.openURL(downloadNewVersion.url)}>
-            {downloadNewVersion.url}
-          </Text>
-        </SafeAreaView>
-      )}
-      {!downloadNewVersion && children}
-    </>
-  );
-};
+  componentDidMount() {
+    this.checkVersion();
+    AppState.addEventListener('change', this.checkVersion);
+  }
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.checkVersion);
+  }
+  render() {
+    return this.state.message !== null ? (
+      <View>
+        <Text style={styles.message}>{this.state.message}</Text>
+        <Text
+          style={styles.url}
+          onPress={() => Linking.openURL(this.state.url)}>
+          {this.state.url}
+        </Text>
+      </View>
+    ) : (
+      this.props.children
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   message: { textAlign: 'center', fontSize: 18, margin: 15 },
