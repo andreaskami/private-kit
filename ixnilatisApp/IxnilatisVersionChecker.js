@@ -6,7 +6,7 @@ import {
   Text,
   SafeAreaView,
 } from 'react-native';
-import VersionNumber from 'react-native-version-number';
+import { getVersion } from 'react-native-device-info';
 import { getLanguages } from 'react-native-i18n';
 import { getLatestVersion } from './httpClient';
 
@@ -36,7 +36,7 @@ export const IxnilatisVersionChecker = ({ children }) => {
         return;
       }
 
-      if (version !== VersionNumber.appVersion) {
+      if (version !== getVersion()) {
         setDownloadNewVersion({
           message,
           url,

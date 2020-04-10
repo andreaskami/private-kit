@@ -1,6 +1,6 @@
 import React from 'react';
 import colors from '../../app/constants/colors';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Form from './Form';
 import Results from './Results';
 import Header from '../layout/Header';
@@ -8,13 +8,15 @@ import languages from '../../app/locales/languages';
 import { getLanguages } from 'react-native-i18n';
 import { checkSymptoms } from '../httpClient';
 import { showMessage } from 'react-native-flash-message';
+import { getUniqueId } from 'react-native-device-info';
 
 export default function SymptomChecker(props) {
-  const [results, setResults] = React.useState(null);
+  const [results, setResults] = React.useState(sampleResult);
   const [isLoading, setLoading] = React.useState(false);
 
   async function submitForm(data) {
     const request = {
+      unique_identification: getUniqueId(),
       age: data.age,
       gender: data.gender,
       zipcode: data.postalCode,
@@ -43,7 +45,7 @@ export default function SymptomChecker(props) {
     const languages = await getLanguages();
     const userLang = languages[0].split('-')[0]; // ['en-US' will become 'en']
     checkSymptoms(request, userLang)
-      .then(response => console.log(response))
+      .then(setResults)
       .catch(err =>
         showMessage({
           message: err,
@@ -78,3 +80,23 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE,
   },
 });
+
+const sampleResult = {
+  html:
+    '<h1><b>Your travel history and symptoms are indicative of a respiratory virus, which may be COVID-19.</b></h1> <p style="text-align: center; padding-left: 10px"> <br/> <p class="text-center"><strong>According to official instructions you should act as follows:</strong></p> <ul style="text-align: left;float: left;padding-left: 10%;"> <li> Contact your general practitioner who will arrange your further examination and treatment.* </li> <li>Remain in quarantine for two weeks.  </li> <li>The COVID19 Emergency Response Line (1420) should be called only in case of emergency.</li> <li>Inform those you have been in close contact with to monitor their health, stay home if possible, and to fill out this self-assessment questionnaire for further instructions if necessary </li> </ul> </p>',
+  suggest: 'CASE4',
+  text:
+    'Your travel history and symptoms are indicative of a respiratory virus, which may be COVID-19. |   |  According to official instructions you should act as follows: |  Contact your general practitioner who will arrange your further examination and treatment.* |  Remain in quarantine for two weeks. |  The COVID19 Emergency Response Line (1420) should be called only in case of emergency. |  Inform those you have been in close contact with to monitor their health, stay home if possible, and to fill out this self-assessment questionnaire for further instructions if necessary',
+  textArray: {
+    instructions: [
+      'Contact your general practitioner who will arrange your further examination and treatment.*',
+      'Remain in quarantine for two weeks.',
+      'The COVID19 Emergency Response Line (1420) should be called only in case of emergency.',
+      'Inform those you have been in close contact with to monitor their health, stay home if possible, and to fill out this self-assessment questionnaire for further instructions if necessary',
+    ],
+    prompt: 'According to official instructions you should act as follows:',
+    result: '',
+    title:
+      'Your travel history and symptoms are indicative of a respiratory virus, which may be COVID-19.',
+  },
+};
