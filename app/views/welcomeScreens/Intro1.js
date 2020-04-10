@@ -31,6 +31,11 @@ const Intro1 = props => {
         <Image source={logo2} style={styles.infoCardLogo} />
         <Image source={logo3} style={styles.infoCardLogo} />
       </View>
+      <View style={styles.rowContainer}>
+        <Image source={logo1} style={styles.infoCardLogo} />
+        <Image source={logo2} style={styles.infoCardLogo} />
+        <Image source={logo3} style={styles.infoCardLogo} />
+      </View>
       <View style={styles.navigationDotsView}>
         <View style={styles.activeIndicator} />
         <TouchableOpacity

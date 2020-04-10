@@ -8,24 +8,24 @@ import {
   Dimensions,
   TouchableOpacity,
   BackHandler,
-  ScrollView,
-  Linking,
 } from 'react-native';
 
 import colors from '../../app/constants/colors';
 import backArrow from '../../app/assets/images/backArrow.png';
 import languages from '../../app/locales/languages';
+import cyprusGovLogo from '../../app/assets/images/cyprus-gov-logo.png';
+import europeanUnionLogo from '../../app/assets/images/european-union-logo.png';
 
-export const Privacy = ({ navigation }) => {
+const width = Dimensions.get('window').width;
+
+export const Acknowledgements = ({ navigation }) => {
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackPress);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
   }, []);
 
-  const backToMain = () => {
-    navigation.navigate('LocationTrackingScreen', {});
-  };
+  const backToMain = () => navigation.navigate('LocationTrackingScreen', {});
 
   const handleBackPress = () => {
     navigation.navigate('LocationTrackingScreen', {});
@@ -40,13 +40,24 @@ export const Privacy = ({ navigation }) => {
           onPress={backToMain}>
           <Image style={styles.backArrow} source={backArrow} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>{languages.t('label.privacy')}</Text>
+        <Text style={styles.headerTitle}>
+          {languages.t('label.Acknowledgements')}
+        </Text>
       </View>
 
       <View style={styles.main}>
-        <Text style={styles.sectionDescription}>
-          {languages.t('label.privacy_placeholder')}
-        </Text>
+        <View style={styles.acknowledgement}>
+          <Image source={europeanUnionLogo} style={styles.logo} />
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.europeanUnionFundingAcknowledgement')}
+          </Text>
+        </View>
+        <View style={styles.acknowledgement}>
+          <Image source={cyprusGovLogo} style={styles.logo} />
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.cyprusGovFundingAcknowledgement')}
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -63,9 +74,22 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     textAlignVertical: 'top',
-    padding: 0,
+    padding: 10,
     width: '96%',
     alignSelf: 'center',
+  },
+  acknowledgement: {
+    flex: 1,
+    flexDirection: 'column',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    maxHeight: 250,
+  },
+  logo: {
+    width: 150,
+    height: 100,
+    marginRight: 10,
   },
   headerTitle: {
     fontSize: 24,
@@ -92,6 +116,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     marginTop: 12,
+    textAlign: 'justify',
     fontFamily: 'OpenSans-Regular',
   },
 });
