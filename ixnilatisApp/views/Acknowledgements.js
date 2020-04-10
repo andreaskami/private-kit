@@ -80,14 +80,15 @@ const styles = StyleSheet.create({
   },
   acknowledgement: {
     flex: 1,
-    flexDirection: 'row',
-    width: width - 100,
+    flexDirection: 'column',
+    width: '100%',
     alignItems: 'center',
-    maxHeight: 150,
+    justifyContent: 'center',
+    maxHeight: 250,
   },
   logo: {
-    width: 50,
-    height: 40,
+    width: 150,
+    height: 100,
     marginRight: 10,
   },
   headerTitle: {
