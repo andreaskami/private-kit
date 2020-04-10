@@ -9,21 +9,16 @@
     "format:all": "prettier --write ./app/**/*.js",
     "test": "jest test"
   },
+  "rnpm": {
+    "assets": ["app/assets/fonts"]
+  },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "git add --force"
-    ]
+    "*.js": ["prettier --write", "git add --force"]
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "rnpm": {
-    "assets": [
-      "app/assets/fonts"
-    ]
   },
   "dependencies": {
     "@bam.tech/react-native-component-map-clustering": "^1.1.1",
@@ -84,8 +79,6 @@
   },
   "jest": {
     "preset": "react-native",
-    "setupFiles": [
-      "./jestSetupFile.js"
-    ]
+    "setupFiles": ["./jestSetupFile.js"]
   }
 }
