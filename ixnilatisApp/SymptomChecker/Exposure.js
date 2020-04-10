@@ -17,15 +17,15 @@ export default function Exposure(props) {
 
       <View style={styles.switchContainer}>
         <Text style={{ fontSize: 20 }}>
-          {props.data.hasTravelled
+          {props.data.hasBeenExposed
             ? languages.t('label.yes')
             : languages.t('label.no')}
         </Text>
         <Switch
-          value={props.data.hasTravelled}
+          value={props.data.hasBeenExposed}
           onValueChange={() =>
             props.dispatch({
-              hasTravelled: !props.data.hasTravelled,
+              hasBeenExposed: !props.data.hasBeenExposed,
             })
           }
         />

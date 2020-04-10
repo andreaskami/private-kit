@@ -27,6 +27,7 @@ export default function Form(props) {
     hasTravelled: false,
     travelCountry: '',
     symptoms: new Set([]),
+    hasBeenExposed: false,
   });
 
   function nextStep() {

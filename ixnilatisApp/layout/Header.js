@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import backArrow from '../../app/assets/images/backArrow.png';
 import useBackpress from './useBackpress';
 
@@ -13,6 +20,7 @@ export default function Header(props) {
         <Image style={styles.backArrow} source={backArrow} />
       </TouchableOpacity>
       <Text style={styles.headerTitle}>{props.title}</Text>
+      {props.isLoading && <ActivityIndicator style={styles.loader} />}
     </View>
   );
 }
@@ -38,5 +46,8 @@ const styles = StyleSheet.create({
   backArrow: {
     height: 18,
     width: 18.48,
+  },
+  loader: {
+    marginLeft: 10,
   },
 });
