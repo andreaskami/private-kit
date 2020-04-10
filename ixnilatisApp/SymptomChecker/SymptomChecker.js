@@ -35,7 +35,7 @@ export default function SymptomChecker(props) {
       zipcode: data.postalCode,
       country: data.country,
       flight_country: data.travelCountry,
-      vulnerable_group: data.hasMedicalCondition,
+      vulnerable_group: data.hasMedicalCondition ? 1 : 0,
       malaise: data.symptoms.has('malaise') ? 1 : 0,
       fever: data.symptoms.has('fever') ? 1 : 0,
       cough: data.symptoms.has('cough') ? 1 : 0,
