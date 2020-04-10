@@ -26,6 +26,10 @@ import news from './../assets/images/newspaper.png';
 import kebabIcon from './../assets/images/kebabIcon.png';
 import pkLogo from './../assets/images/PKLogo.png';
 
+import logo1 from './../assets/images/logo1.png';
+import logo2 from './../assets/images/logo2.png';
+import logo3 from './../assets/images/logo3.png';
+
 import { GetStoreData, SetStoreData } from '../helpers/General';
 import languages from './../locales/languages';
 
@@ -283,6 +287,11 @@ class LocationTracking extends Component {
           </View>
 
           <View style={styles.footer}>
+            <View style={styles.rowContainer}>
+              <Image source={logo1} style={styles.infoCardLogo} />
+              <Image source={logo2} style={styles.infoCardLogo} />
+              <Image source={logo3} style={styles.infoCardLogo} />
+            </View>
             <Text
               style={[
                 styles.sectionDescription,
@@ -292,7 +301,7 @@ class LocationTracking extends Component {
             </Text>
             <Text
               style={[
-                styles.sectionDescription,
+                styles.sectionDescriptionLow,
                 { color: 'blue', textAlign: 'center', marginTop: 0 },
               ]}
               onPress={() =>
@@ -317,6 +326,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: colors.PRIMARY_TEXT,
     backgroundColor: colors.WHITE,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+  },
+  infoCardLogo: {
+    alignSelf: 'center',
+    marginTop: '10%',
+    flex: 1,
+    width: 75,
+    height: 50,
+    resizeMode: 'contain',
   },
   headerTitle: {
     textAlign: 'center',
@@ -356,13 +376,25 @@ const styles = StyleSheet.create({
   },
   sectionDescription: {
     fontSize: 12,
-    lineHeight: 24,
+    lineHeight: 15,
     fontFamily: 'OpenSans-Regular',
     marginLeft: 10,
     marginRight: 10,
+    marginTop: 10,
     //IX
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 2,
+  },
+  sectionDescriptionLow: {
+    fontSize: 12,
+    lineHeight: 15,
+    fontFamily: 'OpenSans-Regular',
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 0,
+    //IX
+    textAlign: 'center',
+    marginBottom: 5,
   },
   startLoggingButtonTouchable: {
     borderRadius: 12,
