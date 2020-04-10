@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,52 +14,41 @@ import colors from '../../app/constants/colors';
 import backArrow from '../../app/assets/images/backArrow.png';
 import languages from '../../app/locales/languages';
 
-const width = Dimensions.get('window').width;
+export const Privacy = ({ navigation }) => {
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+  }, []);
 
-class Privacy extends Component {
-  constructor(props) {
-    super(props);
-  }
+  const backToMain = () => {
+    navigation.navigate('LocationTrackingScreen', {});
+  };
 
-  backToMain() {
-    this.props.navigation.navigate('LocationTrackingScreen', {});
-  }
-
-  handleBackPress = () => {
-    this.props.navigation.navigate('LocationTrackingScreen', {});
+  const handleBackPress = () => {
+    navigation.navigate('LocationTrackingScreen', {});
     return true;
   };
 
-  componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-  }
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity
+          style={styles.backArrowTouchable}
+          onPress={backToMain}>
+          <Image style={styles.backArrow} source={backArrow} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>{languages.t('label.privacy')}</Text>
+      </View>
 
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-  }
-
-  render() {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity
-            style={styles.backArrowTouchable}
-            onPress={() => this.backToMain()}>
-            <Image style={styles.backArrow} source={backArrow} />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>{languages.t('label.privacy')}</Text>
-        </View>
-
-        <View style={styles.main}>
-          <Text style={styles.sectionDescription}>
-            {/* This screen is a placeholder for complete license content, or a link */}
-            {languages.t('label.privacy_placeholder')}
-          </Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-}
+      <View style={styles.main}>
+        <Text style={styles.sectionDescription}>
+          {languages.t('label.privacy_placeholder')}
+        </Text>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -104,5 +93,3 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans-Regular',
   },
 });
-
-export default Privacy;

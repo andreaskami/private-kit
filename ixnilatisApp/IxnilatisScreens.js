@@ -2,7 +2,7 @@ import React from 'react';
 import FormWork from './views/FormWork';
 import FormGeneralNew from './views/FormGeneralNew';
 import FormGeneralActive from './views/FormGeneralActive';
-import Privacy from './views/Privacy';
+import { Privacy } from './views/Privacy';
 import { Acknowledgements } from './views/Acknowledgements';
 
 export function getIxnilatisScreens(Stack) {
