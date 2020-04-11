@@ -2,8 +2,8 @@ import React from 'react';
 import FormWork from './views/FormWork';
 import FormGeneralNew from './views/FormGeneralNew';
 import FormGeneralActive from './views/FormGeneralActive';
-import Privacy from './views/Privacy';
 import { Acknowledgements } from './views/Acknowledgements';
+import { Privacy } from './views/Privacy';
 import SymptomChecker from './SymptomChecker/SymptomChecker';
 
 export function getIxnilatisScreens(Stack) {

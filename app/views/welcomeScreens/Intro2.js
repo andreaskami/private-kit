@@ -31,6 +31,8 @@ const Intro2 = props => {
           {languages.t('label.intro2_para2')}
         </Text>
         <View style={styles.rowContainer}>
+          <Image source={logo1} style={styles.infoCardLogo} />
+          <Image source={logo2} style={styles.infoCardLogo} />
           <Image source={logo3} style={styles.infoCardLogo} />
         </View>
       </View>
@@ -92,10 +94,10 @@ const styles = StyleSheet.create({
   },
   infoCardLogo: {
     alignSelf: 'center',
-    marginTop: '10%',
+    marginTop: '25%',
     flex: 1,
-    width: 85,
-    height: 60,
+    width: 65,
+    height: 40,
     resizeMode: 'contain',
   },
   rowContainer: {

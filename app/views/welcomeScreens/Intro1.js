@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   View,
+  SafeAreaView,
   Text,
   Dimensions,
   Image,
@@ -18,15 +19,22 @@ const width = Dimensions.get('window').width;
 
 const Intro1 = props => {
   return (
-    <View style={styles.mainContainer}>
+    <SafeAreaView style={styles.mainContainer}>
       <View style={styles.infoCard}>
         <Image source={welcome1} style={styles.infoCardImage} />
         <Text style={styles.infoCardBodyText}>
           {languages.t('label.intro1_para1')}
         </Text>
-        <View style={styles.rowContainer}>
-          <Image source={logo3} style={styles.infoCardLogo} />
-        </View>
+      </View>
+      <View style={styles.rowContainer}>
+        <Image source={logo1} style={styles.infoCardLogo} />
+        <Image source={logo2} style={styles.infoCardLogo} />
+        <Image source={logo3} style={styles.infoCardLogo} />
+      </View>
+      <View style={styles.rowContainer}>
+        <Image source={logo1} style={styles.infoCardLogo} />
+        <Image source={logo2} style={styles.infoCardLogo} />
+        <Image source={logo3} style={styles.infoCardLogo} />
       </View>
       <View style={styles.navigationDotsView}>
         <View style={styles.activeIndicator} />
@@ -43,11 +51,11 @@ const Intro1 = props => {
         onPress={() => props.swipe(1)}
         style={styles.primaryButtonTouchable}>
         <Text style={styles.primaryButtonText}>
-          {languages.t('label.next')}
+          {languages.t('label.start')}
         </Text>
       </TouchableOpacity>
       {/* <TouchableOpacity><Text style={{marginTop:12,fontFamily:'OpenSans-SemiBold',alignSelf:'center',color:'#665eff'}}>Skip this</Text></TouchableOpacity> */}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -59,27 +67,28 @@ const styles = StyleSheet.create({
   infoCard: {
     width: width * 0.7866,
     backgroundColor: '#3497fc',
-    height: '70%',
-    borderRadius: 12,
+    height: '60%',
+    borderRadius: 7,
     alignSelf: 'center',
     marginTop: '9%',
   },
   infoCardImage: {
     alignSelf: 'center',
-    width: width * 0.5,
-    height: width * 0.5,
-    marginTop: '16%',
+    width: width * 0.3,
+    height: width * 0.3,
+    marginTop: '5%',
   },
   infoCardLogo: {
     alignSelf: 'center',
-    marginTop: '5%',
+    marginTop: '1%',
     flex: 1,
-    width: 85,
-    height: 60,
+    width: 70,
+    height: 48,
     resizeMode: 'contain',
   },
   rowContainer: {
     flexDirection: 'row',
+    marginTop: '3%',
   },
   infoCardHeadText: {
     fontFamily: 'OpenSans-Bold',
@@ -97,7 +106,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     textAlign: 'center',
     color: '#ffffff',
-    maxWidth: '84%',
+    maxWidth: '90%',
     alignSelf: 'center',
     marginTop: 20,
   },

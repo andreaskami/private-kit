@@ -13,6 +13,8 @@ import {
 import colors from '../../app/constants/colors';
 import backArrow from '../../app/assets/images/backArrow.png';
 import languages from '../../app/locales/languages';
+import cyprusGovLogo from '../../app/assets/images/cyprus-gov-logo.png';
+import europeanUnionLogo from '../../app/assets/images/european-union-logo.png';
 
 const width = Dimensions.get('window').width;
 
@@ -44,10 +46,18 @@ export const Acknowledgements = ({ navigation }) => {
       </View>
 
       <View style={styles.main}>
-        <Text style={styles.sectionDescription}>
-          {/* This screen is a placeholder for complete license content, or a link */}
-          {languages.t('label.ack_placeholder')}
-        </Text>
+        <View style={styles.acknowledgement}>
+          <Image source={europeanUnionLogo} style={styles.logo} />
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.europeanUnionFundingAcknowledgement')}
+          </Text>
+        </View>
+        <View style={styles.acknowledgement}>
+          <Image source={cyprusGovLogo} style={styles.logo} />
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.cyprusGovFundingAcknowledgement')}
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -64,9 +74,22 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     textAlignVertical: 'top',
-    padding: 20,
+    padding: 10,
     width: '96%',
     alignSelf: 'center',
+  },
+  acknowledgement: {
+    flex: 1,
+    flexDirection: 'column',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    maxHeight: 250,
+  },
+  logo: {
+    width: 150,
+    height: 100,
+    marginRight: 10,
   },
   headerTitle: {
     fontSize: 24,
@@ -93,6 +116,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     marginTop: 12,
+    textAlign: 'justify',
     fontFamily: 'OpenSans-Regular',
   },
 });

@@ -77,10 +77,7 @@ function OverlapScreen() {
   const [region, setRegion] = useState({});
   const [markers, setMarkers] = useState([]);
   const [circles, setCircles] = useState([]);
-  const [showButton, setShowButton] = useState({
-    disabled: false,
-    text: languages.t('label.show_overlap'),
-  });
+
   const [initialRegion, setInitialRegion] = useState(INITIAL_REGION);
   const { navigate } = useNavigation();
   const mapView = useRef();
@@ -340,13 +337,6 @@ function OverlapScreen() {
         ))}
       </MapView>
       <View style={styles.main}>
-        <TouchableOpacity
-          style={styles.buttonTouchable}
-          onPress={downloadAndPlot}
-          disabled={showButton.disabled}>
-          {/* If no overlap found, change button text to say so. Temporary solution, replace with something more robust */}
-          <Text style={styles.buttonText}>{languages.t(showButton.text)}</Text>
-        </TouchableOpacity>
         <Text style={styles.sectionDescription}>
           {languages.t('label.overlap_para_1')}
         </Text>
@@ -395,7 +385,7 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
     flexDirection: 'column',
-    padding: 15,
+    padding: 10,
     width: '96%',
     alignSelf: 'center',
   },

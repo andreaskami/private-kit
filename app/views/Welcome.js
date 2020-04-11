@@ -62,7 +62,7 @@ class Welcome extends Component {
           <Text
             style={
               (styles.sectionDescription,
-              { textAlign: 'center', paddingTop: 15 })
+              { textAlign: 'center', paddingTop: 10 })
             }>
             {languages.t('label.url_info')}{' '}
           </Text>
@@ -71,9 +71,7 @@ class Welcome extends Component {
               (styles.sectionDescriptionLow,
               { color: 'blue', textAlign: 'center' })
             }
-            onPress={() =>
-              Linking.openURL('http://covid-19.rise.org.cy/index.html')
-            }>
+            onPress={() => Linking.openURL('http://covid-19.rise.org.cy/')}>
             {languages.t('label.private_kit_url')}
           </Text>
         </View>
@@ -129,7 +127,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 14,
     fontWeight: '400',
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -137,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 14,
     fontWeight: '400',
-    marginTop: 5,
+    marginTop: 2,
     marginLeft: 10,
     marginRight: 10,
   },
