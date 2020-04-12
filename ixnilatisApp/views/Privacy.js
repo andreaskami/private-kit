@@ -43,11 +43,11 @@ export const Privacy = ({ navigation }) => {
         <Text style={styles.headerTitle}>{languages.t('label.privacy')}</Text>
       </View>
 
-      <View style={styles.main}>
+      <ScrollView style={styles.main}>
         <Text style={styles.sectionDescription}>
           {languages.t('label.privacy_placeholder')}
         </Text>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
