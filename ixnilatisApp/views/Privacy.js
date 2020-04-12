@@ -47,6 +47,15 @@ export const Privacy = ({ navigation }) => {
         <Text style={styles.sectionDescription}>
           {languages.t('label.privacy_placeholder')}
         </Text>
+
+        <Text
+          style={[
+            styles.sectionDescription,
+            { color: 'blue', textAlign: 'center', marginTop: 0 },
+          ]}
+          onPress={() => Linking.openURL(languages.t('label.privacy_url'))}>
+          covid-19.rise.org.cy.privacy
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );
