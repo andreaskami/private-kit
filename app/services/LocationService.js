@@ -210,11 +210,11 @@ export default class LocationServices {
               languages.t('label.ACCESS3'),
               [
                 {
-                  text: languages.t('label.YES'),
+                  text: languages.t('label.yes'),
                   onPress: () => BackgroundGeolocation.showAppSettings(),
                 },
                 {
-                  text: languages.t('label.NO'),
+                  text: languages.t('label.no'),
                   onPress: () => console.log('No Pressed'),
                   style: 'cancel',
                 },
@@ -286,7 +286,7 @@ export default class LocationServices {
               languages.t('label.ACCESS3'),
               [
                 {
-                  text: languages.t('label.YES'),
+                  text: languages.t('label.yes'),
                   onPress: () => {
                     if (Platform.OS === 'android') {
                       // showLocationSettings() only works for android
@@ -297,7 +297,7 @@ export default class LocationServices {
                   },
                 },
                 {
-                  text: languages.t('label.NO'),
+                  text: languages.t('label.no'),
                   onPress: () => console.log('No Pressed'),
                   style: 'cancel',
                 },
@@ -314,11 +314,11 @@ export default class LocationServices {
               languages.t('label.ACCESS3'),
               [
                 {
-                  text: languages.t('label.YES'),
+                  text: languages.t('label.yes'),
                   onPress: () => BackgroundGeolocation.showAppSettings(),
                 },
                 {
-                  text: languages.t('label.NO'),
+                  text: languages.t('label.no'),
                   onPress: () => console.log('No Pressed'),
                   style: 'cancel',
                 },

@@ -4,6 +4,7 @@ import FormGeneralNew from './views/FormGeneralNew';
 import FormGeneralActive from './views/FormGeneralActive';
 import { Acknowledgements } from './views/Acknowledgements';
 import { Privacy } from './views/Privacy';
+import SymptomChecker from './SymptomChecker/SymptomChecker';
 
 export function getIxnilatisScreens(Stack) {
   return [
@@ -35,6 +36,12 @@ export function getIxnilatisScreens(Stack) {
       key='AckScreen'
       name='AckScreen'
       component={Acknowledgements}
+      options={{ headerShown: false }}
+    />,
+    <Stack.Screen
+      key='SymptomCheckerScreen'
+      name='SymptomCheckerScreen'
+      component={SymptomChecker}
       options={{ headerShown: false }}
     />,
   ];
