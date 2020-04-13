@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function Results(props) {
   return (
     <View style={styles.container}>
-      <View style={styles.contentContainer}>
+      <ScrollView style={styles.contentContainer}>
         <Text style={styles.header}>{props.results.title}</Text>
 
         <Text style={styles.result}>{props.results.result}</Text>
@@ -19,7 +19,7 @@ export default function Results(props) {
             ))}
           </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }

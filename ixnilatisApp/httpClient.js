@@ -6,7 +6,9 @@ export function getLatestVersion(lang) {
   );
 }
 export function checkSymptoms(request, lang) {
-  const langSafe = new Set(['el', 'en']).has(lang) ? lang : 'en';
+  let langSafe = new Set(['el', 'en']).has(lang) ? lang : 'en';
+  // Endpoint accepts gr, not el
+  langSafe = langSafe == 'el' ? 'gr' : langSafe;
   return fetchSafe(
     `http://coronatest.ucy.ac.cy/api/records/${langSafe}/store`,
     {
