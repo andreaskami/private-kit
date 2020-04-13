@@ -10,7 +10,7 @@ export default function Demographics(props) {
       <Text style={styles.header}>{languages.t('label.demographics')}</Text>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>{languages.t('label.age')}</Text>
+        <Text style={styles.label}>{languages.t('label.age')} *</Text>
         <TextInput
           value={props.data.age}
           onChangeText={age => props.dispatch({ age })}
@@ -36,7 +36,7 @@ export default function Demographics(props) {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>{languages.t('label.postal_code')}</Text>
+        <Text style={styles.label}>{languages.t('label.postal_code')} *</Text>
         <TextInput
           value={props.data.postalCode}
           onChangeText={postalCode => props.dispatch({ postalCode })}

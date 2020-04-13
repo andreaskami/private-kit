@@ -49,7 +49,7 @@ export default function Travel(props) {
 
       <PreviousNextButtons
         nextCallback={props.nextStep}
-        nextDisabled={false}
+        nextDisabled={props.data.hasTravelled && !props.data.travelCountry}
         previousCallback={props.previousStep}
         previousDisabled={false}
       />

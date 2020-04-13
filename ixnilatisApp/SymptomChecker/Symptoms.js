@@ -17,7 +17,7 @@ export default function Symptoms(props) {
   }
   return (
     <View>
-      <Text style={styles.header}>{languages.t('label.symptoms')}</Text>
+      <Text style={styles.header}>{languages.t('label.symptoms')} *</Text>
 
       <Text style={styles.label}>{languages.t('label.symptoms_question')}</Text>
       <Symptom
