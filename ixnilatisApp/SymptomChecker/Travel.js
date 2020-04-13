@@ -2,6 +2,7 @@ import React from 'react';
 import { Picker, StyleSheet, Switch, Text, View } from 'react-native';
 import languages from '../../app/locales/languages';
 import PreviousNextButtons from './PreviousNextButtons';
+import countries from '../countries';
 
 export default function Travel(props) {
   return (
@@ -35,8 +36,13 @@ export default function Travel(props) {
             selectedValue={props.data.travelCountry}
             onValueChange={travelCountry => props.dispatch({ travelCountry })}>
             <Picker.Item label='' value='' />
-            <Picker.Item label='Cyprus' value='cy' />
-            <Picker.Item label='Greece' value='gr' />
+            {countries.map((country, index) => (
+              <Picker.Item
+                key={index}
+                label={`${country.name} (${country.nativeName})`}
+                value={country.alpha2Code}
+              />
+            ))}
           </Picker>
         </View>
       )}

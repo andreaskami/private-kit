@@ -2,6 +2,7 @@ import React from 'react';
 import { Picker, StyleSheet, Text, TextInput, View } from 'react-native';
 import languages from '../../app/locales/languages';
 import PreviousNextButtons from './PreviousNextButtons';
+import countries from '../countries';
 
 export default function Demographics(props) {
   return (
@@ -51,8 +52,13 @@ export default function Demographics(props) {
           selectedValue={props.data.country}
           onValueChange={country => props.dispatch({ country })}>
           <Picker.Item label='' value='' />
-          <Picker.Item label='Cyprus' value='cy' />
-          <Picker.Item label='Greece' value='gr' />
+          {countries.map((country, index) => (
+            <Picker.Item
+              key={index}
+              label={`${country.name} (${country.nativeName})`}
+              value={country.alpha2Code}
+            />
+          ))}
         </Picker>
       </View>
 
