@@ -74,7 +74,7 @@ export default function SymptomChecker(props) {
         isLoading={isLoading}
       />
       {results === null ? (
-        <Form onSubmit={submitForm} />
+        <Form onSubmit={submitForm} isLoading={isLoading} />
       ) : (
         <Results results={results.textArray} />
       )}

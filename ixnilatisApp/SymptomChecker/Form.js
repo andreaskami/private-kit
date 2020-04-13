@@ -72,6 +72,7 @@ export default function Form(props) {
             previousStep={previousStep}
             data={data}
             dispatch={dispatch}
+            isLoading={props.isLoading}
           />
         )}
       </View>

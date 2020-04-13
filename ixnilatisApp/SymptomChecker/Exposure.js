@@ -33,9 +33,9 @@ export default function Exposure(props) {
 
       <PreviousNextButtons
         nextCallback={props.nextStep}
-        nextDisabled={props.data.symptoms.size == 0}
+        nextDisabled={props.isLoading}
         previousCallback={props.previousStep}
-        previousDisabled={false}
+        previousDisabled={props.isLoading}
       />
 
       {showModal && (
