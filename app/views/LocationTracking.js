@@ -331,8 +331,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: '10%',
     flex: 1,
-    width: 75,
-    height: 50,
+    width: 105,
+    height: 80,
     resizeMode: 'contain',
   },
   headerTitle: {
