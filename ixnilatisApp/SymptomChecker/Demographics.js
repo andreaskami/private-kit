@@ -56,7 +56,7 @@ export default function Demographics(props) {
             <Picker.Item
               key={index}
               label={`${country.name} (${country.nativeName})`}
-              value={country.alpha2Code}
+              value={`${country.name}-${country.alpha2Code}`}
             />
           ))}
         </Picker>
