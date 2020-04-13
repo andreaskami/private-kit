@@ -34,6 +34,7 @@ import { GetStoreData, SetStoreData } from '../helpers/General';
 import languages from './../locales/languages';
 
 import Version from '../../ixnilatisApp/views/Version';
+import CheckerButton from '../../ixnilatisApp/views/CheckerButton';
 
 const width = Dimensions.get('window').width;
 
@@ -238,6 +239,8 @@ class LocationTracking extends Component {
               </Text>
             )}
           </View>
+
+          <CheckerButton navigation={this.props.navigation} />
 
           <View style={styles.actionButtonsView}>
             <TouchableOpacity
