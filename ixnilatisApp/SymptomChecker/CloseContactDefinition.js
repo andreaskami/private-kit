@@ -7,9 +7,11 @@ export default function Exposure() {
   const [showModal, setShowModal] = React.useState(false);
   return (
     <View>
-      <Text style={styles.button} onPress={() => setShowModal(show => !show)}>
-        {languages.t('label.close_contact_definition')}
-      </Text>
+      <View style={{ alignItems: 'center' }}>
+        <Text style={styles.button} onPress={() => setShowModal(show => !show)}>
+          {languages.t('label.close_contact_definition')}
+        </Text>
+      </View>
 
       {showModal && (
         <Modal transparent>
