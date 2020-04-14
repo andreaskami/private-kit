@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import WebView from 'react-native-webview';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView from 'react-native-map-clustering';
 import RNFetchBlob from 'rn-fetch-blob';
 import Share from 'react-native-share';
 import colors from '../constants/colors';
@@ -48,8 +49,8 @@ const no_overlap_button_text = languages.t(
 const INITIAL_REGION = {
   latitude: 35.185,
   longitude: 33.382,
-  latitudeDelta: 10,
-  longitudeDelta: 10,
+  latitudeDelta: 1,
+  longitudeDelta: 1,
 };
 
 function distance(lat1, lon1, lat2, lon2) {
