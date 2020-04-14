@@ -91,7 +91,7 @@
   "close":"Close",
   "travel":"Travelling",
   "travel_question":"Have you travelled abroad within the last 14 days?",
-  "travel_question_country":"Please choose the country you have flown to:",
+  "travel_question_country":"Please choose the country you have travelled from:",
   "medical":"Medical",
   "medical_condition_question":"Do you have any of the following chronic conditions?",
   "medical_condition_cardiovascular":" Cardiovascular disease (including hypertension) ",
