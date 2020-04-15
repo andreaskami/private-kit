@@ -40,6 +40,8 @@ export const IxnilatisVersionChecker = ({ children }) => {
         setDownloadNewVersion({
           message,
           url,
+          version: getVersion(),
+          remoteVersion: version,
         });
       }
     } catch (err) {
@@ -57,6 +59,8 @@ export const IxnilatisVersionChecker = ({ children }) => {
             onPress={() => Linking.openURL(downloadNewVersion.url)}>
             {downloadNewVersion.url}
           </Text>
+          {/* <Text>installed: {downloadNewVersion.version}</Text>
+          <Text>remote: {downloadNewVersion.remoteVersion}</Text> */}
         </SafeAreaView>
       )}
       {!downloadNewVersion && children}
