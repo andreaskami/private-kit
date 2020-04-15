@@ -1,5 +1,10 @@
 import AsyncStorage from '@react-native-community/async-storage';
-// import _ from 'lodash';
+
+if (__DEV__) {
+  global.clearAsyncStorage = () => {
+    AsyncStorage.clear().then(() => console.log('Cleared'));
+  };
+}
 
 /**
  * Get Data from Store
