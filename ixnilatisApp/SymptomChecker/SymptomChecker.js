@@ -33,8 +33,8 @@ export default function SymptomChecker(props) {
       age: data.age,
       gender: data.gender,
       zipcode: data.postalCode,
-      country: data.country,
-      flight_country: data.travelCountry,
+      flight_country: data.travelCountry.name,
+      flight_country_iso: data.travelCountry.alpha2Code,
       vulnerable_group: data.hasMedicalCondition ? 1 : 0,
       malaise: data.symptoms.has('malaise') ? 1 : 0,
       fever: data.symptoms.has('fever') ? 1 : 0,
@@ -51,6 +51,7 @@ export default function SymptomChecker(props) {
       chest_pain: data.symptoms.has('chest_pain') ? 1 : 0,
       nothing: data.symptoms.has('none_of_the_above') ? 1 : 0,
     };
+    console.log(request);
     setLoading(true);
     const languages = await getLanguages();
     const userLang = languages[0].split('-')[0];

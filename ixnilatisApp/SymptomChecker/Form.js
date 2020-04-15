@@ -22,10 +22,9 @@ export default function Form(props) {
     age: '',
     gender: '',
     postalCode: '',
-    country: '',
     hasMedicalCondition: false,
     hasTravelled: false,
-    travelCountry: '',
+    travelCountry: {},
     symptoms: new Set([]),
     hasBeenExposed: false,
   });

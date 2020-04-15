@@ -40,7 +40,7 @@ export default function Travel(props) {
               <Picker.Item
                 key={index}
                 label={`${country.name} (${country.nativeName})`}
-                value={`${country.name}-${country.alpha2Code}`}
+                value={country}
               />
             ))}
           </Picker>

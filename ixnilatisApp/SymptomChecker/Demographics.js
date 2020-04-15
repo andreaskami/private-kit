@@ -45,23 +45,6 @@ export default function Demographics(props) {
         />
       </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>{languages.t('label.country')}</Text>
-        <Picker
-          style={styles.input}
-          selectedValue={props.data.country}
-          onValueChange={country => props.dispatch({ country })}>
-          <Picker.Item label='' value='' />
-          {countries.map((country, index) => (
-            <Picker.Item
-              key={index}
-              label={`${country.name} (${country.nativeName})`}
-              value={`${country.name}-${country.alpha2Code}`}
-            />
-          ))}
-        </Picker>
-      </View>
-
       <PreviousNextButtons
         nextCallback={props.nextStep}
         nextDisabled={props.data.age === '' || props.data.postalCode === ''}
@@ -80,6 +63,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: 20,
+    marginBottom: 10,
     paddingLeft: 10,
     paddingRight: 10,
   },
