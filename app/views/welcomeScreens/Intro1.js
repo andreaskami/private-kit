@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   View,
+  ScrollView,
   SafeAreaView,
   Text,
   Dimensions,
@@ -20,17 +21,19 @@ const width = Dimensions.get('window').width;
 const Intro1 = props => {
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <View style={styles.infoCard}>
+      <ScrollView style={styles.infoCard}>
         <Image source={welcome1} style={styles.infoCardImage} />
         <Text style={styles.infoCardBodyText}>
           {languages.t('label.intro1_para1')}
         </Text>
-      </View>
-      <View style={styles.rowContainer}>
-        <Image source={logo1} style={styles.infoCardLogo} />
-        <Image source={logo2} style={styles.infoCardLogo} />
-        <Image source={logo3} style={styles.infoCardLogo} />
-      </View>
+
+        <View style={styles.rowContainer}>
+          <Image source={logo1} style={styles.infoCardLogo} />
+          <Image source={logo2} style={styles.infoCardLogo} />
+          <Image source={logo3} style={styles.infoCardLogo} />
+        </View>
+      </ScrollView>
+
       <View style={styles.navigationDotsView}>
         <View style={styles.activeIndicator} />
         <TouchableOpacity
