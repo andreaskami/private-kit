@@ -49,8 +49,8 @@ const no_overlap_button_text = languages.t(
 const INITIAL_REGION = {
   latitude: 35.185,
   longitude: 33.382,
-  latitudeDelta: 1,
-  longitudeDelta: 1,
+  latitudeDelta: 0.01,
+  longitudeDelta: 0.01,
 };
 
 function distance(lat1, lon1, lat2, lon2) {
