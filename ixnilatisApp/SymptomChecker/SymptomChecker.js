@@ -33,8 +33,10 @@ export default function SymptomChecker(props) {
       age: data.age,
       gender: data.gender,
       zipcode: data.postalCode,
-      flight_country: data.travelCountry.name,
-      flight_country_iso: data.travelCountry.alpha2Code,
+      flight_country: data.hasTravelled ? data.travelCountry.name : '',
+      flight_country_iso: data.hasTravelled
+        ? data.travelCountry.alpha2Code
+        : '',
       vulnerable_group: data.hasMedicalCondition ? 1 : 0,
       malaise: data.symptoms.has('malaise') ? 1 : 0,
       fever: data.symptoms.has('fever') ? 1 : 0,
@@ -50,6 +52,7 @@ export default function SymptomChecker(props) {
       covid_19_contact: data.hasBeenExposed ? 1 : 0,
       chest_pain: data.symptoms.has('chest_pain') ? 1 : 0,
       nothing: data.symptoms.has('none_of_the_above') ? 1 : 0,
+      test: data.isReal ? 0 : 1,
     };
     console.log(request);
     setLoading(true);

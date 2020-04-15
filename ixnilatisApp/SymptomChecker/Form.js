@@ -6,8 +6,16 @@ import Medical from './Medical';
 import Travel from './Travel';
 import Symptoms from './Symptoms';
 import Exposure from './Exposure';
+import Confirmation from './Confirmation';
 
-const steps = ['demographics', 'medical', 'travel', 'symptoms', 'exposure'];
+const steps = [
+  'demographics',
+  'medical',
+  'travel',
+  'symptoms',
+  'exposure',
+  'confirmation',
+];
 
 function formReducer(state, action) {
   return {
@@ -27,6 +35,7 @@ export default function Form(props) {
     travelCountry: {},
     symptoms: new Set([]),
     hasBeenExposed: false,
+    isReal: false,
   });
 
   function nextStep() {
@@ -67,6 +76,14 @@ export default function Form(props) {
         )}
         {steps[currentStep] == 'exposure' && (
           <Exposure
+            nextStep={nextStep}
+            previousStep={previousStep}
+            data={data}
+            dispatch={dispatch}
+          />
+        )}
+        {steps[currentStep] == 'confirmation' && (
+          <Confirmation
             nextStep={() => props.onSubmit(data)}
             previousStep={previousStep}
             data={data}
