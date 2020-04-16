@@ -13,11 +13,9 @@ import Entry from './app/Entry';
 
 const App: () => React$Node = () => {
   return (
-    <IxnilatisVersionChecker>
-      <MenuProvider>
-        <Entry />
-      </MenuProvider>
-    </IxnilatisVersionChecker>
+    <MenuProvider>
+      <Entry />
+    </MenuProvider>
   );
 };
 
