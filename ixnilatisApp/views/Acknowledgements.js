@@ -15,6 +15,7 @@ import backArrow from '../../app/assets/images/backArrow.png';
 import languages from '../../app/locales/languages';
 import cyprusGovLogo from '../../app/assets/images/cyprus-gov-logo.png';
 import europeanUnionLogo from '../../app/assets/images/european-union-logo.png';
+import XMLogo from '../../app/assets/images/XMlogo.jpg';
 
 const width = Dimensions.get('window').width;
 
@@ -56,6 +57,12 @@ export const Acknowledgements = ({ navigation }) => {
           <Image source={cyprusGovLogo} style={styles.logo} />
           <Text style={styles.sectionDescription}>
             {languages.t('label.cyprusGovFundingAcknowledgement')}
+          </Text>
+        </View>
+        <View style={styles.acknowledgement}>
+          <Image source={XMLogo} style={styles.logo} />
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.xmFundingAcknowledgement')}
           </Text>
         </View>
       </View>
