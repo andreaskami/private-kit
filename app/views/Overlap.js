@@ -337,10 +337,12 @@ function OverlapScreen() {
       </View>
       <View
         style={{
-          flex: 1,
+          flex: 0,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
+          paddingTop: 10,
+          paddingBottom: 10,
         }}>
         <View
           style={{
@@ -433,12 +435,9 @@ function OverlapScreen() {
           {languages.t('label.overlap_para_1')}
         </Text>
       </View>
-      <View style={styles.footer}>
+      <View>
         <Text
-          style={[
-            styles.sectionFooter,
-            { textAlign: 'center', paddingTop: 15, color: 'blue' },
-          ]}
+          style={[styles.sectionFooter]}
           onPress={() => Linking.openURL(languages.t('private_kit_url'))}>
           {languages.t('label.nCoV2019_url_info')}{' '}
         </Text>
@@ -530,21 +529,14 @@ const styles = StyleSheet.create({
   sectionDescription: {
     fontSize: 16,
     lineHeight: 24,
-    marginTop: 12,
     fontFamily: 'OpenSans-Regular',
   },
   sectionFooter: {
     fontSize: 12,
     lineHeight: 24,
-    marginTop: 12,
     fontFamily: 'OpenSans-Regular',
-  },
-  footer: {
     textAlign: 'center',
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingBottom: 10,
+    color: 'blue',
   },
   menuOptionSelected: {
     backgroundColor: '#EFEFEF',
