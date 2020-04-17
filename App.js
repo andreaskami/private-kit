@@ -10,15 +10,15 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 import Entry from './app/Entry';
-import { IxnilatisVersionChecker } from './ixnilatisApp/IxnilatisVersionChecker';
+import { VersionChecker } from './ixnilatisApp/VersionChecker';
 
 const App: () => React$Node = () => {
   return (
-    <IxnilatisVersionChecker>
+    <VersionChecker>
       <MenuProvider>
         <Entry />
       </MenuProvider>
-    </IxnilatisVersionChecker>
+    </VersionChecker>
   );
 };
 

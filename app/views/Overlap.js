@@ -11,6 +11,13 @@ import {
   TouchableOpacity,
   BackHandler,
 } from 'react-native';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import moment from 'moment';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import WebView from 'react-native-webview';
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
@@ -49,8 +56,8 @@ const no_overlap_button_text = languages.t(
 const INITIAL_REGION = {
   latitude: 35.185,
   longitude: 33.382,
-  latitudeDelta: 1,
-  longitudeDelta: 1,
+  latitudeDelta: 0.01,
+  longitudeDelta: 0.01,
 };
 
 function distance(lat1, lon1, lat2, lon2) {
@@ -78,10 +85,41 @@ function OverlapScreen() {
   const [region, setRegion] = useState({});
   const [markers, setMarkers] = useState([]);
   const [circles, setCircles] = useState([]);
+  const [allLocations, setAllLocations] = useState([]);
+  const [showingLast, setShowingLast] = useState(14);
+  const [period, setPeriod] = useState('All day');
 
   const [initialRegion, setInitialRegion] = useState(INITIAL_REGION);
   const { navigate } = useNavigation();
   const mapView = useRef();
+
+  useEffect(() => {
+    const dateLast = moment().subtract(showingLast, 'd');
+
+    const filteredLocations = allLocations.filter(
+      marker =>
+        marker.time >= dateLast.unix() * 1000 && filterByPeriod(marker.time),
+    );
+
+    populateMarkers(filteredLocations);
+  }, [showingLast, period]);
+
+  const filterByPeriod = timestamp => {
+    const timestampHour = moment(timestamp).format('HH');
+
+    if (period === 'All day') return true;
+
+    let timestampPeriod;
+    if (timestampHour === 0 || timestampHour < 12) {
+      timestampPeriod = 'Morning';
+    } else if (timestampHour <= 19) {
+      timestampPeriod = 'Afternoon';
+    } else {
+      timestampPeriod = 'Night';
+    }
+
+    return timestampPeriod === period;
+  };
 
   async function getOverlap() {
     try {
@@ -90,41 +128,37 @@ function OverlapScreen() {
     }
   }
 
-  async function populateMarkers() {
-    GetStoreData('LOCATION_DATA').then(locationArrayString => {
-      var locationArray = JSON.parse(locationArrayString);
-      if (locationArray !== null) {
-        var markers = [];
-        var previousMarkers = {};
-        for (var i = 0; i < locationArray.length - 1; i += 1) {
-          const coord = locationArray[i];
-          const lat = coord['latitude'];
-          const long = coord['longitude'];
-          const key = String(lat) + '|' + String(long);
-          if (key in previousMarkers) {
-            previousMarkers[key] += 1;
-          } else {
-            previousMarkers[key] = 0;
-            const marker = {
-              coordinate: {
-                latitude: lat,
-                longitude: long,
-              },
-              key: i + 1,
-            };
-            markers.push(marker);
-          }
-        }
-
-        setMarkers(markers);
+  async function populateMarkers(locationArray) {
+    const markers = [];
+    const previousMarkers = {};
+    for (var i = 0; i < locationArray.length - 1; i += 1) {
+      const coord = locationArray[i];
+      const lat = coord.latitude;
+      const long = coord.longitude;
+      const key = String(lat) + '|' + String(long);
+      if (key in previousMarkers) {
+        previousMarkers[key] += 1;
+      } else {
+        previousMarkers[key] = 0;
+        const marker = {
+          coordinate: {
+            latitude: lat,
+            longitude: long,
+          },
+          key: i + 1,
+          time: coord.time,
+        };
+        markers.push(marker);
       }
-    });
+    }
+    setMarkers(markers);
   }
 
   async function getInitialState() {
     try {
       GetStoreData('LOCATION_DATA').then(locationArrayString => {
         const locationArray = JSON.parse(locationArrayString);
+
         if (locationArray !== null) {
           const { latitude, longitude } = locationArray.slice(-1)[0];
 
@@ -136,16 +170,8 @@ function OverlapScreen() {
             latitudeDelta: 0.010922,
             longitudeDelta: 0.020421,
           });
-          populateMarkers([
-            {
-              coordinate: {
-                latitude,
-                longitude,
-              },
-              key: 0,
-              color: '#f26964',
-            },
-          ]);
+          setAllLocations(locationArray);
+          populateMarkers(locationArray);
         }
       });
     } catch (error) {
@@ -283,7 +309,6 @@ function OverlapScreen() {
   useFocusEffect(
     React.useCallback(() => {
       getInitialState();
-      populateMarkers();
       return () => {};
     }, []),
   );
@@ -309,6 +334,74 @@ function OverlapScreen() {
         <Text style={styles.headerTitle}>
           {languages.t('label.overlap_title')}
         </Text>
+      </View>
+      <View
+        style={{
+          flex: 0,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingTop: 10,
+          paddingBottom: 10,
+        }}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text>Showing last</Text>
+          <Menu>
+            <MenuTrigger style={{ marginLeft: 14 }}>
+              <Text style={{ backgroundColor: '#EFEFEF', padding: 5 }}>
+                {showingLast} days
+              </Text>
+            </MenuTrigger>
+            <MenuOptions>
+              {[14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map(num => (
+                <MenuOption
+                  style={num === showingLast ? styles.menuOptionSelected : null}
+                  key={num}
+                  onSelect={() => setShowingLast(num)}>
+                  <Text style={styles.menuOptionText}>{num} days</Text>
+                </MenuOption>
+              ))}
+            </MenuOptions>
+          </Menu>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text>Period</Text>
+          <Menu>
+            <MenuTrigger style={{ marginLeft: 14 }}>
+              <Text style={{ backgroundColor: '#EFEFEF', padding: 5 }}>
+                {period}
+              </Text>
+            </MenuTrigger>
+            <MenuOptions>
+              {['All day', 'Morning', 'Afternoon', 'Night'].map(
+                selectedPeriod => (
+                  <MenuOption
+                    style={
+                      selectedPeriod === period
+                        ? styles.menuOptionSelected
+                        : null
+                    }
+                    key={selectedPeriod}
+                    onSelect={() => setPeriod(selectedPeriod)}>
+                    <Text style={styles.menuOptionText}>{selectedPeriod}</Text>
+                  </MenuOption>
+                ),
+              )}
+            </MenuOptions>
+          </Menu>
+        </View>
       </View>
       <MapView
         ref={mapView}
@@ -342,12 +435,9 @@ function OverlapScreen() {
           {languages.t('label.overlap_para_1')}
         </Text>
       </View>
-      <View style={styles.footer}>
+      <View>
         <Text
-          style={[
-            styles.sectionFooter,
-            { textAlign: 'center', paddingTop: 15, color: 'blue' },
-          ]}
+          style={[styles.sectionFooter]}
           onPress={() => Linking.openURL(languages.t('private_kit_url'))}>
           {languages.t('label.nCoV2019_url_info')}{' '}
         </Text>
@@ -378,15 +468,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     textAlignVertical: 'top',
-    // alignItems: 'center',
     padding: 15,
     width: '96%',
     alignSelf: 'center',
   },
   map: {
-    flex: 1,
-    flexDirection: 'column',
-    padding: 10,
+    height: '60%',
     width: '96%',
     alignSelf: 'center',
   },
@@ -442,124 +529,125 @@ const styles = StyleSheet.create({
   sectionDescription: {
     fontSize: 16,
     lineHeight: 24,
-    marginTop: 12,
     fontFamily: 'OpenSans-Regular',
   },
   sectionFooter: {
     fontSize: 12,
     lineHeight: 24,
-    marginTop: 12,
     fontFamily: 'OpenSans-Regular',
-  },
-  footer: {
     textAlign: 'center',
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingBottom: 10,
+    color: 'blue',
+  },
+  menuOptionSelected: {
+    backgroundColor: '#EFEFEF',
+  },
+  menuOptionText: {
+    fontFamily: 'OpenSans-Regular',
+    // fontSize: 14,
+    // padding: 10,
   },
 });
 
 const customMapStyles = [
-  {
-    featureType: 'all',
-    elementType: 'all',
-    stylers: [
-      {
-        saturation: '32',
-      },
-      {
-        lightness: '-3',
-      },
-      {
-        visibility: 'on',
-      },
-      {
-        weight: '1.18',
-      },
-    ],
-  },
-  {
-    featureType: 'administrative',
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'landscape',
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'landscape.man_made',
-    elementType: 'all',
-    stylers: [
-      {
-        saturation: '-70',
-      },
-      {
-        lightness: '14',
-      },
-    ],
-  },
-  {
-    featureType: 'poi',
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'road',
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'transit',
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'water',
-    elementType: 'all',
-    stylers: [
-      {
-        saturation: '100',
-      },
-      {
-        lightness: '-14',
-      },
-    ],
-  },
-  {
-    featureType: 'water',
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-      {
-        lightness: '12',
-      },
-    ],
-  },
+  // {
+  //   featureType: 'all',
+  //   elementType: 'all',
+  //   stylers: [
+  //     {
+  //       saturation: '32',
+  //     },
+  //     {
+  //       lightness: '-3',
+  //     },
+  //     {
+  //       visibility: 'on',
+  //     },
+  //     {
+  //       weight: '1.18',
+  //     },
+  //   ],
+  // },
+  // {
+  //   featureType: 'administrative',
+  //   elementType: 'labels',
+  //   stylers: [
+  //     {
+  //       visibility: 'off',
+  //     },
+  //   ],
+  // },
+  // {
+  //   featureType: 'landscape',
+  //   elementType: 'labels',
+  //   stylers: [
+  //     {
+  //       visibility: 'off',
+  //     },
+  //   ],
+  // },
+  // {
+  //   featureType: 'landscape.man_made',
+  //   elementType: 'all',
+  //   stylers: [
+  //     {
+  //       saturation: '-70',
+  //     },
+  //     {
+  //       lightness: '14',
+  //     },
+  //   ],
+  // },
+  // {
+  //   featureType: 'poi',
+  //   elementType: 'labels',
+  //   stylers: [
+  //     {
+  //       visibility: 'off',
+  //     },
+  //   ],
+  // },
+  // {
+  //   featureType: 'road',
+  //   elementType: 'labels',
+  //   stylers: [
+  //     {
+  //       visibility: 'off',
+  //     },
+  //   ],
+  // },
+  // {
+  //   featureType: 'transit',
+  //   elementType: 'labels',
+  //   stylers: [
+  //     {
+  //       visibility: 'off',
+  //     },
+  //   ],
+  // },
+  // {
+  //   featureType: 'water',
+  //   elementType: 'all',
+  //   stylers: [
+  //     {
+  //       saturation: '100',
+  //     },
+  //     {
+  //       lightness: '-14',
+  //     },
+  //   ],
+  // },
+  // {
+  //   featureType: 'water',
+  //   elementType: 'labels',
+  //   stylers: [
+  //     {
+  //       visibility: 'off',
+  //     },
+  //     {
+  //       lightness: '12',
+  //     },
+  //   ],
+  // },
 ];
 
 export default OverlapScreen;

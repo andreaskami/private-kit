@@ -333,9 +333,8 @@ const styles = StyleSheet.create({
   infoCardLogo: {
     alignSelf: 'center',
     marginTop: '10%',
-    flex: 1,
-    width: 105,
-    height: 80,
+    width: 100,
+    height: 50,
     resizeMode: 'contain',
   },
   headerTitle: {

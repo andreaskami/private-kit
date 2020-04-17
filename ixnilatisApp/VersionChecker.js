@@ -4,18 +4,21 @@ import {
   Linking,
   StyleSheet,
   Text,
+  Platform,
   SafeAreaView,
 } from 'react-native';
 import { getVersion } from 'react-native-device-info';
 import { getLanguages } from 'react-native-i18n';
 import { getLatestVersion } from './httpClient';
 
-export const IxnilatisVersionChecker = ({ children }) => {
+export const VersionChecker = ({ children }) => {
   const [downloadNewVersion, setDownloadNewVersion] = useState();
 
   useLayoutEffect(() => {
-    checkVersion();
-    AppState.addEventListener('change', checkVersion);
+    if (Platform.OS !== 'ios') {
+      checkVersion();
+      AppState.addEventListener('change', checkVersion);
+    }
 
     return () => AppState.removeEventListener('change', checkVersion);
   }, []);
