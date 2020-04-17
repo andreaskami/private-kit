@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [GMSServices provideAPIKey:@"AIzaSyDn_nQ3kBEzMEZAJLTxOgbsik3sxWbMYDg"];
+  [GMSServices provideAPIKey:@"AIzaSyBvg3dFKRpraYnnx6cv3dWBuAc7qTcQoYc"];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"PrivateKit"
