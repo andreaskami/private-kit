@@ -439,18 +439,20 @@ function OverlapScreen() {
           />
         ))}
       </MapView>
-      <View style={styles.main}>
-        <Text style={styles.sectionDescription}>
-          {languages.t('label.overlap_para_1')}
-        </Text>
-      </View>
-      <View>
-        <Text
-          style={[styles.sectionFooter]}
-          onPress={() => Linking.openURL(languages.t('private_kit_url'))}>
-          {languages.t('label.nCoV2019_url_info')}{' '}
-        </Text>
-      </View>
+      <ScrollView>
+        <View style={styles.main}>
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.overlap_para_1')}
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={[styles.sectionFooter]}
+            onPress={() => Linking.openURL(languages.t('private_kit_url'))}>
+            {languages.t('label.nCoV2019_url_info')}{' '}
+          </Text>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -474,17 +476,13 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   main: {
-    flex: 1,
-    flexDirection: 'column',
     textAlignVertical: 'top',
     padding: 15,
-    width: '96%',
-    alignSelf: 'center',
+    width: '100%',
   },
   map: {
     height: '60%',
-    width: '96%',
-    alignSelf: 'center',
+    width: '100%',
   },
   buttonTouchable: {
     borderRadius: 12,
