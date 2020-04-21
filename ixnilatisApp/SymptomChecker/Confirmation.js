@@ -8,11 +8,11 @@ export default function Confirmation(props) {
     <View>
       <Text style={styles.header}>{languages.t('label.confirmation')}</Text>
 
-      <Text style={styles.label}>
+      <Text style={styles.question}>
         {languages.t('label.confirmation_question')}
       </Text>
       <View style={styles.switchContainer}>
-        <Text style={{ fontSize: 20 }}>
+        <Text style={{ fontSize: 18, marginRight: 5 }}>
           {props.data.isReal
             ? languages.t('label.yes')
             : languages.t('label.no')}
@@ -27,7 +27,7 @@ export default function Confirmation(props) {
         />
       </View>
 
-      <Text style={styles.label}>
+      <Text style={[styles.question, { marginBottom: 30, color: 'red' }]}>
         {languages.t('label.confirmation_question2')}
       </Text>
 
@@ -47,17 +47,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 22,
   },
-  label: {
+  question: {
     marginTop: 10,
-    marginBottom: 20,
-    marginLeft: 10,
+    textAlign: 'center',
   },
   switchContainer: {
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
-    marginBottom: 50,
+    margin: 20,
   },
 });

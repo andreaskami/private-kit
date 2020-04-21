@@ -21,13 +21,27 @@ export default function Exposure() {
                 {languages.t('label.close_contact_definition')}
               </Text>
               <ScrollView>
-                <Text>{languages.t('label.close_contact_definition_1')}</Text>
-                <Text>{languages.t('label.close_contact_definition_2')}</Text>
-                <Text>{languages.t('label.close_contact_definition_3')}</Text>
-                <Text>{languages.t('label.close_contact_definition_4')}</Text>
-                <Text>{languages.t('label.close_contact_definition_5')}</Text>
-                <Text>{languages.t('label.close_contact_definition_6')}</Text>
-                <Text>{languages.t('label.close_contact_definition_7')}</Text>
+                <Text style={styles.definition}>
+                  1. {languages.t('label.close_contact_definition_1')}
+                </Text>
+                <Text style={styles.definition}>
+                  2. {languages.t('label.close_contact_definition_2')}
+                </Text>
+                <Text style={styles.definition}>
+                  3. {languages.t('label.close_contact_definition_3')}
+                </Text>
+                <Text style={styles.definition}>
+                  4. {languages.t('label.close_contact_definition_4')}
+                </Text>
+                <Text style={styles.definition}>
+                  5. {languages.t('label.close_contact_definition_5')}
+                </Text>
+                <Text style={styles.definition}>
+                  6. {languages.t('label.close_contact_definition_6')}
+                </Text>
+                <Text style={styles.definition}>
+                  7. {languages.t('label.close_contact_definition_7')}
+                </Text>
               </ScrollView>
               <Text
                 style={{
@@ -66,6 +80,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
+  },
+  definition: {
+    marginBottom: 5,
   },
   modalView: {
     margin: 20,
