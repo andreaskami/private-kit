@@ -86,7 +86,7 @@ function OverlapScreen() {
   const [markers, setMarkers] = useState([]);
   const [circles, setCircles] = useState([]);
   const [allLocations, setAllLocations] = useState([]);
-  const [showingLast, setShowingLast] = useState(14);
+  const [showingLast, setShowingLast] = useState(0);
   const [period, setPeriod] = useState('All day');
 
   const [initialRegion, setInitialRegion] = useState(INITIAL_REGION);
@@ -94,14 +94,21 @@ function OverlapScreen() {
   const mapView = useRef();
 
   useEffect(() => {
-    const dateLast = moment().subtract(showingLast, 'd');
+    if (showingLast === 0) {
+      populateMarkers(allLocations);
+    } else {
+      const date = moment()
+        .subtract(showingLast, 'd')
+        .format('D');
 
-    const filteredLocations = allLocations.filter(
-      marker =>
-        marker.time >= dateLast.unix() * 1000 && filterByPeriod(marker.time),
-    );
+      const filteredLocations = allLocations.filter(
+        marker =>
+          moment(marker.time).format('D') === date &&
+          filterByPeriod(marker.time),
+      );
 
-    populateMarkers(filteredLocations);
+      populateMarkers(filteredLocations);
+    }
   }, [showingLast, period]);
 
   const filterByPeriod = timestamp => {
@@ -351,20 +358,22 @@ function OverlapScreen() {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Text>Showing last</Text>
+          <Text>History</Text>
           <Menu>
             <MenuTrigger style={{ marginLeft: 14 }}>
               <Text style={{ backgroundColor: '#EFEFEF', padding: 5 }}>
-                {showingLast} days
+                {showingLast === 0 ? 'present' : `${showingLast} days ago`}
               </Text>
             </MenuTrigger>
             <MenuOptions>
-              {[14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map(num => (
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(num => (
                 <MenuOption
                   style={num === showingLast ? styles.menuOptionSelected : null}
                   key={num}
                   onSelect={() => setShowingLast(num)}>
-                  <Text style={styles.menuOptionText}>{num} days</Text>
+                  <Text style={styles.menuOptionText}>
+                    {num === 0 ? 'present' : `${num} days ago`}
+                  </Text>
                 </MenuOption>
               ))}
             </MenuOptions>
@@ -430,18 +439,20 @@ function OverlapScreen() {
           />
         ))}
       </MapView>
-      <View style={styles.main}>
-        <Text style={styles.sectionDescription}>
-          {languages.t('label.overlap_para_1')}
-        </Text>
-      </View>
-      <View>
-        <Text
-          style={[styles.sectionFooter]}
-          onPress={() => Linking.openURL(languages.t('private_kit_url'))}>
-          {languages.t('label.nCoV2019_url_info')}{' '}
-        </Text>
-      </View>
+      <ScrollView>
+        <View style={styles.main}>
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.overlap_para_1')}
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={[styles.sectionFooter]}
+            onPress={() => Linking.openURL(languages.t('private_kit_url'))}>
+            {languages.t('label.nCoV2019_url_info')}{' '}
+          </Text>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -465,17 +476,13 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   main: {
-    flex: 1,
-    flexDirection: 'column',
     textAlignVertical: 'top',
     padding: 15,
-    width: '96%',
-    alignSelf: 'center',
+    width: '100%',
   },
   map: {
     height: '60%',
-    width: '96%',
-    alignSelf: 'center',
+    width: '100%',
   },
   buttonTouchable: {
     borderRadius: 12,

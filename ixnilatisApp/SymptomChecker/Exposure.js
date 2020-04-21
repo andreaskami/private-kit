@@ -16,7 +16,7 @@ export default function Exposure(props) {
       <Text style={styles.label}>{languages.t('label.exposure_question')}</Text>
 
       <View style={styles.switchContainer}>
-        <Text style={{ fontSize: 20 }}>
+        <Text style={{ fontSize: 18, marginRight: 5 }}>
           {props.data.hasBeenExposed
             ? languages.t('label.yes')
             : languages.t('label.no')}
@@ -69,11 +69,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.RED,
   },
   switchContainer: {
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
-    marginBottom: 50,
+    margin: 20,
   },
 });

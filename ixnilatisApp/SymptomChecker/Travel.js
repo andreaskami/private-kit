@@ -5,13 +5,16 @@ import PreviousNextButtons from './PreviousNextButtons';
 import countries from '../countries';
 
 export default function Travel(props) {
+  console.log(props.data.travelCountry);
   return (
     <View>
       <Text style={styles.header}>{languages.t('label.travel')}</Text>
 
-      <Text style={styles.label}>{languages.t('label.travel_question')}</Text>
+      <Text style={styles.question}>
+        {languages.t('label.travel_question')}
+      </Text>
       <View style={styles.switchContainer}>
-        <Text style={{ fontSize: 20 }}>
+        <Text style={{ fontSize: 18, marginRight: 5 }}>
           {props.data.hasTravelled
             ? languages.t('label.yes')
             : languages.t('label.no')}
@@ -28,7 +31,7 @@ export default function Travel(props) {
 
       {props.data.hasTravelled && (
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>
+          <Text style={styles.question}>
             {languages.t('label.travel_question_country')}
           </Text>
           <Picker
@@ -66,15 +69,15 @@ const styles = StyleSheet.create({
   inputContainer: {
     paddingLeft: 10,
   },
-  label: {
+  question: {
     marginTop: 10,
+    textAlign: 'center',
   },
   switchContainer: {
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
-    marginBottom: 50,
+    margin: 20,
   },
 });

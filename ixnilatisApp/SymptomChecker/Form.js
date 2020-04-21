@@ -27,9 +27,9 @@ function formReducer(state, action) {
 export default function Form(props) {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [data, dispatch] = React.useReducer(formReducer, {
-    age: '',
-    gender: '',
-    postalCode: '',
+    age: null,
+    gender: null,
+    postalCode: null,
     hasMedicalCondition: false,
     hasTravelled: false,
     travelCountry: {},
@@ -47,10 +47,10 @@ export default function Form(props) {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        {steps[currentStep] == 'demographics' && (
+        {steps[currentStep] === 'demographics' && (
           <Demographics nextStep={nextStep} data={data} dispatch={dispatch} />
         )}
-        {steps[currentStep] == 'medical' && (
+        {steps[currentStep] === 'medical' && (
           <Medical
             nextStep={nextStep}
             previousStep={previousStep}
@@ -58,7 +58,7 @@ export default function Form(props) {
             dispatch={dispatch}
           />
         )}
-        {steps[currentStep] == 'travel' && (
+        {steps[currentStep] === 'travel' && (
           <Travel
             nextStep={nextStep}
             previousStep={previousStep}
@@ -66,7 +66,7 @@ export default function Form(props) {
             dispatch={dispatch}
           />
         )}
-        {steps[currentStep] == 'symptoms' && (
+        {steps[currentStep] === 'symptoms' && (
           <Symptoms
             nextStep={nextStep}
             previousStep={previousStep}
@@ -74,7 +74,7 @@ export default function Form(props) {
             dispatch={dispatch}
           />
         )}
-        {steps[currentStep] == 'exposure' && (
+        {steps[currentStep] === 'exposure' && (
           <Exposure
             nextStep={nextStep}
             previousStep={previousStep}
@@ -82,7 +82,7 @@ export default function Form(props) {
             dispatch={dispatch}
           />
         )}
-        {steps[currentStep] == 'confirmation' && (
+        {steps[currentStep] === 'confirmation' && (
           <Confirmation
             nextStep={() => props.onSubmit(data)}
             previousStep={previousStep}
