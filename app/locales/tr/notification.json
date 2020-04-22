@@ -1,0 +1,8 @@
+{
+    "notification_main_text": "Güne göre kesişme noktalarını kontrol et",
+    "notification_title": "Kesişme noktalarını analiz et",
+    "notification_data_not_available": "\n\nİndirilmiş konum tarihçen mevcut değil!\n\n",
+    "notification_warning_text": "Bu düğmeye basıp rastgele kesişme noktası elde edebilirsin.\nWARNING: Bunlar simüle edilmiş kesişme noktalardır. Gerçek değil",
+    "notification_random_data_button": "Rastgele veri elde etmek amacıyla bu düğmeye bas ",
+    "notifications":"Bildirimler"
+}

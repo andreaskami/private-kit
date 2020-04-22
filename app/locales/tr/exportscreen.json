@@ -1,0 +1,11 @@
+﻿{
+    "export_para_1":"Aşağıdaki Paylaş düğmesi aracılığıyla konum tarihçeni istediğin herhangi biriyle paylaşabilirsin. Düğmeyi tıkladığın zaman bu bilgiyi kiminle ve nasıl paylaşmak istediğin sana sorulacak",
+    "export_para_2":"Konum bilgisi basit bir zaman ve koordinat listesi olarak paylaşılır. Başka herhangi bir tanımlayıcı bilgi içermez ",
+    "share":"PAYLAŞ",
+    "data_hint":"Kaydedilmiş veride olan",
+    "data_covers":"Kayıtların kapsadığı toplam süre:",
+    "data_count":"Kaydedilmiş konum sayısı:",
+    "data_last_updated":"En son güncellemeden bu yana geçen süre:",
+    "no_data": "Veri mevcut değil",
+    "less_than_one_minute": "1 dakikadan daha az"
+}
