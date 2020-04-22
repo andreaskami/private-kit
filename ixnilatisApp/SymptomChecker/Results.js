@@ -7,13 +7,14 @@ export default function Results(props) {
       <ScrollView style={styles.contentContainer}>
         <Text style={styles.header}>{props.results.title}</Text>
 
-        <Text style={styles.result}>{props.results.result}</Text>
+        <Text style={styles.result}>{props.results.result.trim()}</Text>
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>{props.results.prompt}</Text>
           <View style={styles.inputContainer}>
             {props.results.instructions.map((instruction, index) => (
               <Text key={index} style={styles.condition}>
+                {`${index + 1}. `}
                 {instruction}
               </Text>
             ))}
@@ -29,25 +30,29 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
+    padding: 10,
   },
   contentContainer: {
-    height: '80%',
+    height: '100%',
   },
   header: {
     marginTop: 10,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: 20,
+    textDecorationLine: 'underline',
   },
   result: {
-    marginTop: 10,
+    marginTop: '10%',
+    marginBottom: '8%',
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'justify',
   },
   inputContainer: {
     marginTop: 20,
-    paddingLeft: 10,
-    paddingRight: 10,
+    padding: 10,
+    backgroundColor: '#EFEFEF',
   },
   label: {},
   condition: {
