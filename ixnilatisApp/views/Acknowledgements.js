@@ -7,6 +7,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
   BackHandler,
 } from 'react-native';
 
@@ -45,27 +46,28 @@ export const Acknowledgements = ({ navigation }) => {
           {languages.t('label.Acknowledgements')}
         </Text>
       </View>
-
-      <View style={styles.main}>
-        <View style={styles.acknowledgement}>
-          <Image source={europeanUnionLogo} style={styles.logo} />
-          <Text style={styles.sectionDescription}>
-            {languages.t('label.europeanUnionFundingAcknowledgement')}
-          </Text>
+      <ScrollView>
+        <View style={styles.main}>
+          <View style={styles.acknowledgement}>
+            <Image source={europeanUnionLogo} style={styles.logo} />
+            <Text style={styles.sectionDescription}>
+              {languages.t('label.europeanUnionFundingAcknowledgement')}
+            </Text>
+          </View>
+          <View style={styles.acknowledgement}>
+            <Image source={cyprusGovLogo} style={styles.logo} />
+            <Text style={styles.sectionDescription}>
+              {languages.t('label.cyprusGovFundingAcknowledgement')}
+            </Text>
+          </View>
+          <View style={styles.acknowledgement}>
+            <Image source={XMLogo} style={styles.logo} />
+            <Text style={styles.sectionDescription}>
+              {languages.t('label.xmFundingAcknowledgement')}
+            </Text>
+          </View>
         </View>
-        <View style={styles.acknowledgement}>
-          <Image source={cyprusGovLogo} style={styles.logo} />
-          <Text style={styles.sectionDescription}>
-            {languages.t('label.cyprusGovFundingAcknowledgement')}
-          </Text>
-        </View>
-        <View style={styles.acknowledgement}>
-          <Image source={XMLogo} style={styles.logo} />
-          <Text style={styles.sectionDescription}>
-            {languages.t('label.xmFundingAcknowledgement')}
-          </Text>
-        </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
