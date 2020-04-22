@@ -41,11 +41,11 @@ export default function Demographics(props) {
   }, [invalidAge, invalidPostalCode]);
 
   return (
-    <ScrollView keyboardShouldPersistTaps='handled'>
+    <ScrollView keyboardShouldPersistTaps='handled' style={styles.root}>
       <Text style={styles.header}>{languages.t('label.demographics')}</Text>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>{languages.t('label.age')} *</Text>
+        <Text>{languages.t('label.age')} *</Text>
         <TextInput
           value={age}
           onChangeText={age => props.dispatch({ age })}
@@ -58,7 +58,7 @@ export default function Demographics(props) {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>{languages.t('label.gender')}</Text>
+        <Text>{languages.t('label.gender')}</Text>
         <Picker
           selectedValue={props.data.gender}
           onValueChange={gender => props.dispatch({ gender })}
@@ -74,7 +74,7 @@ export default function Demographics(props) {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>{languages.t('label.postal_code')} *</Text>
+        <Text>{languages.t('label.postal_code')} *</Text>
         <TextInput
           value={postalCode}
           onChangeText={postalCode => props.dispatch({ postalCode })}
@@ -111,7 +111,8 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   input: {
-    borderWidth: 1,
+    borderWidth: 0.5,
+    borderRadius: 4,
+    color: '#000',
   },
-  label: {},
 });
