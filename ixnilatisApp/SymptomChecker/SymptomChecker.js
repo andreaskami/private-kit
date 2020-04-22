@@ -33,10 +33,10 @@ export default function SymptomChecker(props) {
       age: data.age,
       gender: data.gender,
       zipcode: data.postalCode,
-      flight_country: data.hasTravelled ? data.travelCountry.name : '',
-      flight_country_iso: data.hasTravelled
-        ? data.travelCountry.alpha2Code
-        : '',
+      country: 'Cyprus (CY)',
+      country_iso: 'CY',
+      flight_country: data.hasTravelled ? data.travelCountry : '',
+      flight_country_iso: data.hasTravelled ? data.travelCountry : '',
       vulnerable_group: data.hasMedicalCondition ? 1 : 0,
       malaise: data.symptoms.has('malaise') ? 1 : 0,
       fever: data.symptoms.has('fever') ? 1 : 0,

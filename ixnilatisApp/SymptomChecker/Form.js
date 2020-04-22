@@ -32,7 +32,7 @@ export default function Form(props) {
     postalCode: null,
     hasMedicalCondition: false,
     hasTravelled: false,
-    travelCountry: {},
+    travelCountry: null,
     symptoms: new Set([]),
     hasBeenExposed: false,
     isReal: false,
