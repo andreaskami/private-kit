@@ -10,7 +10,7 @@ import ExportScreen from './views/Export';
 import ImportScreen from './views/Import';
 import OverlapScreen from './views/Overlap';
 import LicencesScreen from './views/Licenses';
-import NotificationScreen from './views/Notification';
+import StatisticsScreen from './views/Statistics';
 import Slider from './views/welcomeScreens/Slider';
 import { GetStoreData } from './helpers/General';
 import { getIxnilatisScreens } from '../ixnilatisApp/IxnilatisScreens';
@@ -91,8 +91,8 @@ class Entry extends Component {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name='NotificationScreen'
-              component={NotificationScreen}
+              name='StatisticsScreen'
+              component={StatisticsScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen

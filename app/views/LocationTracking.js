@@ -116,10 +116,6 @@ class LocationTracking extends Component {
     this.props.navigation.navigate('LicensesScreen', {});
   }
 
-  notifications() {
-    this.props.navigation.navigate('NotificationScreen', {});
-  }
-
   privacy() {
     this.props.navigation.navigate('PrivacyScreen', {});
   }
@@ -128,8 +124,8 @@ class LocationTracking extends Component {
     this.props.navigation.navigate('AckScreen', {});
   }
 
-  notifications() {
-    this.props.navigation.navigate('NotificationScreen', {});
+  statistics() {
+    this.props.navigation.navigate('StatisticsScreen', {});
   }
 
   setOptOut = () => {
@@ -164,6 +160,12 @@ class LocationTracking extends Component {
             <MenuOptions>
               <MenuOption
                 onSelect={() => {
+                  this.statistics();
+                }}>
+                <Text style={styles.menuOptionText}>Statistics</Text>
+              </MenuOption>
+              <MenuOption
+                onSelect={() => {
                   this.licenses();
                 }}>
                 <Text style={styles.menuOptionText}>Licenses</Text>
@@ -179,12 +181,6 @@ class LocationTracking extends Component {
                   this.acknowledgement();
                 }}>
                 <Text style={styles.menuOptionText}>Acknowledgements</Text>
-              </MenuOption>
-              <MenuOption
-                onSelect={() => {
-                  this.notifications();
-                }}>
-                <Text style={styles.menuOptionText}>Notifications</Text>
               </MenuOption>
             </MenuOptions>
           </Menu>

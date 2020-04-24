@@ -5,6 +5,16 @@ export function getLatestVersion(lang) {
     {},
   );
 }
+export function getLatestStatistics() {
+  return fetch(
+    'https://api.airtable.com/v0/app64wWREXGzJWXNJ/Table%201?maxRecords=3&view=Grid%20view',
+    {
+      headers: new Headers({
+        Authorization: 'Bearer key8fwuOvrtxO9J7J',
+      }),
+    },
+  );
+}
 export function checkSymptoms(request, lang) {
   let langSafe = new Set(['el', 'en']).has(lang) ? lang : 'en';
   // Endpoint accepts gr, not el

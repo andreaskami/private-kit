@@ -6,6 +6,7 @@ import licensesFile from './licensesscreen.json';
 import overlapFile from './overlap.json';
 import ixnilatisOverride from './ixnilatisOverride.json';
 import ixnilatisNew from './ixnilatisNew.json';
+import statistics from './statistics.json';
 
 export default {
   ...intro,
@@ -16,4 +17,5 @@ export default {
   ...licensesFile,
   ...ixnilatisOverride,
   ...ixnilatisNew,
+  ...statistics,
 };
