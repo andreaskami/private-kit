@@ -94,7 +94,7 @@ export const NotificationScreen = ({ navigation }) => {
                   <View style={styles.row}>
                     <Text>{languages.t('label.new_cases')}: </Text>
                     <Text style={styles.value}>
-                      {latestUpdate.fields.newCases}
+                      +{latestUpdate.fields.newCases}
                     </Text>
                   </View>
 
@@ -127,7 +127,7 @@ export const NotificationScreen = ({ navigation }) => {
                       {latestUpdate.fields.date}
                     </Text>
                     <Text style={[styles.value, { minWidth: 120 }]}>
-                      {latestUpdate.fields.newCases}
+                      +{latestUpdate.fields.newCases}
                     </Text>
                     <Text style={styles.value}>
                       {latestUpdate.fields.totalCases}

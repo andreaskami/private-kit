@@ -5,5 +5,6 @@
     "new_cases": "New cases",
     "total_cases": "Total cases",
     "historic_data": "Historic Data",
-    "date": "Date"
+    "date": "Date",
+    "loading_data": "Loading data..."
 }
