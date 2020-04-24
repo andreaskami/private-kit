@@ -605,7 +605,7 @@
 				CODE_SIGN_ENTITLEMENTS = CovTracer/CovTracer.temp_caseinsensitive_rename.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = T96XH3HTPU;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -637,7 +637,7 @@
 				CODE_SIGN_ENTITLEMENTS = CovTracer/CovTracer.temp_caseinsensitive_rename.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = T96XH3HTPU;
 				FRAMEWORK_SEARCH_PATHS = (
