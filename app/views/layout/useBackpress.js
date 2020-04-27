@@ -10,5 +10,5 @@ export default function useBackpress (callback) {
     return () => {
       BackHandler.removeEventListener('hardwareBackPress', handler)
     }
-  }, [])
+  })
 }

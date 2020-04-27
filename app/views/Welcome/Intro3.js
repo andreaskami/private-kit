@@ -1,13 +1,15 @@
 import React from 'react'
 import { View, Text, Dimensions, Image, Linking, TouchableOpacity, StyleSheet } from 'react-native'
+import languages from '../../locales/languages'
+import PropTypes from 'prop-types'
+
 import logo1 from './../../assets/images/logo1.png'
 import logo2 from './../../assets/images/logo2.png'
 import logo3 from './../../assets/images/logo3.png'
 
 const width = Dimensions.get('window').width
-import languages from '../../locales/languages'
 
-const Intro2 = props => (
+const Intro3 = props => (
   <View style={styles.mainContainer}>
     <View style={styles.infoCard}>
       <Text style={styles.infoCardHeadText}>{languages.t('label.intro3_title1')}</Text>
@@ -21,10 +23,12 @@ const Intro2 = props => (
       <Text
         style={(styles.sectionDescription, { color: 'blue', textAlign: 'center' })}
         onPress={() => Linking.openURL('http://covid-19.rise.org.cy')}
-        style={[
-          styles.infoCardBodyText,
-          { fontFamily: 'OpenSans-Bold', opacity: 1, marginTop: 12 }
-        ]}>
+        style={{
+          ...styles.infoCardBodyText,
+          fontFamily: 'OpenSans-Bold',
+          opacity: 1,
+          marginTop: 12
+        }}>
         {languages.t('label.url_info')} {languages.t('label.private_kit_url')}
       </Text>
     </View>
@@ -51,6 +55,11 @@ const Intro2 = props => (
     {/* <TouchableOpacity><Text style={{marginTop:12,fontFamily:'OpenSans-SemiBold',alignSelf:'center',color:'#665eff'}}>Skip this</Text></TouchableOpacity> */}
   </View>
 )
+
+Intro3.propTypes = {
+  swipe: PropTypes.func.isRequired,
+  navigation: PropTypes.object.isRequired
+}
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -169,4 +178,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Intro2
+export default Intro3

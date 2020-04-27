@@ -4,6 +4,7 @@ import { SafeAreaView, StyleSheet, Linking, View, Text } from 'react-native'
 import colors from '../constants/colors'
 import Button from '../components/Button'
 import languages from '../locales/languages'
+import PropTypes from 'prop-types'
 
 import { GetStoreData, SetStoreData } from '../helpers/General'
 
@@ -25,9 +26,7 @@ class Welcome extends Component {
   componentWillUnmount () {}
 
   willParticipate () {
-    SetStoreData('PARTICIPATE', 'true').then(() =>
-      this.props.navigation.navigate('HomeScreen', {})
-    )
+    SetStoreData('PARTICIPATE', 'true').then(() => this.props.navigation.navigate('HomeScreen', {}))
   }
 
   render () {
@@ -129,5 +128,9 @@ const styles = StyleSheet.create({
     marginRight: 10
   }
 })
+
+Welcome.propTypes = {
+  navigation: PropTypes.object.isRequired
+}
 
 export default Welcome

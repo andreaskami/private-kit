@@ -34,6 +34,7 @@
     "patch-package": "^6.2.2",
     "pluralize": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",
+    "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-native": "0.62.2",
     "react-native-app-intro-slider": "^4.0.2",

@@ -2,6 +2,13 @@ import React from 'react'
 import { ActivityIndicator, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import backArrow from '../../assets/images/backArrow.png'
 import useBackpress from './useBackpress'
+import PropTypes from 'prop-types'
+
+Header.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired
+}
 
 export default function Header (props) {
   useBackpress(props.navigation.goBack)

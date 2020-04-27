@@ -1,5 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, ScrollView, View } from 'react-native'
+import PropTypes from 'prop-types'
+
 import languages from '../../locales/languages'
 import PreviousNextButtons from './PreviousNextButtons'
 import Symptom from './Symptom'
@@ -7,9 +9,8 @@ import Symptom from './Symptom'
 export default function Symptoms (props) {
   function toggleSymptom (id) {
     let symptoms = new Set(props.data.symptoms)
-    symptoms.has(id) ? symptoms.delete(id) : symptoms.add(id)
 
-    //Remove others if none
+    // Remove others if none
     if (symptoms.has('none_of_the_above')) {
       symptoms = new Set(['none_of_the_above'])
     }
@@ -104,6 +105,13 @@ export default function Symptoms (props) {
       />
     </View>
   )
+}
+
+Symptoms.propTypes = {
+  data: PropTypes.object.isRequired,
+  nextStep: PropTypes.func.isRequired,
+  previousStep: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({

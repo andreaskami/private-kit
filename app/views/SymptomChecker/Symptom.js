@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, Switch, Text, View } from 'react-native'
+import PropTypes from 'prop-types'
 
 export default function Symptom (props) {
   return (
@@ -14,6 +15,14 @@ export default function Symptom (props) {
       </Text>
     </View>
   )
+}
+
+Symptom.propTypes = {
+  disabled: PropTypes.bool.isRequired,
+  symptoms: PropTypes.any,
+  onChange: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired
 }
 
 const styles = StyleSheet.create({

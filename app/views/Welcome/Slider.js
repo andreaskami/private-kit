@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
 
 import Swiper from './ReactNativeSwiper'
 import Intro1 from './Intro1'
 import Intro2 from './Intro2'
 import Intro3 from './Intro3'
 
-const WelcomSlider = props => {
+export const WelcomeSlider = props => {
   const swiperRef = React.useRef('')
 
   const swipe = i => {
@@ -34,7 +35,10 @@ const WelcomSlider = props => {
   )
 }
 
+WelcomeSlider.propTypes = {
+  navigation: PropTypes.object.isRequired
+}
+
 const styles = StyleSheet.create({
   container: { flex: 1 }
 })
-export default WelcomSlider

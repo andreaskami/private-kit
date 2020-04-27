@@ -1,11 +1,13 @@
 import React from 'react'
 import { View, Text, Dimensions, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
+
+import languages from './../../locales/languages'
 import logo1 from './../../assets/images/logo1.png'
 import logo2 from './../../assets/images/logo2.png'
 import logo3 from './../../assets/images/logo3.png'
 
 const width = Dimensions.get('window').width
-import languages from './../../locales/languages'
 
 const Intro2 = props => (
   <View style={styles.mainContainer}>
@@ -40,6 +42,10 @@ const Intro2 = props => (
     {/* <TouchableOpacity><Text style={{marginTop:12,fontFamily:'OpenSans-SemiBold',alignSelf:'center',color:'#665eff'}}>Skip this</Text></TouchableOpacity> */}
   </View>
 )
+
+Intro2.propTypes = {
+  swipe: PropTypes.func.isRequired
+}
 
 const styles = StyleSheet.create({
   mainContainer: {

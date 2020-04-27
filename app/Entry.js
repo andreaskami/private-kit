@@ -11,7 +11,7 @@ import ImportScreen from './views/Import'
 import OverlapScreen from './views/Overlap'
 import LicencesScreen from './views/Licenses'
 import StatisticsScreen from './views/Statistics'
-import Slider from './views/Welcome/Slider'
+import { WelcomeSlider } from './views/Welcome/Slider'
 import { GetStoreData } from './helpers/General'
 import FlashMessage from 'react-native-flash-message'
 import { SafeAreaView } from 'react-native'
@@ -57,11 +57,15 @@ class Entry extends Component {
             ) : (
               <Stack.Screen
                 name='InitialScreen'
-                component={Slider}
+                component={WelcomeSlider}
                 options={{ headerShown: false }}
               />
             )}
-            <Stack.Screen name='Slider' component={Slider} options={{ headerShown: false }} />
+            <Stack.Screen
+              name='Slider'
+              component={WelcomeSlider}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name='WelcomeScreen'
               component={Welcome}

@@ -3,6 +3,7 @@ import { Picker, StyleSheet, Switch, Text, View } from 'react-native'
 import languages from '../../locales/languages'
 import PreviousNextButtons from './PreviousNextButtons'
 import countries from '../../constants/countries'
+import PropTypes from 'prop-types'
 
 export default function Travel (props) {
   console.log(props.data.travelCountry)
@@ -52,6 +53,13 @@ export default function Travel (props) {
       />
     </View>
   )
+}
+
+Travel.propTypes = {
+  data: PropTypes.object.isRequired,
+  nextStep: PropTypes.func.isRequired,
+  previousStep: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({
