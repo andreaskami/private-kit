@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
-if (__DEV__) {
+if (global.__DEV__) {
   global.clearAsyncStorage = () => {
     AsyncStorage.clear().then(() => console.log('Cleared'))
   }
@@ -37,13 +37,11 @@ export async function GetStoreData (key, isString = true) {
  */
 export async function SetStoreData (key, item) {
   try {
-    //we want to wait for the Promise returned by AsyncStorage.setItem()
-    //to be resolved to the actual value before returning the value
-    if (typeof item !== 'string') {
-      item = JSON.stringify(item)
-    }
+    // we want to wait for the Promise returned by AsyncStorage.setItem()
+    // to be resolved to the actual value before returning the value
+    const payload = typeof item !== 'string' ? JSON.stringify(item) : item
 
-    return await AsyncStorage.setItem(key, item)
+    return await AsyncStorage.setItem(key, payload)
   } catch (error) {
     console.log(error.message)
   }
