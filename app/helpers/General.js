@@ -1,9 +1,9 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage'
 
-if (__DEV__) {
+if (global.__DEV__) {
   global.clearAsyncStorage = () => {
-    AsyncStorage.clear().then(() => console.log('Cleared'));
-  };
+    AsyncStorage.clear().then(() => console.log('Cleared'))
+  }
 }
 
 /**
@@ -13,19 +13,19 @@ if (__DEV__) {
  * @param {string} key
  * @param {boolean} isString
  */
-export async function GetStoreData(key, isString = true) {
+export async function GetStoreData (key, isString = true) {
   try {
-    let data = await AsyncStorage.getItem(key);
+    const data = await AsyncStorage.getItem(key)
 
     if (isString) {
-      return data;
+      return data
     }
 
-    return JSON.parse(data);
+    return JSON.parse(data)
   } catch (error) {
-    console.log(error.message);
+    console.log(error.message)
   }
-  return false;
+  return false
 }
 
 /**
@@ -35,16 +35,14 @@ export async function GetStoreData(key, isString = true) {
  * @param {string} key
  * @param {object} item
  */
-export async function SetStoreData(key, item) {
+export async function SetStoreData (key, item) {
   try {
-    //we want to wait for the Promise returned by AsyncStorage.setItem()
-    //to be resolved to the actual value before returning the value
-    if (typeof item !== 'string') {
-      item = JSON.stringify(item);
-    }
+    // we want to wait for the Promise returned by AsyncStorage.setItem()
+    // to be resolved to the actual value before returning the value
+    const payload = typeof item !== 'string' ? JSON.stringify(item) : item
 
-    return await AsyncStorage.setItem(key, item);
+    return await AsyncStorage.setItem(key, payload)
   } catch (error) {
-    console.log(error.message);
+    console.log(error.message)
   }
 }

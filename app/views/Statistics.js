@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,79 +8,67 @@ import {
   Dimensions,
   TouchableOpacity,
   BackHandler,
-  ScrollView,
-} from 'react-native';
+  ScrollView
+} from 'react-native'
 
-import colors from '../constants/colors';
-import backArrow from './../assets/images/backArrow.png';
-import languages from '../locales/languages';
-import {
-  VictoryBar,
-  VictoryAxis,
-  VictoryChart,
-  VictoryTooltip,
-} from 'victory-native';
-import { getLatestStatistics } from '../../ixnilatisApp/httpClient';
+import colors from '../constants/colors'
+import backArrow from './../assets/images/backArrow.png'
+import languages from '../locales/languages'
+import { VictoryBar, VictoryAxis, VictoryChart, VictoryTooltip } from 'victory-native'
+import { getLatestStatistics } from '../services/httpClient'
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width
+const height = Dimensions.get('window').height
 
 export const NotificationScreen = ({ navigation }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const latestUpdate = useMemo(() => {
-    if (data.length === 0) return null;
+    if (data.length === 0) return null
 
-    return data[data.length - 1];
-  }, [data]);
+    return data[data.length - 1]
+  }, [data])
 
   useEffect(() => {
-    fetchStatistics();
+    fetchStatistics()
 
-    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress)
 
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-  }, []);
+    return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress)
+  }, [])
 
   const fetchStatistics = async () => {
     try {
-      const res = await getLatestStatistics().then(r => r.json());
-      setData(res.records);
+      const res = await getLatestStatistics().then(r => r.json())
+      setData(res.records)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   const backToMain = () => {
-    navigation.navigate('LocationTrackingScreen', {});
-  };
+    navigation.navigate('HomeScreen', {})
+  }
 
   const handleBackPress = () => {
-    navigation.navigate('LocationTrackingScreen', {});
-  };
+    navigation.navigate('HomeScreen', {})
+  }
 
-  console.log(latestUpdate);
+  console.log(latestUpdate)
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          style={styles.backArrowTouchable}
-          onPress={backToMain}>
+        <TouchableOpacity style={styles.backArrowTouchable} onPress={backToMain}>
           <Image style={styles.backArrow} source={backArrow} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>
-          {languages.t('label.statistics')}
-        </Text>
+        <Text style={styles.headerTitle}>{languages.t('label.statistics')}</Text>
       </View>
 
       <View style={styles.main}>
-        <Text style={styles.pageTitle}>
-          {languages.t('label.statistics_title')}
-        </Text>
+        <Text style={styles.pageTitle}>{languages.t('label.statistics_title')}</Text>
 
         {!loading && data.length > 0 && (
           <>
@@ -93,31 +81,21 @@ export const NotificationScreen = ({ navigation }) => {
                 <View>
                   <View style={styles.row}>
                     <Text>{languages.t('label.new_cases')}: </Text>
-                    <Text style={styles.value}>
-                      +{latestUpdate.fields.newCases}
-                    </Text>
+                    <Text style={styles.value}>+{latestUpdate.fields.newCases}</Text>
                   </View>
 
                   <View style={styles.row}>
                     <Text>{languages.t('label.total_cases')}: </Text>
-                    <Text style={styles.value}>
-                      {latestUpdate.fields.totalCases}
-                    </Text>
+                    <Text style={styles.value}>{latestUpdate.fields.totalCases}</Text>
                   </View>
                 </View>
               </View>
             )}
             <View style={styles.historicDataContainer}>
-              <Text style={styles.historicDataTitle}>
-                {languages.t('label.historic_data')}
-              </Text>
+              <Text style={styles.historicDataTitle}>{languages.t('label.historic_data')}</Text>
               <View style={[styles.row]}>
-                <Text style={{ minWidth: 120 }}>
-                  {languages.t('label.date')}
-                </Text>
-                <Text style={{ minWidth: 120 }}>
-                  {languages.t('label.new_cases')}
-                </Text>
+                <Text style={{ minWidth: 120 }}>{languages.t('label.date')}</Text>
+                <Text style={{ minWidth: 120 }}>{languages.t('label.new_cases')}</Text>
                 <Text>{languages.t('label.total_cases')}</Text>
               </View>
               <ScrollView>
@@ -129,9 +107,7 @@ export const NotificationScreen = ({ navigation }) => {
                     <Text style={[styles.value, { minWidth: 120 }]}>
                       +{latestUpdate.fields.newCases}
                     </Text>
-                    <Text style={styles.value}>
-                      {latestUpdate.fields.totalCases}
-                    </Text>
+                    <Text style={styles.value}>{latestUpdate.fields.totalCases}</Text>
                   </View>
                 ))}
               </ScrollView>
@@ -150,8 +126,8 @@ export const NotificationScreen = ({ navigation }) => {
         )}
       </View>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   // Container covers the entire screen
@@ -159,59 +135,59 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     color: colors.PRIMARY_TEXT,
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.WHITE
   },
   main: {
     flex: 1,
-    width: '100%',
+    width: '100%'
   },
   headerTitle: {
     fontSize: 24,
-    fontFamily: 'OpenSans-Bold',
+    fontFamily: 'OpenSans-Bold'
   },
   pageTitle: {
     fontSize: 20,
     fontFamily: 'OpenSans-Bold',
     marginLeft: 20,
-    marginTop: 20,
+    marginTop: 20
   },
   headerContainer: {
     flexDirection: 'row',
     height: 60,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(189, 195, 199,0.6)',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   backArrowTouchable: {
     width: 60,
     height: 60,
     paddingTop: 21,
-    paddingLeft: 20,
+    paddingLeft: 20
   },
   backArrow: {
     height: 18,
-    width: 18.48,
+    width: 18.48
   },
   loadingIndicator: {
     marginTop: 50,
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   latestUpdateContainer: {
-    padding: 20,
+    padding: 20
   },
   row: {
     flex: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 10
   },
   tableHeaders: {
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   value: {
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   historicDataContainer: {
     flex: 1,
@@ -219,16 +195,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 0.5,
     borderColor: '#000',
-    borderRadius: 4,
+    borderRadius: 4
   },
   historicDataTitle: {
     fontSize: 18,
-    marginBottom: 20,
+    marginBottom: 20
   },
   historicRecord: {
     justifyContent: 'space-between',
-    textAlign: 'left',
-  },
-});
+    textAlign: 'left'
+  }
+})
 
-export default NotificationScreen;
+export default NotificationScreen

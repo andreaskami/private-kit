@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,277 +9,265 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  BackHandler,
-} from 'react-native';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-import moment from 'moment';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import WebView from 'react-native-webview';
-import { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import MapView from 'react-native-map-clustering';
-import RNFetchBlob from 'rn-fetch-blob';
-import Share from 'react-native-share';
-import colors from '../constants/colors';
-import Button from '../components/Button';
-import { GetStoreData } from '../helpers/General';
-import { convertPointsToString } from '../helpers/convertPointsToString';
-import LocationServices from '../services/LocationService';
-import greenMarker from '../assets/images/user-green.png';
-import backArrow from '../assets/images/backArrow.png';
-import languages from '../locales/languages';
-import CustomCircle from '../helpers/customCircle';
+  BackHandler
+} from 'react-native'
+import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu'
+import moment from 'moment'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import WebView from 'react-native-webview'
+import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView from 'react-native-map-clustering'
+import RNFetchBlob from 'rn-fetch-blob'
+import Share from 'react-native-share'
+import colors from '../constants/colors'
+import Button from '../components/Button'
+import { GetStoreData } from '../helpers/General'
+import { convertPointsToString } from '../helpers/convertPointsToString'
+import LocationServices from '../services/LocationService'
+import greenMarker from '../assets/images/user-green.png'
+import backArrow from '../assets/images/backArrow.png'
+import languages from '../locales/languages'
+import CustomCircle from '../helpers/customCircle'
 
-const width = Dimensions.get('window').width;
+const width = Dimensions.get('window').width
 
-const base64 = RNFetchBlob.base64;
+const base64 = RNFetchBlob.base64
 // This data source was published in the Lancet, originally mentioned in
 // this article:
 //    https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30119-5/fulltext
 // The dataset is now hosted on Github due to the high demand for it.  The
 // first Google Doc holding data (https://docs.google.com/spreadsheets/d/1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008/edit#gid=0)
 // points to this souce but no longer holds the actual data.
-const public_data = languages.t('label.incidents_data');
+const public_data = languages.t('label.incidents_data')
 
-const show_button_text = languages.t('label.show_overlap');
+const show_button_text = languages.t('label.show_overlap')
 
-const overlap_true_button_text = languages.t(
-  'label.overlap_found_button_label',
-);
-const no_overlap_button_text = languages.t(
-  'label.overlap_no_results_button_label',
-);
+const overlap_true_button_text = languages.t('label.overlap_found_button_label')
+const no_overlap_button_text = languages.t('label.overlap_no_results_button_label')
 const INITIAL_REGION = {
   latitude: 35.185,
   longitude: 33.382,
   latitudeDelta: 0.01,
-  longitudeDelta: 0.01,
-};
+  longitudeDelta: 0.01
+}
 
-function distance(lat1, lon1, lat2, lon2) {
+function distance (lat1, lon1, lat2, lon2) {
   if (lat1 == lat2 && lon1 == lon2) {
-    return 0;
+    return 0
   } else {
-    var radlat1 = (Math.PI * lat1) / 180;
-    var radlat2 = (Math.PI * lat2) / 180;
-    var theta = lon1 - lon2;
-    var radtheta = (Math.PI * theta) / 180;
+    var radlat1 = (Math.PI * lat1) / 180
+    var radlat2 = (Math.PI * lat2) / 180
+    var theta = lon1 - lon2
+    var radtheta = (Math.PI * theta) / 180
     var dist =
       Math.sin(radlat1) * Math.sin(radlat2) +
-      Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta)
     if (dist > 1) {
-      dist = 1;
+      dist = 1
     }
-    dist = Math.acos(dist);
-    dist = (dist * 180) / Math.PI;
-    dist = dist * 60 * 1.1515;
-    return dist * 1.609344;
+    dist = Math.acos(dist)
+    dist = (dist * 180) / Math.PI
+    dist = dist * 60 * 1.1515
+    return dist * 1.609344
   }
 }
 
-function OverlapScreen() {
-  const [region, setRegion] = useState({});
-  const [markers, setMarkers] = useState([]);
-  const [circles, setCircles] = useState([]);
-  const [allLocations, setAllLocations] = useState([]);
-  const [showingLast, setShowingLast] = useState(0);
-  const [period, setPeriod] = useState('All day');
+function OverlapScreen () {
+  const [region, setRegion] = useState({})
+  const [markers, setMarkers] = useState([])
+  const [circles, setCircles] = useState([])
+  const [allLocations, setAllLocations] = useState([])
+  const [showingLast, setShowingLast] = useState(0)
+  const [period, setPeriod] = useState('All day')
 
-  const [initialRegion, setInitialRegion] = useState(INITIAL_REGION);
-  const { navigate } = useNavigation();
-  const mapView = useRef();
+  const [initialRegion, setInitialRegion] = useState(INITIAL_REGION)
+  const { navigate } = useNavigation()
+  const mapView = useRef()
 
   useEffect(() => {
     if (showingLast === 0) {
-      populateMarkers(allLocations);
+      populateMarkers(allLocations)
     } else {
       const date = moment()
         .subtract(showingLast, 'd')
-        .format('D');
+        .format('D')
 
       const filteredLocations = allLocations.filter(
-        marker =>
-          moment(marker.time).format('D') === date &&
-          filterByPeriod(marker.time),
-      );
+        marker => moment(marker.time).format('D') === date && filterByPeriod(marker.time)
+      )
 
-      populateMarkers(filteredLocations);
+      populateMarkers(filteredLocations)
     }
-  }, [showingLast, period]);
+  }, [showingLast, period])
 
   const filterByPeriod = timestamp => {
-    const timestampHour = moment(timestamp).format('HH');
+    const timestampHour = moment(timestamp).format('HH')
 
-    if (period === 'All day') return true;
+    if (period === 'All day') return true
 
-    let timestampPeriod;
+    let timestampPeriod
     if (timestampHour === 0 || timestampHour < 12) {
-      timestampPeriod = 'Morning';
+      timestampPeriod = 'Morning'
     } else if (timestampHour <= 19) {
-      timestampPeriod = 'Afternoon';
+      timestampPeriod = 'Afternoon'
     } else {
-      timestampPeriod = 'Night';
+      timestampPeriod = 'Night'
     }
 
-    return timestampPeriod === period;
-  };
+    return timestampPeriod === period
+  }
 
-  async function getOverlap() {
+  async function getOverlap () {
     try {
     } catch (error) {
-      console.log(error.message);
+      console.log(error.message)
     }
   }
 
-  async function populateMarkers(locationArray) {
-    const markers = [];
-    const previousMarkers = {};
+  async function populateMarkers (locationArray) {
+    const markers = []
+    const previousMarkers = {}
     for (var i = 0; i < locationArray.length - 1; i += 1) {
-      const coord = locationArray[i];
-      const lat = coord.latitude;
-      const long = coord.longitude;
-      const key = String(lat) + '|' + String(long);
+      const coord = locationArray[i]
+      const lat = coord.latitude
+      const long = coord.longitude
+      const key = String(lat) + '|' + String(long)
       if (key in previousMarkers) {
-        previousMarkers[key] += 1;
+        previousMarkers[key] += 1
       } else {
-        previousMarkers[key] = 0;
+        previousMarkers[key] = 0
         const marker = {
           coordinate: {
             latitude: lat,
-            longitude: long,
+            longitude: long
           },
           key: i + 1,
-          time: coord.time,
-        };
-        markers.push(marker);
+          time: coord.time
+        }
+        markers.push(marker)
       }
     }
-    setMarkers(markers);
+    setMarkers(markers)
   }
 
-  async function getInitialState() {
+  async function getInitialState () {
     try {
       GetStoreData('LOCATION_DATA').then(locationArrayString => {
-        const locationArray = JSON.parse(locationArrayString);
+        const locationArray = JSON.parse(locationArrayString)
 
         if (locationArray !== null) {
-          const { latitude, longitude } = locationArray.slice(-1)[0];
+          const { latitude, longitude } = locationArray.slice(-1)[0]
 
-          mapView.current &&
-            mapView.current.animateCamera({ center: { latitude, longitude } });
+          mapView.current && mapView.current.animateCamera({ center: { latitude, longitude } })
           setInitialRegion({
             latitude,
             longitude,
             latitudeDelta: 0.010922,
-            longitudeDelta: 0.020421,
-          });
-          setAllLocations(locationArray);
-          populateMarkers(locationArray);
+            longitudeDelta: 0.020421
+          })
+          setAllLocations(locationArray)
+          populateMarkers(locationArray)
         }
-      });
+      })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
-  async function downloadAndPlot() {
+  async function downloadAndPlot () {
     // Downloads the file on the disk and loads it into memory
     try {
       setShowButton({
         disabled: true,
-        text: languages.t('label.loading_public_data'),
-      });
+        text: languages.t('label.loading_public_data')
+      })
 
       RNFetchBlob.config({
         // add this option that makes response data to be stored as a file,
         // this is much more performant.
-        fileCache: true,
+        fileCache: true
       })
         .fetch('GET', public_data, {})
         .then(res => {
           // the temp file path
-          console.log('The file saved to ', res.path());
+          console.log('The file saved to ', res.path())
           try {
             RNFetchBlob.fs
               .readFile(res.path(), 'utf8')
               .then(records => {
                 // delete the file first using flush
-                res.flush();
+                res.flush()
                 parseCSV(records).then(parsedRecords => {
-                  console.log(parsedRecords);
-                  console.log(Object.keys(parsedRecords).length);
+                  console.log(parsedRecords)
+                  console.log(Object.keys(parsedRecords).length)
                   plotCircles(parsedRecords).then(() => {
                     // if no overlap, alert user via button text
                     // this is a temporary fix, make it more robust later
                     if (Object.keys(parsedRecords).length !== 0) {
                       setShowButton({
                         disabled: false,
-                        text: overlap_true_button_text,
-                      });
+                        text: overlap_true_button_text
+                      })
                     } else {
                       setShowButton({
                         disabled: false,
-                        text: no_overlap_button_text,
-                      });
+                        text: no_overlap_button_text
+                      })
                     }
-                  });
-                });
+                  })
+                })
               })
               .catch(e => {
-                console.error('got error: ', e);
-              });
+                console.error('got error: ', e)
+              })
           } catch (err) {
-            console.log('ERROR:', err);
+            console.log('ERROR:', err)
           }
-        });
+        })
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
 
-  async function parseCSV(records) {
+  async function parseCSV (records) {
     try {
-      const latestLat = initialRegion.latitude;
-      const latestLong = initialRegion.longitude;
-      const rows = records.split('\n');
-      const parsedRows = {};
+      const latestLat = initialRegion.latitude
+      const latestLong = initialRegion.longitude
+      const rows = records.split('\n')
+      const parsedRows = {}
 
       for (var i = rows.length - 1; i >= 0; i--) {
-        var row = rows[i].split(',');
-        const lat = parseFloat(row[7]);
-        const long = parseFloat(row[8]);
+        var row = rows[i].split(',')
+        const lat = parseFloat(row[7])
+        const long = parseFloat(row[8])
         if (!isNaN(lat) && !isNaN(long)) {
           if (true) {
-            var key = String(lat) + '|' + String(long);
+            var key = String(lat) + '|' + String(long)
             if (!(key in parsedRows)) {
-              parsedRows[key] = 0;
+              parsedRows[key] = 0
             }
-            parsedRows[key] += 1;
+            parsedRows[key] += 1
           }
         }
       }
-      return parsedRows;
+      return parsedRows
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
 
   plotCircles = async records => {
     try {
-      const circles = [];
-      const distThreshold = 2000; //In KMs
-      const latestLat = initialRegion.latitude;
-      const latestLong = initialRegion.longitude;
-      let index = 0;
+      const circles = []
+      const distThreshold = 2000 //In KMs
+      const latestLat = initialRegion.latitude
+      const latestLong = initialRegion.longitude
+      let index = 0
 
       for (const key in records) {
-        const latitude = parseFloat(key.split('|')[0]);
-        const longitude = parseFloat(key.split('|')[1]);
-        const count = records[key];
+        const latitude = parseFloat(key.split('|')[0])
+        const longitude = parseFloat(key.split('|')[1])
+        const count = records[key]
         if (
           !isNaN(latitude) &&
           !isNaN(longitude) &&
@@ -289,43 +277,43 @@ function OverlapScreen() {
             key: `${index}-${latitude}-${longitude}-${count}`,
             center: {
               latitude: latitude,
-              longitude: longitude,
+              longitude: longitude
             },
-            radius: 50 * count,
-          };
-          circles.push(circle);
+            radius: 50 * count
+          }
+          circles.push(circle)
         }
-        index += 1;
+        index += 1
       }
-      console.log(circles.length, 'points found');
-      setCircles(circles);
+      console.log(circles.length, 'points found')
+      setCircles(circles)
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
-
-  function backToMain() {
-    navigate('LocationTrackingScreen', {});
   }
 
-  function handleBackPress() {
-    navigate('LocationTrackingScreen', {});
-    return true;
+  function backToMain () {
+    navigate('HomeScreen', {})
+  }
+
+  function handleBackPress () {
+    navigate('HomeScreen', {})
+    return true
   }
 
   useFocusEffect(
     React.useCallback(() => {
-      getInitialState();
-      return () => {};
-    }, []),
-  );
+      getInitialState()
+      return () => {}
+    }, [])
+  )
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-    return function cleanup() {
-      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-    };
-  });
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress)
+    return function cleanup () {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress)
+    }
+  })
 
   // This map shows where your private location trail overlaps with public data from a variety of sources,
   // including official reports from WHO, Ministries of Health, and Chinese local, provincial, and national
@@ -333,14 +321,10 @@ function OverlapScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          style={styles.backArrowTouchable}
-          onPress={backToMain}>
+        <TouchableOpacity style={styles.backArrowTouchable} onPress={backToMain}>
           <Image style={styles.backArrow} source={backArrow} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>
-          {languages.t('label.overlap_title')}
-        </Text>
+        <Text style={styles.headerTitle}>{languages.t('label.overlap_title')}</Text>
       </View>
       <View
         style={{
@@ -349,14 +333,14 @@ function OverlapScreen() {
           alignItems: 'center',
           justifyContent: 'center',
           paddingTop: 10,
-          paddingBottom: 10,
+          paddingBottom: 10
         }}>
         <View
           style={{
             flex: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}>
           <Text>History</Text>
           <Menu>
@@ -384,30 +368,22 @@ function OverlapScreen() {
             flex: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}>
           <Text>Period</Text>
           <Menu>
             <MenuTrigger style={{ marginLeft: 14 }}>
-              <Text style={{ backgroundColor: '#EFEFEF', padding: 5 }}>
-                {period}
-              </Text>
+              <Text style={{ backgroundColor: '#EFEFEF', padding: 5 }}>{period}</Text>
             </MenuTrigger>
             <MenuOptions>
-              {['All day', 'Morning', 'Afternoon', 'Night'].map(
-                selectedPeriod => (
-                  <MenuOption
-                    style={
-                      selectedPeriod === period
-                        ? styles.menuOptionSelected
-                        : null
-                    }
-                    key={selectedPeriod}
-                    onSelect={() => setPeriod(selectedPeriod)}>
-                    <Text style={styles.menuOptionText}>{selectedPeriod}</Text>
-                  </MenuOption>
-                ),
-              )}
+              {['All day', 'Morning', 'Afternoon', 'Night'].map(selectedPeriod => (
+                <MenuOption
+                  style={selectedPeriod === period ? styles.menuOptionSelected : null}
+                  key={selectedPeriod}
+                  onSelect={() => setPeriod(selectedPeriod)}>
+                  <Text style={styles.menuOptionText}>{selectedPeriod}</Text>
+                </MenuOption>
+              ))}
             </MenuOptions>
           </Menu>
         </View>
@@ -441,9 +417,7 @@ function OverlapScreen() {
       </MapView>
       <ScrollView>
         <View style={styles.main}>
-          <Text style={styles.sectionDescription}>
-            {languages.t('label.overlap_para_1')}
-          </Text>
+          <Text style={styles.sectionDescription}>{languages.t('label.overlap_para_1')}</Text>
         </View>
         <View>
           <Text
@@ -454,7 +428,7 @@ function OverlapScreen() {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -463,26 +437,26 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     color: colors.PRIMARY_TEXT,
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.WHITE
   },
   headerTitle: {
     fontSize: 24,
-    fontFamily: 'OpenSans-Bold',
+    fontFamily: 'OpenSans-Bold'
   },
   subHeaderTitle: {
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 22,
-    padding: 5,
+    padding: 5
   },
   main: {
     textAlignVertical: 'top',
     padding: 15,
-    width: '100%',
+    width: '100%'
   },
   map: {
     height: '60%',
-    width: '100%',
+    width: '100%'
   },
   buttonTouchable: {
     borderRadius: 12,
@@ -491,7 +465,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: width * 0.7866,
     marginTop: 15,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   buttonText: {
     fontFamily: 'OpenSans-Bold',
@@ -499,21 +473,21 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     letterSpacing: 0,
     textAlign: 'center',
-    color: '#ffffff',
+    color: '#ffffff'
   },
   mainText: {
     fontSize: 18,
     lineHeight: 24,
     fontWeight: '400',
     textAlignVertical: 'center',
-    padding: 20,
+    padding: 20
   },
   smallText: {
     fontSize: 10,
     lineHeight: 24,
     fontWeight: '400',
     textAlignVertical: 'center',
-    padding: 20,
+    padding: 20
   },
 
   headerContainer: {
@@ -521,39 +495,39 @@ const styles = StyleSheet.create({
     height: 60,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(189, 195, 199,0.6)',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   backArrowTouchable: {
     width: 60,
     height: 60,
     paddingTop: 21,
-    paddingLeft: 20,
+    paddingLeft: 20
   },
   backArrow: {
     height: 18,
-    width: 18.48,
+    width: 18.48
   },
   sectionDescription: {
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: 'OpenSans-Regular',
+    fontFamily: 'OpenSans-Regular'
   },
   sectionFooter: {
     fontSize: 12,
     lineHeight: 24,
     fontFamily: 'OpenSans-Regular',
     textAlign: 'center',
-    color: 'blue',
+    color: 'blue'
   },
   menuOptionSelected: {
-    backgroundColor: '#EFEFEF',
+    backgroundColor: '#EFEFEF'
   },
   menuOptionText: {
-    fontFamily: 'OpenSans-Regular',
+    fontFamily: 'OpenSans-Regular'
     // fontSize: 14,
     // padding: 10,
-  },
-});
+  }
+})
 
 const customMapStyles = [
   // {
@@ -655,6 +629,6 @@ const customMapStyles = [
   //     },
   //   ],
   // },
-];
+]
 
-export default OverlapScreen;
+export default OverlapScreen

@@ -1,5 +1,5 @@
-import i18next from 'i18next';
-import { getLanguages } from 'react-native-i18n';
+import i18next from 'i18next'
+import { getLanguages } from 'react-native-i18n'
 
 // Refer this for checking the codes and creating new folders https://developer.chrome.com/webstore/i18n
 // Step 1 - Create index.js files for each language we want to have, in this file you can import all the json files (Step 4) and export them
@@ -9,132 +9,132 @@ import { getLanguages } from 'react-native-i18n';
 // Step 5 - Add the labels to be used in respective json files. The labels are the key and the content is the value in different language, so make sure for each file the key remains the same
 // Step 6 - In React Native code import the main languages file and call the translate function - languages.t('label.labelname')
 
-import enlabels from './en';
-import delabels from './de';
-import hilabels from './hi';
-import frlabels from './fr';
-import itlabels from './it';
-import ptlabels from './pt';
-import mrlabels from './mr';
-import nllabels from './nl';
-import htlabels from './ht';
-import pt_BRlabels from './pt_BR';
-import eslabels from './es';
-import urlabels from './ur';
-import knlabels from './kn';
-import calabels from './ca';
-import gjlabels from './gj';
-import cslabels from './cs';
-import trlabels from './tr';
-import grlabels from './gr';
+import enlabels from './en'
+import delabels from './de'
+import hilabels from './hi'
+import frlabels from './fr'
+import itlabels from './it'
+import ptlabels from './pt'
+import mrlabels from './mr'
+import nllabels from './nl'
+import htlabels from './ht'
+import pt_BRlabels from './pt_BR'
+import eslabels from './es'
+import urlabels from './ur'
+import knlabels from './kn'
+import calabels from './ca'
+import gjlabels from './gj'
+import cslabels from './cs'
+import trlabels from './tr'
+import grlabels from './gr'
 
 // This will fetch the user's language
-let userLang = undefined;
+let userLang = undefined
 getLanguages().then(languages => {
-  userLang = languages[0].split('-')[0]; // ['en-US' will become 'en']
-  i18next.changeLanguage(userLang);
+  userLang = languages[0].split('-')[0] // ['en-US' will become 'en']
+  i18next.changeLanguage(userLang)
   //i18next.changeLanguage('el');
-});
+})
 
 i18next.init({
   interpolation: {
     // React already does escaping
-    escapeValue: false,
+    escapeValue: false
   },
   lng: userLang, // 'en' | 'es',
   fallbackLng: 'en', // If language detector fails
   resources: {
     en: {
       translation: {
-        label: enlabels,
-      },
+        label: enlabels
+      }
     },
     de: {
       translation: {
-        label: delabels,
-      },
+        label: delabels
+      }
     },
     hi: {
       translation: {
-        label: hilabels,
-      },
+        label: hilabels
+      }
     },
     fr: {
       translation: {
-        label: frlabels,
-      },
+        label: frlabels
+      }
     },
     it: {
       translation: {
-        label: itlabels,
-      },
+        label: itlabels
+      }
     },
     pt: {
       translation: {
-        label: ptlabels,
-      },
+        label: ptlabels
+      }
     },
     mr: {
       translation: {
-        label: mrlabels,
-      },
+        label: mrlabels
+      }
     },
     nl: {
       translation: {
-        label: nllabels,
-      },
+        label: nllabels
+      }
     },
     ht: {
       translation: {
-        label: htlabels,
-      },
+        label: htlabels
+      }
     },
     pt_BR: {
       translation: {
-        label: pt_BRlabels,
-      },
+        label: pt_BRlabels
+      }
     },
     kn: {
       translation: {
-        label: knlabels,
-      },
+        label: knlabels
+      }
     },
     es: {
       translation: {
-        label: eslabels,
-      },
+        label: eslabels
+      }
     },
     ur: {
       translation: {
-        label: urlabels,
-      },
+        label: urlabels
+      }
     },
     ca: {
       translation: {
-        label: calabels,
-      },
+        label: calabels
+      }
     },
     gj: {
       translation: {
-        label: gjlabels,
-      },
+        label: gjlabels
+      }
     },
     cs: {
       translation: {
-        label: cslabels,
-      },
+        label: cslabels
+      }
     },
     tr: {
       translation: {
-        label: trlabels,
-      },
+        label: trlabels
+      }
     },
     el: {
       translation: {
-        label: grlabels,
-      },
-    },
-  },
-});
+        label: grlabels
+      }
+    }
+  }
+})
 
-export default i18next;
+export default i18next
