@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,86 +9,81 @@ import {
   Dimensions,
   Image,
   ScrollView,
-  BackHandler,
-} from 'react-native';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-import colors from '../constants/colors';
-import LocationServices from '../services/LocationService';
-import BroadcastingServices from '../services/BroadcastingService';
-import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
-import exportImage from './../assets/images/export.png';
-import news from './../assets/images/newspaper.png';
-import kebabIcon from './../assets/images/kebabIcon.png';
-import pkLogo from './../assets/images/PKLogo.png';
+  BackHandler
+} from 'react-native'
+import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu'
+import colors from '../constants/colors'
+import LocationServices from '../services/LocationService'
+import BroadcastingServices from '../services/BroadcastingService'
+import BackgroundGeolocation from '@mauron85/react-native-background-geolocation'
+import exportImage from './../assets/images/export.png'
+import news from './../assets/images/newspaper.png'
+import kebabIcon from './../assets/images/kebabIcon.png'
+import pkLogo from './../assets/images/PKLogo.png'
 
-import logo1 from './../assets/images/logo1.png';
-import logo2 from './../assets/images/logo2.png';
-import logo3 from './../assets/images/logo3.png';
+import logo1 from './../assets/images/logo1.png'
+import logo2 from './../assets/images/logo2.png'
+import logo3 from './../assets/images/logo3.png'
 
-import { GetStoreData, SetStoreData } from '../helpers/General';
-import languages from './../locales/languages';
+import { GetStoreData, SetStoreData } from '../helpers/General'
+import languages from './../locales/languages'
 
-import Version from '../../ixnilatisApp/views/Version';
-import CheckerButton from '../../ixnilatisApp/views/CheckerButton';
+import Version from '../../ixnilatisApp/views/Version'
+import CheckerButton from '../../ixnilatisApp/views/CheckerButton'
 
-const width = Dimensions.get('window').width;
+const width = Dimensions.get('window').width
 
 class LocationTracking extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
-      isLogging: '',
-    };
+      isLogging: ''
+    }
   }
 
-  componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  componentDidMount () {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
     GetStoreData('PARTICIPATE')
       .then(isParticipating => {
         if (isParticipating === 'true') {
           this.setState({
-            isLogging: true,
-          });
-          this.willParticipate();
+            isLogging: true
+          })
+          this.willParticipate()
         } else {
           this.setState({
-            isLogging: false,
-          });
+            isLogging: false
+          })
         }
       })
-      .catch(error => console.log(error));
+      .catch(error => console.log(error))
   }
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+  componentWillUnmount () {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress)
   }
 
   handleBackPress = () => {
-    BackHandler.exitApp(); // works best when the goBack is async
-    return true;
-  };
-  export() {
-    this.props.navigation.navigate('ExportScreen', {});
+    BackHandler.exitApp() // works best when the goBack is async
+    return true
+  }
+  export () {
+    this.props.navigation.navigate('ExportScreen', {})
   }
 
-  import() {
-    this.props.navigation.navigate('ImportScreen', {});
+  import () {
+    this.props.navigation.navigate('ImportScreen', {})
   }
 
-  overlap() {
-    this.props.navigation.navigate('OverlapScreen', {});
+  overlap () {
+    this.props.navigation.navigate('OverlapScreen', {})
   }
 
   willParticipate = () => {
     SetStoreData('PARTICIPATE', 'true').then(() => {
-      LocationServices.start();
+      LocationServices.start()
       // BroadcastingServices.start();
-    });
+    })
 
     // Check and see if they actually authorized in the system dialog.
     // If not, stop services and set the state to !isLogging
@@ -96,47 +91,47 @@ class LocationTracking extends Component {
     BackgroundGeolocation.checkStatus(({ authorization }) => {
       if (authorization === BackgroundGeolocation.AUTHORIZED) {
         this.setState({
-          isLogging: true,
-        });
+          isLogging: true
+        })
       } else if (authorization === BackgroundGeolocation.NOT_AUTHORIZED) {
-        LocationServices.stop(this.props.navigation);
-        BroadcastingServices.stop(this.props.navigation);
+        LocationServices.stop(this.props.navigation)
+        BroadcastingServices.stop(this.props.navigation)
         this.setState({
-          isLogging: false,
-        });
+          isLogging: false
+        })
       }
-    });
-  };
-
-  news() {
-    this.props.navigation.navigate('NewsScreen', {});
+    })
   }
 
-  licenses() {
-    this.props.navigation.navigate('LicensesScreen', {});
+  news () {
+    this.props.navigation.navigate('NewsScreen', {})
   }
 
-  privacy() {
-    this.props.navigation.navigate('PrivacyScreen', {});
+  licenses () {
+    this.props.navigation.navigate('LicensesScreen', {})
   }
 
-  acknowledgement() {
-    this.props.navigation.navigate('AckScreen', {});
+  privacy () {
+    this.props.navigation.navigate('PrivacyScreen', {})
   }
 
-  statistics() {
-    this.props.navigation.navigate('StatisticsScreen', {});
+  acknowledgement () {
+    this.props.navigation.navigate('AckScreen', {})
+  }
+
+  statistics () {
+    this.props.navigation.navigate('StatisticsScreen', {})
   }
 
   setOptOut = () => {
-    LocationServices.stop(this.props.navigation);
-    BroadcastingServices.stop(this.props.navigation);
+    LocationServices.stop(this.props.navigation)
+    BroadcastingServices.stop(this.props.navigation)
     this.setState({
-      isLogging: false,
-    });
-  };
+      isLogging: false
+    })
+  }
 
-  render() {
+  render () {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.main}>
@@ -145,7 +140,7 @@ class LocationTracking extends Component {
             style={{
               position: 'absolute',
               alignSelf: 'flex-end',
-              zIndex: 10,
+              zIndex: 10
             }}>
             <MenuTrigger style={{ marginTop: 14 }}>
               <Image
@@ -153,32 +148,32 @@ class LocationTracking extends Component {
                 style={{
                   width: 15,
                   height: 28,
-                  padding: 14,
+                  padding: 14
                 }}
               />
             </MenuTrigger>
             <MenuOptions>
               <MenuOption
                 onSelect={() => {
-                  this.statistics();
+                  this.statistics()
                 }}>
                 <Text style={styles.menuOptionText}>Statistics</Text>
               </MenuOption>
               <MenuOption
                 onSelect={() => {
-                  this.licenses();
+                  this.licenses()
                 }}>
                 <Text style={styles.menuOptionText}>Licenses</Text>
               </MenuOption>
               <MenuOption
                 onSelect={() => {
-                  this.privacy();
+                  this.privacy()
                 }}>
                 <Text style={styles.menuOptionText}>Privacy</Text>
               </MenuOption>
               <MenuOption
                 onSelect={() => {
-                  this.acknowledgement();
+                  this.acknowledgement()
                 }}>
                 <Text style={styles.menuOptionText}>Acknowledgements</Text>
               </MenuOption>
@@ -194,7 +189,7 @@ class LocationTracking extends Component {
                     width: 132,
                     height: 164.4,
                     alignSelf: 'center',
-                    marginTop: 12,
+                    marginTop: 12
                   }}
                 />
                 <TouchableOpacity
@@ -207,9 +202,7 @@ class LocationTracking extends Component {
                 <TouchableOpacity
                   onPress={() => this.overlap()}
                   style={styles.startLoggingButtonTouchable}>
-                  <Text style={styles.startLoggingButtonText}>
-                    {languages.t('label.overlap')}
-                  </Text>
+                  <Text style={styles.startLoggingButtonText}>{languages.t('label.overlap')}</Text>
                 </TouchableOpacity>
               </>
             ) : (
@@ -221,7 +214,7 @@ class LocationTracking extends Component {
                     height: 164.4,
                     alignSelf: 'center',
                     marginTop: 12,
-                    opacity: 0.3,
+                    opacity: 0.3
                   }}
                 />
                 <TouchableOpacity
@@ -235,9 +228,7 @@ class LocationTracking extends Component {
             )}
 
             {this.state.isLogging ? (
-              <Text style={styles.sectionDescription}>
-                {languages.t('label.logging_message')}
-              </Text>
+              <Text style={styles.sectionDescription}>{languages.t('label.logging_message')}</Text>
             ) : (
               <Text style={styles.sectionDescription}>
                 {languages.t('label.not_logging_message')}
@@ -248,46 +239,23 @@ class LocationTracking extends Component {
           <CheckerButton navigation={this.props.navigation} />
 
           <View style={styles.actionButtonsView}>
-            <TouchableOpacity
-              onPress={() => this.import()}
-              style={styles.actionButtonsTouchable}>
+            <TouchableOpacity onPress={() => this.import()} style={styles.actionButtonsTouchable}>
+              <Image style={styles.actionButtonImage} source={exportImage} resizeMode={'contain'} />
+              <Text style={styles.actionButtonText}>{languages.t('label.import')}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => this.export()} style={styles.actionButtonsTouchable}>
               <Image
-                style={styles.actionButtonImage}
+                style={[styles.actionButtonImage, { transform: [{ rotate: '180deg' }] }]}
                 source={exportImage}
                 resizeMode={'contain'}
               />
-              <Text style={styles.actionButtonText}>
-                {languages.t('label.import')}
-              </Text>
+              <Text style={styles.actionButtonText}>{languages.t('label.export')}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => this.export()}
-              style={styles.actionButtonsTouchable}>
-              <Image
-                style={[
-                  styles.actionButtonImage,
-                  { transform: [{ rotate: '180deg' }] },
-                ]}
-                source={exportImage}
-                resizeMode={'contain'}
-              />
-              <Text style={styles.actionButtonText}>
-                {languages.t('label.export')}
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => this.news()}
-              style={styles.actionButtonsTouchable}>
-              <Image
-                style={styles.actionButtonImage}
-                source={news}
-                resizeMode={'contain'}
-              />
-              <Text style={styles.actionButtonText}>
-                {languages.t('label.news')}
-              </Text>
+            <TouchableOpacity onPress={() => this.news()} style={styles.actionButtonsTouchable}>
+              <Image style={styles.actionButtonImage} source={news} resizeMode={'contain'} />
+              <Text style={styles.actionButtonText}>{languages.t('label.news')}</Text>
             </TouchableOpacity>
           </View>
 
@@ -297,28 +265,22 @@ class LocationTracking extends Component {
               <Image source={logo2} style={styles.infoCardLogo} />
               <Image source={logo3} style={styles.infoCardLogo} />
             </View>
-            <Text
-              style={[
-                styles.sectionDescription,
-                { textAlign: 'center', paddingTop: 15 },
-              ]}>
+            <Text style={[styles.sectionDescription, { textAlign: 'center', paddingTop: 15 }]}>
               {languages.t('label.url_info')}{' '}
             </Text>
             <Text
               style={[
                 styles.sectionDescriptionLow,
-                { color: 'blue', textAlign: 'center', marginTop: 0 },
+                { color: 'blue', textAlign: 'center', marginTop: 0 }
               ]}
-              onPress={() =>
-                Linking.openURL(languages.t('label.private_kit_url'))
-              }>
+              onPress={() => Linking.openURL(languages.t('label.private_kit_url'))}>
               {languages.t('label.private_kit_url')}
             </Text>
             <Version />
           </View>
         </ScrollView>
       </SafeAreaView>
-    );
+    )
   }
 }
 
@@ -330,37 +292,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     color: colors.PRIMARY_TEXT,
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.WHITE
   },
   rowContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   infoCardLogo: {
     alignSelf: 'center',
     marginTop: '10%',
     width: 100,
     height: 50,
-    resizeMode: 'contain',
+    resizeMode: 'contain'
   },
   headerTitle: {
     textAlign: 'center',
     fontSize: 38,
     padding: 0,
-    fontFamily: 'OpenSans-Bold',
+    fontFamily: 'OpenSans-Bold'
   },
   subHeaderTitle: {
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 22,
-    padding: 5,
+    padding: 5
   },
   main: {
     alignItems: 'center',
-    width: '100%',
+    width: '100%'
   },
   buttonsAndLogoView: {
     flex: 6,
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   actionButtonsView: {
     width: width * 0.7866,
@@ -368,7 +330,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flex: 2,
     alignItems: 'center',
-    marginBottom: -10,
+    marginBottom: -10
   },
   footer: {
     textAlign: 'center',
@@ -376,7 +338,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     padding: 4,
     paddingBottom: 10,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   sectionDescription: {
     fontSize: 12,
@@ -387,7 +349,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     //IX
     textAlign: 'center',
-    marginBottom: 2,
+    marginBottom: 2
   },
   sectionDescriptionLow: {
     fontSize: 12,
@@ -398,7 +360,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     //IX
     textAlign: 'center',
-    marginBottom: 5,
+    marginBottom: 5
   },
   startLoggingButtonTouchable: {
     borderRadius: 12,
@@ -408,7 +370,7 @@ const styles = StyleSheet.create({
     width: width * 0.7866,
     marginTop: 30,
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: 20
   },
   startLoggingButtonText: {
     fontFamily: 'OpenSans-Bold',
@@ -416,7 +378,7 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     letterSpacing: 0,
     textAlign: 'center',
-    color: '#ffffff',
+    color: '#ffffff'
   },
   stopLoggingButtonTouchable: {
     borderRadius: 12,
@@ -425,7 +387,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: width * 0.7866,
     marginTop: 30,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   stopLoggingButtonText: {
     fontFamily: 'OpenSans-Bold',
@@ -433,7 +395,7 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     letterSpacing: 0,
     textAlign: 'center',
-    color: '#ffffff',
+    color: '#ffffff'
   },
   actionButtonsTouchable: {
     height: 76,
@@ -441,11 +403,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#454f63',
     width: width * 0.23,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   actionButtonImage: {
     height: 21.6,
-    width: 32.2,
+    width: 32.2
   },
   actionButtonText: {
     opacity: 0.56,
@@ -455,13 +417,13 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     textAlign: 'center',
     color: '#ffffff',
-    marginTop: 6,
+    marginTop: 6
   },
   menuOptionText: {
     fontFamily: 'OpenSans-Regular',
     fontSize: 14,
-    padding: 10,
-  },
-});
+    padding: 10
+  }
+})
 
-export default LocationTracking;
+export default LocationTracking

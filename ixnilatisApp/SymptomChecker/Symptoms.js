@@ -1,27 +1,25 @@
-import React from 'react';
-import { StyleSheet, Text, ScrollView, View } from 'react-native';
-import languages from '../../app/locales/languages';
-import PreviousNextButtons from './PreviousNextButtons';
-import Symptom from './Symptom';
+import React from 'react'
+import { StyleSheet, Text, ScrollView, View } from 'react-native'
+import languages from '../../app/locales/languages'
+import PreviousNextButtons from './PreviousNextButtons'
+import Symptom from './Symptom'
 
-export default function Symptoms(props) {
-  function toggleSymptom(id) {
-    let symptoms = new Set(props.data.symptoms);
-    symptoms.has(id) ? symptoms.delete(id) : symptoms.add(id);
+export default function Symptoms (props) {
+  function toggleSymptom (id) {
+    let symptoms = new Set(props.data.symptoms)
+    symptoms.has(id) ? symptoms.delete(id) : symptoms.add(id)
 
     //Remove others if none
     if (symptoms.has('none_of_the_above')) {
-      symptoms = new Set(['none_of_the_above']);
+      symptoms = new Set(['none_of_the_above'])
     }
-    props.dispatch({ symptoms });
+    props.dispatch({ symptoms })
   }
   return (
     <View>
       <Text style={styles.header}>{languages.t('label.symptoms')}</Text>
 
-      <Text style={styles.question}>
-        {languages.t('label.symptoms_question')}
-      </Text>
+      <Text style={styles.question}>{languages.t('label.symptoms_question')}</Text>
 
       <View style={styles.symptomsContainer}>
         <ScrollView>
@@ -105,23 +103,23 @@ export default function Symptoms(props) {
         previousDisabled={false}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   header: {
     marginTop: 10,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: 22
   },
   question: {
     marginTop: 10,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   symptomsContainer: {
     flex: 0,
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 20,
-  },
-});
+    marginBottom: 20
+  }
+})

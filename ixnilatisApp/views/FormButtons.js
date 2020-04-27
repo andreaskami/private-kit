@@ -1,41 +1,34 @@
-import React from 'react';
-import {
-  Alert,
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import languages from '../../app/locales/languages';
-import { hasFormsLeft, getWaitTimeLeft } from '../formLimitations';
+import React from 'react'
+import { Alert, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import languages from '../../app/locales/languages'
+import { hasFormsLeft, getWaitTimeLeft } from '../formLimitations'
 
-const width = Dimensions.get('window').width;
+const width = Dimensions.get('window').width
 
 export const FormButtons = ({ navigation }) => {
   const newForm = async () => {
-    const hasForms = await hasFormsLeft();
+    const hasForms = await hasFormsLeft()
     if (!hasForms) {
       Alert.alert(
         languages.t('label.FORMGENERAL_COUNTLIMIT_TITLE'),
-        languages.t('label.FORMGENERAL_COUNTLIMIT_MESSAGE'),
-      );
-      return;
+        languages.t('label.FORMGENERAL_COUNTLIMIT_MESSAGE')
+      )
+      return
     }
 
-    const timeLeft = await getWaitTimeLeft();
+    const timeLeft = await getWaitTimeLeft()
     if (timeLeft > 0) {
       Alert.alert(
         languages.t('label.FORMGENERAL_TIMELIMIT_TITLE'),
         languages.t('label.FORMGENERAL_TIMELIMIT_MESSAGE', {
-          minutes: timeLeft,
-        }),
-      );
-      return;
+          minutes: timeLeft
+        })
+      )
+      return
     }
 
-    navigation.navigate('FormGeneralNewScreen', {});
-  };
+    navigation.navigate('FormGeneralNewScreen', {})
+  }
 
   return (
     <View style={styles.actionButtonsView}>
@@ -43,40 +36,32 @@ export const FormButtons = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => navigation.navigate('FormWorkScreen', {})}
           style={styles.actionButtonsTouchable}>
-          <Text style={styles.actionButtonHead}>
-            {languages.t('label.FORM_A')}
-          </Text>
-          <Text style={styles.actionButtonText}>
-            {languages.t('label.FORMWORK')}
-          </Text>
+          <Text style={styles.actionButtonHead}>{languages.t('label.FORM_A')}</Text>
+          <Text style={styles.actionButtonText}>{languages.t('label.FORMWORK')}</Text>
         </TouchableOpacity>
       )}
 
       <TouchableOpacity onPress={newForm} style={styles.actionButtonsTouchable}>
         <Text style={styles.actionButtonHead}>&#9997;</Text>
-        <Text style={styles.actionButtonText}>
-          {languages.t('label.FORMGENERAL_NEW')}
-        </Text>
+        <Text style={styles.actionButtonText}>{languages.t('label.FORMGENERAL_NEW')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => navigation.navigate('FormGeneralActiveScreen', {})}
         style={styles.actionButtonsTouchable}>
         <Text style={styles.actionButtonHead}>&#128196;</Text>
-        <Text style={styles.actionButtonText}>
-          {languages.t('label.FORMGENERAL_ACTIVE')}
-        </Text>
+        <Text style={styles.actionButtonText}>{languages.t('label.FORMGENERAL_ACTIVE')}</Text>
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   actionButtonsView: {
     width: width * 0.7866,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 35,
+    marginTop: 35
   },
   actionButtonsTouchable: {
     height: 76,
@@ -84,11 +69,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#454f63',
     width: width * 0.35,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   actionButtonImage: {
     height: 21.6,
-    width: 32.2,
+    width: 32.2
   },
   actionButtonText: {
     opacity: 0.56,
@@ -98,7 +83,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     textAlign: 'center',
     color: '#ffffff',
-    marginTop: 3,
+    marginTop: 3
   },
   actionButtonHead: {
     opacity: 1,
@@ -108,6 +93,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     textAlign: 'center',
     color: '#ffffff',
-    marginTop: 3,
-  },
-});
+    marginTop: 3
+  }
+})

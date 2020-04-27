@@ -15,7 +15,7 @@ const colors = {
   REG_BUTTON: '#428AF8',
   POS_BUTTON: '#32A852',
   NEG_BUTTON: '#F8262F',
-  SENS_BUTTON: '#6C3794',
-};
+  SENS_BUTTON: '#6C3794'
+}
 
-export default colors;
+export default colors

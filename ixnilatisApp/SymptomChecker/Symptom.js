@@ -1,7 +1,7 @@
-import React from 'react';
-import { StyleSheet, Switch, Text, View } from 'react-native';
+import React from 'react'
+import { StyleSheet, Switch, Text, View } from 'react-native'
 
-export default function Symptom(props) {
+export default function Symptom (props) {
   return (
     <View style={styles.switchContainer}>
       <Switch
@@ -9,13 +9,11 @@ export default function Symptom(props) {
         value={props.symptoms.has(props.id)}
         onValueChange={() => props.onChange(props.id)}
       />
-      <Text
-        onPress={() => props.onChange(props.id)}
-        style={{ fontSize: 18, marginLeft: 5 }}>
+      <Text onPress={() => props.onChange(props.id)} style={{ fontSize: 18, marginLeft: 5 }}>
         {props.title}
       </Text>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -24,6 +22,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    margin: 10,
-  },
-});
+    margin: 10
+  }
+})

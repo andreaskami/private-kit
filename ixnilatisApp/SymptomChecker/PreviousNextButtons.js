@@ -1,9 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import languages from '../../app/locales/languages';
-import colors from '../../app/constants/colors';
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import languages from '../../app/locales/languages'
+import colors from '../../app/constants/colors'
 
-export default function PreviousNextButtons(props) {
+export default function PreviousNextButtons (props) {
   return (
     <View style={styles.buttonContainer}>
       <Text
@@ -17,13 +17,13 @@ export default function PreviousNextButtons(props) {
         {languages.t('label.next')}
       </Text>
     </View>
-  );
+  )
 }
 const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-evenly'
   },
   button: {
     height: 40,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 10,
     color: colors.WHITE,
-    backgroundColor: colors.DODGER_BLUE,
+    backgroundColor: colors.DODGER_BLUE
   },
   disabledButton: {
     height: 40,
@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 10,
     color: colors.WHITE,
-    backgroundColor: colors.SILVER,
-  },
-});
+    backgroundColor: colors.SILVER
+  }
+})

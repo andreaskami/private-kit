@@ -1,27 +1,23 @@
-import React from 'react';
-import { StyleSheet, Switch, Text, View } from 'react-native';
-import languages from '../../app/locales/languages';
-import PreviousNextButtons from './PreviousNextButtons';
+import React from 'react'
+import { StyleSheet, Switch, Text, View } from 'react-native'
+import languages from '../../app/locales/languages'
+import PreviousNextButtons from './PreviousNextButtons'
 
-export default function Confirmation(props) {
+export default function Confirmation (props) {
   return (
     <View>
       <Text style={styles.header}>{languages.t('label.confirmation')}</Text>
 
-      <Text style={styles.question}>
-        {languages.t('label.confirmation_question')}
-      </Text>
+      <Text style={styles.question}>{languages.t('label.confirmation_question')}</Text>
       <View style={styles.switchContainer}>
         <Text style={{ fontSize: 18, marginRight: 5 }}>
-          {props.data.isReal
-            ? languages.t('label.yes')
-            : languages.t('label.no')}
+          {props.data.isReal ? languages.t('label.yes') : languages.t('label.no')}
         </Text>
         <Switch
           value={props.data.isReal}
           onValueChange={() =>
             props.dispatch({
-              isReal: !props.data.isReal,
+              isReal: !props.data.isReal
             })
           }
         />
@@ -38,24 +34,24 @@ export default function Confirmation(props) {
         previousDisabled={props.isLoading}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   header: {
     marginTop: 10,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: 22
   },
   question: {
     marginTop: 10,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   switchContainer: {
     flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 20,
-  },
-});
+    margin: 20
+  }
+})

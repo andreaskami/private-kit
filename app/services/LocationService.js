@@ -9,13 +9,13 @@ import languages from '../locales/languages'
 let instanceCount = 0
 
 export class LocationData {
-  constructor() {
+  constructor () {
     this.locationInterval = 60000 * 5 // Time (in milliseconds) between location information polls.  E.g. 60000*5 = 5 minutes
     // DEBUG: Reduce Time intervall for faster debugging
     // this.locationInterval = 5000;
   }
 
-  getLocationData() {
+  getLocationData () {
     return GetStoreData('LOCATION_DATA').then(locationArrayString => {
       let locationArray = []
       if (locationArrayString !== null) {
@@ -26,7 +26,7 @@ export class LocationData {
     })
   }
 
-  async getPointStats() {
+  async getPointStats () {
     const locationData = await this.getLocationData()
 
     let lastPoint = null
@@ -46,16 +46,16 @@ export class LocationData {
     }
   }
 
-  saveLocation(location) {
+  saveLocation (location) {
     // Persist this location data in our local storage of time/lat/lon values
     this.getLocationData().then(locationArray => {
       // Always work in UTC, not the local time in the locationData
-      let nowUTC = new Date().toISOString()
-      let unixtimeUTC = Date.parse(nowUTC)
-      let unixtimeUTC_28daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 28
+      const nowUTC = new Date().toISOString()
+      const unixtimeUTC = Date.parse(nowUTC)
+      const unixtimeUTC_28daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 28
 
       // Curate the list of points, only keep the last 28 days
-      let curated = []
+      const curated = []
       for (let i = 0; i < locationArray.length; i++) {
         if (locationArray[i]['time'] > unixtimeUTC_28daysAgo) {
           curated.push(locationArray[i])
@@ -64,7 +64,7 @@ export class LocationData {
 
       // Backfill the stationary points, if available
       if (curated.length >= 1) {
-        let lastLocationArray = curated[curated.length - 1]
+        const lastLocationArray = curated[curated.length - 1]
         let lastTS = lastLocationArray['time']
         for (; lastTS < unixtimeUTC - this.locationInterval; lastTS += this.locationInterval) {
           curated.push(JSON.parse(JSON.stringify(lastLocationArray)))
@@ -76,7 +76,7 @@ export class LocationData {
       // when the GPS data was collected, but that's unimportant
       // for what we are doing.)
       console.log('[GPS] Saving point:', locationArray.length)
-      let lat_lon_time = {
+      const lat_lon_time = {
         latitude: location['latitude'],
         longitude: location['longitude'],
         time: unixtimeUTC
@@ -89,7 +89,7 @@ export class LocationData {
 }
 
 export default class LocationServices {
-  static start() {
+  static start () {
     const locationData = new LocationData()
 
     instanceCount += 1
@@ -100,7 +100,7 @@ export default class LocationServices {
 
     PushNotification.configure({
       // (required) Called when a remote or local notification is opened or received
-      onNotification: function(notification) {
+      onNotification: function (notification) {
         console.log('NOTIFICATION:', notification)
         // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
         notification.finish(PushNotificationIOS.FetchResult.NoData)
@@ -309,7 +309,7 @@ export default class LocationServices {
     // BackgroundGeolocation.start();
   }
 
-  static stop(nav) {
+  static stop (nav) {
     // unregister all event listeners
     PushNotification.localNotification({
       title: languages.t('label.TRACKDISABLED'),

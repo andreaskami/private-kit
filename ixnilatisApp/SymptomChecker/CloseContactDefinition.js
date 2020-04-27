@@ -1,10 +1,10 @@
-import React from 'react';
-import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native';
-import languages from '../../app/locales/languages';
-import colors from '../../app/constants/colors';
+import React from 'react'
+import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import languages from '../../app/locales/languages'
+import colors from '../../app/constants/colors'
 
-export default function Exposure() {
-  const [showModal, setShowModal] = React.useState(false);
+export default function Exposure () {
+  const [showModal, setShowModal] = React.useState(false)
   return (
     <View>
       <View style={{ alignItems: 'center' }}>
@@ -17,9 +17,7 @@ export default function Exposure() {
         <Modal transparent>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.header}>
-                {languages.t('label.close_contact_definition')}
-              </Text>
+              <Text style={styles.header}>{languages.t('label.close_contact_definition')}</Text>
               <ScrollView>
                 <Text style={styles.definition}>
                   1. {languages.t('label.close_contact_definition_1')}
@@ -46,7 +44,7 @@ export default function Exposure() {
               <Text
                 style={{
                   ...styles.button,
-                  backgroundColor: colors.DODGER_BLUE,
+                  backgroundColor: colors.DODGER_BLUE
                 }}
                 onPress={() => setShowModal(show => !show)}>
                 {languages.t('label.close')}
@@ -56,14 +54,14 @@ export default function Exposure() {
         </Modal>
       )}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   header: {
     marginBottom: 10,
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 18
   },
   button: {
     marginLeft: 10,
@@ -73,16 +71,16 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 10,
     color: colors.WHITE,
-    backgroundColor: colors.RED,
+    backgroundColor: colors.RED
   },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    marginTop: 22
   },
   definition: {
-    marginBottom: 5,
+    marginBottom: 5
   },
   modalView: {
     margin: 20,
@@ -93,10 +91,10 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
-  },
-});
+    elevation: 5
+  }
+})

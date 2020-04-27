@@ -1,12 +1,12 @@
-import React from 'react';
-import FormWork from './views/FormWork';
-import FormGeneralNew from './views/FormGeneralNew';
-import FormGeneralActive from './views/FormGeneralActive';
-import { Acknowledgements } from './views/Acknowledgements';
-import { Privacy } from './views/Privacy';
-import SymptomChecker from './SymptomChecker/SymptomChecker';
+import React from 'react'
+import FormWork from './views/FormWork'
+import FormGeneralNew from './views/FormGeneralNew'
+import FormGeneralActive from './views/FormGeneralActive'
+import { Acknowledgements } from './views/Acknowledgements'
+import { Privacy } from './views/Privacy'
+import SymptomChecker from './SymptomChecker/SymptomChecker'
 
-export function getIxnilatisScreens(Stack) {
+export function getIxnilatisScreens (Stack) {
   return [
     <Stack.Screen
       key='FormWorkScreen'
@@ -43,6 +43,6 @@ export function getIxnilatisScreens(Stack) {
       name='SymptomCheckerScreen'
       component={SymptomChecker}
       options={{ headerShown: false }}
-    />,
-  ];
+    />
+  ]
 }

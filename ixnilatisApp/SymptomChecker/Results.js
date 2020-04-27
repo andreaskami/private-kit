@@ -1,7 +1,7 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
-export default function Results(props) {
+export default function Results (props) {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.contentContainer}>
@@ -22,7 +22,7 @@ export default function Results(props) {
         </View>
       </ScrollView>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -30,16 +30,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: 10,
+    padding: 10
   },
   contentContainer: {
-    height: '100%',
+    height: '100%'
   },
   header: {
     marginTop: 10,
     textAlign: 'center',
     fontSize: 20,
-    textDecorationLine: 'underline',
+    textDecorationLine: 'underline'
   },
   result: {
     marginTop: '10%',
@@ -47,17 +47,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'justify',
+    textAlign: 'justify'
   },
   inputContainer: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: '#EFEFEF',
+    backgroundColor: '#EFEFEF'
   },
   label: {},
   condition: {
     marginBottom: 10,
-    borderBottomWidth: 1,
+    borderBottomWidth: 1
   },
   switchContainer: {
     flex: 1,
@@ -65,6 +65,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 50,
-    marginBottom: 50,
-  },
-});
+    marginBottom: 50
+  }
+})

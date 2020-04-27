@@ -1,35 +1,27 @@
-import React from 'react';
-import { StyleSheet, Switch, Text, View } from 'react-native';
-import languages from '../../app/locales/languages';
-import PreviousNextButtons from './PreviousNextButtons';
+import React from 'react'
+import { StyleSheet, Switch, Text, View } from 'react-native'
+import languages from '../../app/locales/languages'
+import PreviousNextButtons from './PreviousNextButtons'
 
-export default function Medical(props) {
+export default function Medical (props) {
   return (
     <View style={styles.root}>
       <Text style={styles.header}>{languages.t('label.medical')}</Text>
 
       <View>
-        <Text style={styles.question}>
-          {languages.t('label.medical_condition_question')}
-        </Text>
+        <Text style={styles.question}>{languages.t('label.medical_condition_question')}</Text>
       </View>
       <View style={styles.conditionsContainer}>
         <View>
           <Text style={styles.condition}>
             * {languages.t('label.medical_condition_cardiovascular')}
           </Text>
-          <Text style={styles.condition}>
-            * {languages.t('label.medical_condition_diabetes')}
-          </Text>
-          <Text style={styles.condition}>
-            * {languages.t('label.medical_condition_lung')}
-          </Text>
+          <Text style={styles.condition}>* {languages.t('label.medical_condition_diabetes')}</Text>
+          <Text style={styles.condition}>* {languages.t('label.medical_condition_lung')}</Text>
           <Text style={styles.condition}>
             * {languages.t('label.medical_condition_respiratory')}
           </Text>
-          <Text style={styles.condition}>
-            * {languages.t('label.medical_condition_cancer')}
-          </Text>
+          <Text style={styles.condition}>* {languages.t('label.medical_condition_cancer')}</Text>
           <Text style={styles.condition}>
             * {languages.t('label.medical_condition_immunodeficiency')}
           </Text>
@@ -37,15 +29,13 @@ export default function Medical(props) {
       </View>
       <View style={styles.switchContainer}>
         <Text style={{ fontSize: 18, marginRight: 5 }}>
-          {props.data.hasMedicalCondition
-            ? languages.t('label.yes')
-            : languages.t('label.no')}
+          {props.data.hasMedicalCondition ? languages.t('label.yes') : languages.t('label.no')}
         </Text>
         <Switch
           value={props.data.hasMedicalCondition}
           onValueChange={() =>
             props.dispatch({
-              hasMedicalCondition: !props.data.hasMedicalCondition,
+              hasMedicalCondition: !props.data.hasMedicalCondition
             })
           }
         />
@@ -58,38 +48,38 @@ export default function Medical(props) {
         previousDisabled={false}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
+    flex: 1
   },
   header: {
     marginTop: 10,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: 22
   },
   conditionsContainer: {
     marginTop: 20,
     padding: 10,
     flex: 0,
     alignItems: 'center',
-    backgroundColor: '#efefef',
+    backgroundColor: '#efefef'
   },
   question: {
     marginTop: 10,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   condition: {
     marginBottom: 10,
-    borderBottomWidth: 1,
+    borderBottomWidth: 1
   },
   switchContainer: {
     flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 20,
-  },
-});
+    margin: 20
+  }
+})

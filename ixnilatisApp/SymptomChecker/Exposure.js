@@ -1,12 +1,12 @@
-import React from 'react';
-import { Modal, StyleSheet, Switch, Text, View } from 'react-native';
-import languages from '../../app/locales/languages';
-import PreviousNextButtons from './PreviousNextButtons';
-import CloseContactDefinition from './CloseContactDefinition';
-import colors from '../../app/constants/colors';
+import React from 'react'
+import { Modal, StyleSheet, Switch, Text, View } from 'react-native'
+import languages from '../../app/locales/languages'
+import PreviousNextButtons from './PreviousNextButtons'
+import CloseContactDefinition from './CloseContactDefinition'
+import colors from '../../app/constants/colors'
 
-export default function Exposure(props) {
-  const [showModal, setShowModal] = React.useState(false);
+export default function Exposure (props) {
+  const [showModal, setShowModal] = React.useState(false)
   return (
     <View>
       <Text style={styles.header}>{languages.t('label.exposure')}</Text>
@@ -17,15 +17,13 @@ export default function Exposure(props) {
 
       <View style={styles.switchContainer}>
         <Text style={{ fontSize: 18, marginRight: 5 }}>
-          {props.data.hasBeenExposed
-            ? languages.t('label.yes')
-            : languages.t('label.no')}
+          {props.data.hasBeenExposed ? languages.t('label.yes') : languages.t('label.no')}
         </Text>
         <Switch
           value={props.data.hasBeenExposed}
           onValueChange={() =>
             props.dispatch({
-              hasBeenExposed: !props.data.hasBeenExposed,
+              hasBeenExposed: !props.data.hasBeenExposed
             })
           }
         />
@@ -44,19 +42,19 @@ export default function Exposure(props) {
         </Modal>
       )}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   header: {
     marginTop: 10,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: 22
   },
   label: {
     padding: 10,
     marginTop: 10,
-    fontSize: 16,
+    fontSize: 16
   },
   button: {
     marginLeft: 10,
@@ -66,13 +64,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 10,
     color: colors.WHITE,
-    backgroundColor: colors.RED,
+    backgroundColor: colors.RED
   },
   switchContainer: {
     flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 20,
-  },
-});
+    margin: 20
+  }
+})

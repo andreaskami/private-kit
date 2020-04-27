@@ -1,31 +1,24 @@
-import React from 'react';
-import colors from '../../app/constants/colors';
-import { StyleSheet, View } from 'react-native';
-import Demographics from './Demographics';
-import Medical from './Medical';
-import Travel from './Travel';
-import Symptoms from './Symptoms';
-import Exposure from './Exposure';
-import Confirmation from './Confirmation';
+import React from 'react'
+import colors from '../../app/constants/colors'
+import { StyleSheet, View } from 'react-native'
+import Demographics from './Demographics'
+import Medical from './Medical'
+import Travel from './Travel'
+import Symptoms from './Symptoms'
+import Exposure from './Exposure'
+import Confirmation from './Confirmation'
 
-const steps = [
-  'demographics',
-  'medical',
-  'travel',
-  'symptoms',
-  'exposure',
-  'confirmation',
-];
+const steps = ['demographics', 'medical', 'travel', 'symptoms', 'exposure', 'confirmation']
 
-function formReducer(state, action) {
+function formReducer (state, action) {
   return {
     ...state,
-    ...action,
-  };
+    ...action
+  }
 }
 
-export default function Form(props) {
-  const [currentStep, setCurrentStep] = React.useState(0);
+export default function Form (props) {
+  const [currentStep, setCurrentStep] = React.useState(0)
   const [data, dispatch] = React.useReducer(formReducer, {
     age: null,
     gender: null,
@@ -35,14 +28,14 @@ export default function Form(props) {
     travelCountry: null,
     symptoms: new Set([]),
     hasBeenExposed: false,
-    isReal: false,
-  });
+    isReal: false
+  })
 
-  function nextStep() {
-    setCurrentStep(curr => (curr + 1 < steps.length ? curr + 1 : curr));
+  function nextStep () {
+    setCurrentStep(curr => (curr + 1 < steps.length ? curr + 1 : curr))
   }
-  function previousStep() {
-    setCurrentStep(curr => (curr - 1 >= 0 ? curr - 1 : curr));
+  function previousStep () {
+    setCurrentStep(curr => (curr - 1 >= 0 ? curr - 1 : curr))
   }
   return (
     <View style={styles.container}>
@@ -59,12 +52,7 @@ export default function Form(props) {
           />
         )}
         {steps[currentStep] === 'travel' && (
-          <Travel
-            nextStep={nextStep}
-            previousStep={previousStep}
-            data={data}
-            dispatch={dispatch}
-          />
+          <Travel nextStep={nextStep} previousStep={previousStep} data={data} dispatch={dispatch} />
         )}
         {steps[currentStep] === 'symptoms' && (
           <Symptoms
@@ -93,7 +81,7 @@ export default function Form(props) {
         )}
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -102,9 +90,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     color: colors.PRIMARY_TEXT,
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.WHITE
   },
   contentContainer: {
-    height: '80%',
-  },
-});
+    height: '80%'
+  }
+})

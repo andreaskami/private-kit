@@ -1,28 +1,20 @@
-import React from 'react';
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import languages from '../../app/locales/languages';
+import React from 'react'
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import languages from '../../app/locales/languages'
 
-const width = Dimensions.get('window').width;
+const width = Dimensions.get('window').width
 
-function CheckerButton(props) {
+function CheckerButton (props) {
   return (
     <View style={styles.actionButtonsView}>
       <TouchableOpacity
         onPress={() => props.navigation.navigate('SymptomCheckerScreen', {})}
         style={styles.actionButtonsTouchable}>
         <Text style={styles.actionButtonHead}>&#x1F50D;</Text>
-        <Text style={styles.actionButtonText}>
-          {languages.t('label.SYMPTOM_CHECKER')}
-        </Text>
+        <Text style={styles.actionButtonText}>{languages.t('label.SYMPTOM_CHECKER')}</Text>
       </TouchableOpacity>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -30,7 +22,7 @@ const styles = StyleSheet.create({
     width: width * 0.7866,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 35,
+    marginBottom: 35
   },
   actionButtonsTouchable: {
     height: 76,
@@ -38,7 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#454f63',
     width: width * 0.35,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   actionButtonText: {
     opacity: 0.56,
@@ -48,7 +40,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     textAlign: 'center',
     color: '#ffffff',
-    marginTop: 3,
+    marginTop: 3
   },
   actionButtonHead: {
     opacity: 1,
@@ -57,8 +49,8 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     letterSpacing: 0,
     textAlign: 'center',
-    color: '#ffffff',
-  },
-});
+    color: '#ffffff'
+  }
+})
 
-export default CheckerButton;
+export default CheckerButton

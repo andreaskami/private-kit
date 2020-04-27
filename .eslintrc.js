@@ -1,7 +1,6 @@
 module.exports = {
-  root: true,
   rules: {
-    'import/named': 'off',
+    'import/named': 'off'
   },
-  extends: ['pitops/react'],
+  extends: ['pitops/react']
 }

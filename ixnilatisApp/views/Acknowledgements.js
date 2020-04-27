@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,43 +8,38 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
-  BackHandler,
-} from 'react-native';
+  BackHandler
+} from 'react-native'
 
-import colors from '../../app/constants/colors';
-import backArrow from '../../app/assets/images/backArrow.png';
-import languages from '../../app/locales/languages';
-import cyprusGovLogo from '../../app/assets/images/cyprus-gov-logo.png';
-import europeanUnionLogo from '../../app/assets/images/european-union-logo.png';
-import XMLogo from '../../app/assets/images/XMlogo.jpg';
+import colors from '../../app/constants/colors'
+import backArrow from '../../app/assets/images/backArrow.png'
+import languages from '../../app/locales/languages'
+import cyprusGovLogo from '../../app/assets/images/cyprus-gov-logo.png'
+import europeanUnionLogo from '../../app/assets/images/european-union-logo.png'
+import XMLogo from '../../app/assets/images/XMlogo.jpg'
 
-const width = Dimensions.get('window').width;
+const width = Dimensions.get('window').width
 
 export const Acknowledgements = ({ navigation }) => {
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-  }, []);
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress)
+    return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress)
+  }, [])
 
-  const backToMain = () => navigation.navigate('LocationTrackingScreen', {});
+  const backToMain = () => navigation.navigate('LocationTrackingScreen', {})
 
   const handleBackPress = () => {
-    navigation.navigate('LocationTrackingScreen', {});
-    return true;
-  };
+    navigation.navigate('LocationTrackingScreen', {})
+    return true
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          style={styles.backArrowTouchable}
-          onPress={backToMain}>
+        <TouchableOpacity style={styles.backArrowTouchable} onPress={backToMain}>
           <Image style={styles.backArrow} source={backArrow} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>
-          {languages.t('label.Acknowledgements')}
-        </Text>
+        <Text style={styles.headerTitle}>{languages.t('label.Acknowledgements')}</Text>
       </View>
       <ScrollView>
         <View style={styles.main}>
@@ -69,15 +64,15 @@ export const Acknowledgements = ({ navigation }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
     color: colors.PRIMARY_TEXT,
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.WHITE
   },
   main: {
     flex: 1,
@@ -85,7 +80,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     padding: 10,
     width: '96%',
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   acknowledgement: {
     flex: 1,
@@ -93,39 +88,39 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    maxHeight: 250,
+    maxHeight: 250
   },
   logo: {
     width: 150,
     height: 100,
-    marginRight: 10,
+    marginRight: 10
   },
   headerTitle: {
     fontSize: 24,
-    fontFamily: 'OpenSans-Bold',
+    fontFamily: 'OpenSans-Bold'
   },
   headerContainer: {
     flexDirection: 'row',
     height: 60,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(189, 195, 199,0.6)',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   backArrowTouchable: {
     width: 60,
     height: 60,
     paddingTop: 21,
-    paddingLeft: 20,
+    paddingLeft: 20
   },
   backArrow: {
     height: 18,
-    width: 18.48,
+    width: 18.48
   },
   sectionDescription: {
     fontSize: 16,
     lineHeight: 24,
     marginTop: 12,
     textAlign: 'justify',
-    fontFamily: 'OpenSans-Regular',
-  },
-});
+    fontFamily: 'OpenSans-Regular'
+  }
+})
