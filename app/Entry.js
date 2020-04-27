@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { SafeAreaView } from 'react-native'
+
 import LocationTracking from './views/LocationTracking'
 import Welcome from './views/Welcome'
 import NewsScreen from './views/News'
@@ -15,6 +15,7 @@ import Slider from './views/welcomeScreens/Slider'
 import { GetStoreData } from './helpers/General'
 import { getIxnilatisScreens } from '../ixnilatisApp/IxnilatisScreens'
 import FlashMessage from 'react-native-flash-message'
+import { SafeAreaView } from 'react-native'
 
 const Stack = createStackNavigator()
 
@@ -98,7 +99,11 @@ class Entry extends Component {
             />
             {getIxnilatisScreens(Stack)}
           </Stack.Navigator>
-          <FlashMessage ref="top" />
+          <FlashMessage
+            ref={(ref) => {
+              this.top = ref
+            }}
+          />
         </SafeAreaView>
       </NavigationContainer>
     )

@@ -12,12 +12,6 @@
     "test": "jest",
     "lint": "eslint ."
   },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "git add --force"
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -85,6 +79,7 @@
     "lint-staged": "^10.1.7",
     "metro-react-native-babel-preset": "^0.59.0",
     "prettier": "2.0.5",
+    "pretty-quick": "^2.0.1",
     "react-native-version": "^4.0.0",
     "react-test-renderer": "16.13.1"
   },
