@@ -15,7 +15,7 @@ import colors from '../constants/colors'
 import backArrow from './../assets/images/backArrow.png'
 import languages from '../locales/languages'
 import { VictoryBar, VictoryAxis, VictoryChart, VictoryTooltip } from 'victory-native'
-import { getLatestStatistics } from '../../ixnilatisApp/httpClient'
+import { getLatestStatistics } from '../services/httpClient'
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
@@ -49,11 +49,11 @@ export const NotificationScreen = ({ navigation }) => {
   }
 
   const backToMain = () => {
-    navigation.navigate('LocationTrackingScreen', {})
+    navigation.navigate('HomeScreen', {})
   }
 
   const handleBackPress = () => {
-    navigation.navigate('LocationTrackingScreen', {})
+    navigation.navigate('HomeScreen', {})
   }
 
   console.log(latestUpdate)

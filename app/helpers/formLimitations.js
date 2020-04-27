@@ -1,4 +1,4 @@
-import { GetStoreData, SetStoreData } from '../app/helpers/General'
+import { GetStoreData, SetStoreData } from './General'
 import { getTodaysTimestamp } from './dateUtils'
 
 export const maxFormCount = 10

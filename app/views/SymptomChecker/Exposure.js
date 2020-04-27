@@ -1,9 +1,9 @@
 import React from 'react'
 import { Modal, StyleSheet, Switch, Text, View } from 'react-native'
-import languages from '../../app/locales/languages'
+import languages from '../../locales/languages'
 import PreviousNextButtons from './PreviousNextButtons'
 import CloseContactDefinition from './CloseContactDefinition'
-import colors from '../../app/constants/colors'
+import colors from '../../constants/colors'
 
 export default function Exposure (props) {
   const [showModal, setShowModal] = React.useState(false)

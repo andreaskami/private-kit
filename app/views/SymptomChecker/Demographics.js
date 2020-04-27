@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import { Picker, StyleSheet, Text, TextInput, ScrollView, View } from 'react-native'
-import languages from '../../app/locales/languages'
+import languages from '../../locales/languages'
 import PreviousNextButtons from './PreviousNextButtons'
-import countries from '../countries'
+import countries from '../../constants/countries.json'
 
 export default function Demographics (props) {
   const { age, postalCode } = props.data

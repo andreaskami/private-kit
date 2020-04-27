@@ -13,14 +13,14 @@ import {
   BackHandler
 } from 'react-native'
 
-import { GetStoreData, SetStoreData } from '../../app/helpers/General'
-import colors from '../../app/constants/colors'
+import { GetStoreData, SetStoreData } from '../helpers/General'
+import colors from '../constants/colors'
 import { WebView } from 'react-native-webview'
-import Button from '../../app/components/Button'
+import Button from '../components/Button'
 import backArrow from '../../app/assets/images/backArrow.png'
-import { formatDate, formatDateTime } from '../dateUtils'
-import { getFormCount, maxFormCount } from '../formLimitations'
-import languages from '../../app/locales/languages'
+import { formatDate, formatDateTime } from '../helpers/dateUtils'
+import { getFormCount, maxFormCount } from '../helpers/formLimitations'
+import languages from '../locales/languages'
 
 const width = Dimensions.get('window').width
 
@@ -35,7 +35,7 @@ class FormGeneral extends Component {
     formCount: 0
   }
   backToMain = () => {
-    this.props.navigation.navigate('LocationTrackingScreen', {})
+    this.props.navigation.navigate('HomeScreen', {})
   }
 
   handleBackPress = () => {

@@ -12,9 +12,9 @@ import {
   Linking
 } from 'react-native'
 
-import colors from '../../app/constants/colors'
+import colors from '../constants/colors'
 import backArrow from '../../app/assets/images/backArrow.png'
-import languages from '../../app/locales/languages'
+import languages from '../locales/languages'
 
 export const Privacy = ({ navigation }) => {
   useEffect(() => {
@@ -23,11 +23,11 @@ export const Privacy = ({ navigation }) => {
   }, [])
 
   const backToMain = () => {
-    navigation.navigate('LocationTrackingScreen', {})
+    navigation.navigate('HomeScreen', {})
   }
 
   const handleBackPress = () => {
-    navigation.navigate('LocationTrackingScreen', {})
+    navigation.navigate('HomeScreen', {})
     return true
   }
 

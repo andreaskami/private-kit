@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import languages from '../../app/locales/languages'
+import languages from '../locales/languages'
 
 const width = Dimensions.get('window').width
 

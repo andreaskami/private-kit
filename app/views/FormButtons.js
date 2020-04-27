@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import languages from '../../app/locales/languages'
-import { hasFormsLeft, getWaitTimeLeft } from '../formLimitations'
+import languages from '../locales/languages'
+import { hasFormsLeft, getWaitTimeLeft } from '../helpers/formLimitations'
 
 const width = Dimensions.get('window').width
 

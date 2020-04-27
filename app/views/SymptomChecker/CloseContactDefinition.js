@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
-import languages from '../../app/locales/languages'
-import colors from '../../app/constants/colors'
+import languages from '../../locales/languages'
+import colors from '../../constants/colors'
 
 export default function Exposure () {
   const [showModal, setShowModal] = React.useState(false)

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Picker, StyleSheet, Switch, Text, View } from 'react-native'
-import languages from '../../app/locales/languages'
+import languages from '../../locales/languages'
 import PreviousNextButtons from './PreviousNextButtons'
-import countries from '../countries'
+import countries from '../../constants/countries'
 
 export default function Travel (props) {
   console.log(props.data.travelCountry)

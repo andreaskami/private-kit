@@ -5,7 +5,7 @@ import logo2 from './../../assets/images/logo2.png'
 import logo3 from './../../assets/images/logo3.png'
 
 const width = Dimensions.get('window').width
-import languages from './../../locales/languages'
+import languages from '../../locales/languages'
 
 const Intro2 = props => (
   <View style={styles.mainContainer}>
@@ -42,7 +42,7 @@ const Intro2 = props => (
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => props.navigation.navigate('LocationTrackingScreen')}
+        onPress={() => props.navigation.navigate('HomeScreen')}
         style={styles.primaryButtonTouchable}>
         <Text style={styles.primaryButtonText}>{languages.t('label.start')}</Text>
       </TouchableOpacity>

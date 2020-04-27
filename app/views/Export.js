@@ -31,7 +31,7 @@ function ExportScreen ({ shareButtonDisabled }) {
   const { navigate } = useNavigation()
 
   function handleBackPress () {
-    navigate('LocationTrackingScreen', {})
+    navigate('HomeScreen', {})
     return true
   }
 
@@ -55,7 +55,7 @@ function ExportScreen ({ shareButtonDisabled }) {
   })
 
   function backToMain () {
-    navigate('LocationTrackingScreen', {})
+    navigate('HomeScreen', {})
   }
 
   async function onShare () {

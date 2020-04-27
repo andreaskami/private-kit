@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import LocationTracking from './views/LocationTracking'
+import { Home } from './views/Home'
 import Welcome from './views/Welcome'
 import NewsScreen from './views/News'
 import ExportScreen from './views/Export'
@@ -11,11 +11,16 @@ import ImportScreen from './views/Import'
 import OverlapScreen from './views/Overlap'
 import LicencesScreen from './views/Licenses'
 import StatisticsScreen from './views/Statistics'
-import Slider from './views/welcomeScreens/Slider'
+import Slider from './views/Welcome/Slider'
 import { GetStoreData } from './helpers/General'
-import { getIxnilatisScreens } from '../ixnilatisApp/IxnilatisScreens'
 import FlashMessage from 'react-native-flash-message'
 import { SafeAreaView } from 'react-native'
+import FormWork from './views/FormWork'
+import FormGeneralNew from './views/FormGeneralNew'
+import FormGeneralActive from './views/FormGeneralActive'
+import { Acknowledgements } from './views/Acknowledgements'
+import { Privacy } from './views/Privacy'
+import SymptomChecker from './views/SymptomChecker/SymptomChecker'
 
 const Stack = createStackNavigator()
 
@@ -46,7 +51,7 @@ class Entry extends Component {
             {this.state.initialRouteName === 'true' ? (
               <Stack.Screen
                 name='InitialScreen'
-                component={LocationTracking}
+                component={Home}
                 options={{ headerShown: false }}
               />
             ) : (
@@ -62,11 +67,7 @@ class Entry extends Component {
               component={Welcome}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
-              name='LocationTrackingScreen'
-              component={LocationTracking}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name='HomeScreen' component={Home} options={{ headerShown: false }} />
             <Stack.Screen
               name='NewsScreen'
               component={NewsScreen}
@@ -97,7 +98,42 @@ class Entry extends Component {
               component={OverlapScreen}
               options={{ headerShown: false }}
             />
-            {getIxnilatisScreens(Stack)}
+            <Stack.Screen
+              key='FormWorkScreen'
+              name='FormWorkScreen'
+              component={FormWork}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              key='FormGeneralNewScreen'
+              name='FormGeneralNewScreen'
+              component={FormGeneralNew}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              key='FormGeneralActiveScreen'
+              name='FormGeneralActiveScreen'
+              component={FormGeneralActive}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              key='PrivacyScreen'
+              name='PrivacyScreen'
+              component={Privacy}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              key='AckScreen'
+              name='AckScreen'
+              component={Acknowledgements}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              key='SymptomCheckerScreen'
+              name='SymptomCheckerScreen'
+              component={SymptomChecker}
+              options={{ headerShown: false }}
+            />
           </Stack.Navigator>
           <FlashMessage
             ref={ref => {

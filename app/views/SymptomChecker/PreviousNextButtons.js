@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import languages from '../../app/locales/languages'
-import colors from '../../app/constants/colors'
+import languages from '../../locales/languages'
+import colors from '../../constants/colors'
 
 export default function PreviousNextButtons (props) {
   return (

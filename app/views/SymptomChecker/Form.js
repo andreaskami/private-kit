@@ -1,5 +1,5 @@
 import React from 'react'
-import colors from '../../app/constants/colors'
+import colors from '../../constants/colors'
 import { StyleSheet, View } from 'react-native'
 import Demographics from './Demographics'
 import Medical from './Medical'

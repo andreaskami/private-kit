@@ -12,12 +12,12 @@ import {
   BackHandler
 } from 'react-native'
 
-import { GetStoreData, SetStoreData } from '../../app/helpers/General'
-import colors from '../../app/constants/colors'
+import { GetStoreData, SetStoreData } from '../helpers/General'
+import colors from '../constants/colors'
 import { WebView } from 'react-native-webview'
-import Button from '../../app/components/Button'
+import Button from '../components/Button'
 import backArrow from '../../app/assets/images/backArrow.png'
-import languages from '../../app/locales/languages'
+import languages from '../locales/languages'
 
 const width = Dimensions.get('window').width
 
@@ -33,7 +33,7 @@ class FormWork extends Component {
     date: ''
   }
   backToMain = () => {
-    this.props.navigation.navigate('LocationTrackingScreen', {})
+    this.props.navigation.navigate('HomeScreen', {})
   }
 
   handleBackPress = () => {

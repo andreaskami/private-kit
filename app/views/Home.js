@@ -16,6 +16,8 @@ import colors from '../constants/colors'
 import LocationServices from '../services/LocationService'
 import BroadcastingServices from '../services/BroadcastingService'
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation'
+import { getVersion } from 'react-native-device-info'
+
 import exportImage from './../assets/images/export.png'
 import news from './../assets/images/newspaper.png'
 import kebabIcon from './../assets/images/kebabIcon.png'
@@ -26,14 +28,13 @@ import logo2 from './../assets/images/logo2.png'
 import logo3 from './../assets/images/logo3.png'
 
 import { GetStoreData, SetStoreData } from '../helpers/General'
-import languages from './../locales/languages'
+import languages from '../locales/languages'
 
-import Version from '../../ixnilatisApp/views/Version'
-import CheckerButton from '../../ixnilatisApp/views/CheckerButton'
+import CheckerButton from './CheckerButton'
 
 const width = Dimensions.get('window').width
 
-class LocationTracking extends Component {
+class Home extends Component {
   constructor (props) {
     super(props)
 
@@ -276,7 +277,7 @@ class LocationTracking extends Component {
               onPress={() => Linking.openURL(languages.t('label.private_kit_url'))}>
               {languages.t('label.private_kit_url')}
             </Text>
-            <Version />
+            <Text style={{ textAlign: 'center' }}>{getVersion()}</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -426,4 +427,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default LocationTracking
+export { Home }

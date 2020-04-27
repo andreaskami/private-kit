@@ -293,11 +293,11 @@ function OverlapScreen () {
   }
 
   function backToMain () {
-    navigate('LocationTrackingScreen', {})
+    navigate('HomeScreen', {})
   }
 
   function handleBackPress () {
-    navigate('LocationTrackingScreen', {})
+    navigate('HomeScreen', {})
     return true
   }
 

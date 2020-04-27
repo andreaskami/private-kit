@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Switch, Text, View } from 'react-native'
-import languages from '../../app/locales/languages'
+import languages from '../../locales/languages'
 import PreviousNextButtons from './PreviousNextButtons'
 
 export default function Medical (props) {

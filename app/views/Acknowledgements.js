@@ -11,9 +11,9 @@ import {
   BackHandler
 } from 'react-native'
 
-import colors from '../../app/constants/colors'
+import colors from '../constants/colors'
 import backArrow from '../../app/assets/images/backArrow.png'
-import languages from '../../app/locales/languages'
+import languages from '../locales/languages'
 import cyprusGovLogo from '../../app/assets/images/cyprus-gov-logo.png'
 import europeanUnionLogo from '../../app/assets/images/european-union-logo.png'
 import XMLogo from '../../app/assets/images/XMlogo.jpg'
@@ -26,10 +26,10 @@ export const Acknowledgements = ({ navigation }) => {
     return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress)
   }, [])
 
-  const backToMain = () => navigation.navigate('LocationTrackingScreen', {})
+  const backToMain = () => navigation.navigate('HomeScreen', {})
 
   const handleBackPress = () => {
-    navigation.navigate('LocationTrackingScreen', {})
+    navigation.navigate('HomeScreen', {})
     return true
   }
 

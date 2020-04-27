@@ -27,11 +27,11 @@ class ImportScreen extends Component {
   }
 
   backToMain () {
-    this.props.navigation.navigate('LocationTrackingScreen', {})
+    this.props.navigation.navigate('HomeScreen', {})
   }
 
   handleBackPress = () => {
-    this.props.navigation.navigate('LocationTrackingScreen', {})
+    this.props.navigation.navigate('HomeScreen', {})
     return true
   }
 

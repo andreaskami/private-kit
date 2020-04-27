@@ -15,16 +15,16 @@ import {
   BackHandler
 } from 'react-native'
 
-import { GetStoreData, SetStoreData } from '../../app/helpers/General'
-import colors from '../../app/constants/colors'
+import { GetStoreData, SetStoreData } from '../helpers/General'
+import colors from '../constants/colors'
 import { WebView } from 'react-native-webview'
-import Button from '../../app/components/Button'
+import Button from '../components/Button'
 import backArrow from '../../app/assets/images/backArrow.png'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { formatDate } from '../dateUtils'
-import { increaseFormCount } from '../formLimitations'
+import { formatDate } from '../helpers/dateUtils'
+import { increaseFormCount } from '../helpers/formLimitations'
 import { showMessage } from 'react-native-flash-message'
-import languages from '../../app/locales/languages'
+import languages from '../locales/languages'
 
 const width = Dimensions.get('window').width
 
@@ -38,7 +38,7 @@ class FormGeneral extends Component {
     showDatePicker: false
   }
   backToMain = () => {
-    this.props.navigation.navigate('LocationTrackingScreen', {})
+    this.props.navigation.navigate('HomeScreen', {})
   }
 
   handleBackPress = () => {

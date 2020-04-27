@@ -1,6 +1,6 @@
 import React from 'react'
 import { ActivityIndicator, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
-import backArrow from '../../app/assets/images/backArrow.png'
+import backArrow from '../../assets/images/backArrow.png'
 import useBackpress from './useBackpress'
 
 export default function Header (props) {
