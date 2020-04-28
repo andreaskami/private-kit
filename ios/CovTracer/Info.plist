@@ -36,6 +36,10 @@
 		<key>NSExceptionDomains</key>
 		<dict/>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Not used at the moment</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Not used at the moment</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We log your location to enable new opportunities for researchers studying refugee migration, wellbeing, and community traffic analysis in a privacy-preserving way.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
