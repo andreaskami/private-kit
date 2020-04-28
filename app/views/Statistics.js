@@ -41,7 +41,7 @@ export const NotificationScreen = ({ navigation }) => {
   const fetchStatistics = async () => {
     try {
       const res = await getLatestStatistics().then(r => r.json())
-      setData(res.records)
+      setData(res.records.filter(record => Object.values(record.fields).length > 0))
     } catch (error) {
       console.log(error)
     }
@@ -55,8 +55,6 @@ export const NotificationScreen = ({ navigation }) => {
   const handleBackPress = () => {
     navigation.navigate('HomeScreen', {})
   }
-
-  console.log(latestUpdate)
 
   return (
     <SafeAreaView style={styles.container}>
