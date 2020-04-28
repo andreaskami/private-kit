@@ -10,21 +10,6 @@ import { getLanguages } from 'react-native-i18n'
 // Step 6 - In React Native code import the main languages file and call the translate function - languages.t('label.labelname')
 
 import enlabels from './en'
-import delabels from './de'
-import hilabels from './hi'
-import frlabels from './fr'
-import itlabels from './it'
-import ptlabels from './pt'
-import mrlabels from './mr'
-import nllabels from './nl'
-import htlabels from './ht'
-import pt_BRlabels from './pt_BR'
-import eslabels from './es'
-import urlabels from './ur'
-import knlabels from './kn'
-import calabels from './ca'
-import gjlabels from './gj'
-import cslabels from './cs'
 import trlabels from './tr'
 import grlabels from './gr'
 
@@ -47,81 +32,6 @@ i18next.init({
     en: {
       translation: {
         label: enlabels
-      }
-    },
-    de: {
-      translation: {
-        label: delabels
-      }
-    },
-    hi: {
-      translation: {
-        label: hilabels
-      }
-    },
-    fr: {
-      translation: {
-        label: frlabels
-      }
-    },
-    it: {
-      translation: {
-        label: itlabels
-      }
-    },
-    pt: {
-      translation: {
-        label: ptlabels
-      }
-    },
-    mr: {
-      translation: {
-        label: mrlabels
-      }
-    },
-    nl: {
-      translation: {
-        label: nllabels
-      }
-    },
-    ht: {
-      translation: {
-        label: htlabels
-      }
-    },
-    pt_BR: {
-      translation: {
-        label: pt_BRlabels
-      }
-    },
-    kn: {
-      translation: {
-        label: knlabels
-      }
-    },
-    es: {
-      translation: {
-        label: eslabels
-      }
-    },
-    ur: {
-      translation: {
-        label: urlabels
-      }
-    },
-    ca: {
-      translation: {
-        label: calabels
-      }
-    },
-    gj: {
-      translation: {
-        label: gjlabels
-      }
-    },
-    cs: {
-      translation: {
-        label: cslabels
       }
     },
     tr: {
