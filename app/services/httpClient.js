@@ -10,13 +10,15 @@ export function getLatestStatistics () {
   })
 }
 export function checkSymptoms (request, lang) {
-  let langSafe = new Set(['el', 'en']).has(lang) ? lang : 'en'
+  const langSafe = new Set(['el', 'en', 'tr']).has(lang) ? lang : 'en'
   // Endpoint accepts gr, not el
-  langSafe = langSafe === 'el' ? 'gr' : langSafe
-  return fetchSafe(`http://coronatest.ucy.ac.cy/api/records/${langSafe}/store`, {
-    method: 'POST',
-    body: JSON.stringify(request)
-  })
+  return fetchSafe(
+    `http://coronatest.ucy.ac.cy/api/records/${langSafe === 'el' ? 'gr' : langSafe}/store`,
+    {
+      method: 'POST',
+      body: JSON.stringify(request)
+    }
+  )
 }
 
 function fetchSafe (url, options) {
