@@ -7,7 +7,7 @@ import Intro1 from './Intro1'
 import Intro2 from './Intro2'
 import Intro3 from './Intro3'
 
-export const WelcomeSlider = props => {
+export const OnboardingSlider = props => {
   const swiperRef = React.useRef('')
 
   const swipe = i => {
@@ -17,7 +17,7 @@ export const WelcomeSlider = props => {
     <View style={{ flex: 1 }}>
       <Swiper
         showsButtons={false}
-        activeDotColor={'#665EFF'}
+        activeDotColor='#665EFF'
         showsPagination={false}
         ref={swiperRef}
         loop={false}>
@@ -35,7 +35,7 @@ export const WelcomeSlider = props => {
   )
 }
 
-WelcomeSlider.propTypes = {
+OnboardingSlider.propTypes = {
   navigation: PropTypes.object.isRequired
 }
 

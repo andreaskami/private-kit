@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import logo1 from './../../assets/images/logo1.png'
 import logo2 from './../../assets/images/logo2.png'
 import logo3 from './../../assets/images/logo3.png'
+import { SetStoreData } from '../../helpers/General'
 
 const width = Dimensions.get('window').width
 
@@ -46,7 +47,10 @@ const Intro3 = props => (
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => props.navigation.navigate('HomeScreen')}
+        onPress={() => {
+          SetStoreData('ONBOARDING_COMPLETE', true)
+          props.navigation.navigate('HomeScreen')
+        }}
         style={styles.primaryButtonTouchable}>
         <Text style={styles.primaryButtonText}>{languages.t('label.start')}</Text>
       </TouchableOpacity>

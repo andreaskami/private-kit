@@ -3,6 +3,7 @@ module.exports = {
   extends: ['pitops/react'],
   rules: {
     'import/named': 'off',
-    'react/jsx-handler-names': 0
+    'react/jsx-handler-names': 0,
+    'react/jsx-no-duplicate-props': 'off'
   }
 }

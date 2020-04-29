@@ -11,7 +11,7 @@ import ImportScreen from './views/Import'
 import OverlapScreen from './views/Overlap'
 import LicencesScreen from './views/Licenses'
 import { StatisticsScreen } from './views/Statistics'
-import { WelcomeSlider } from './views/Welcome/Slider'
+import { OnboardingSlider } from './views/Onboarding/Slider'
 import { GetStoreData } from './helpers/General'
 import FlashMessage from 'react-native-flash-message'
 import { SafeAreaView } from 'react-native'
@@ -28,16 +28,15 @@ class Entry extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      initialRouteName: ''
+      isOnboard: ''
     }
   }
 
   componentDidMount () {
-    GetStoreData('PARTICIPATE')
-      .then(isParticipating => {
-        console.log(isParticipating)
+    GetStoreData('ONBOARDING_COMPLETE')
+      .then(isOnboard => {
         this.setState({
-          initialRouteName: isParticipating
+          isOnboard
         })
       })
       .catch(error => console.log(error))
@@ -48,7 +47,7 @@ class Entry extends Component {
       <NavigationContainer>
         <SafeAreaView style={{ flex: 1 }}>
           <Stack.Navigator initialRouteName='InitialScreen'>
-            {this.state.initialRouteName === 'true' ? (
+            {this.state.isOnboard ? (
               <Stack.Screen
                 name='InitialScreen'
                 component={Home}
@@ -57,13 +56,13 @@ class Entry extends Component {
             ) : (
               <Stack.Screen
                 name='InitialScreen'
-                component={WelcomeSlider}
+                component={OnboardingSlider}
                 options={{ headerShown: false }}
               />
             )}
             <Stack.Screen
               name='Slider'
-              component={WelcomeSlider}
+              component={OnboardingSlider}
               options={{ headerShown: false }}
             />
             <Stack.Screen
