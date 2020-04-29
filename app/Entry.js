@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import { Home } from './views/Home'
-import { Welcome } from './views/Welcome'
 import NewsScreen from './views/News'
 import ExportScreen from './views/Export'
 import ImportScreen from './views/Import'
@@ -53,7 +52,6 @@ export const Entry = () => {
             component={OnboardingSlider}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name='WelcomeScreen' component={Welcome} options={{ headerShown: false }} />
           <Stack.Screen name='HomeScreen' component={Home} options={{ headerShown: false }} />
           <Stack.Screen name='NewsScreen' component={NewsScreen} options={{ headerShown: false }} />
           <Stack.Screen
