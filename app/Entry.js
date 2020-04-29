@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -24,129 +24,106 @@ import SymptomChecker from './views/SymptomChecker/SymptomChecker'
 
 const Stack = createStackNavigator()
 
-class Entry extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isOnboard: ''
-    }
-  }
+export const Entry = () => {
+  const [isOnboard, setIsOnboard] = useState(false)
 
-  componentDidMount () {
+  useEffect(() => {
     GetStoreData('ONBOARDING_COMPLETE')
-      .then(isOnboard => {
-        this.setState({
-          isOnboard
-        })
+      .then(onboardingState => {
+        setIsOnboard(onboardingState)
       })
       .catch(error => console.log(error))
-  }
+  }, [])
 
-  render () {
-    return (
-      <NavigationContainer>
-        <SafeAreaView style={{ flex: 1 }}>
-          <Stack.Navigator initialRouteName='InitialScreen'>
-            {this.state.isOnboard ? (
-              <Stack.Screen
-                name='InitialScreen'
-                component={Home}
-                options={{ headerShown: false }}
-              />
-            ) : (
-              <Stack.Screen
-                name='InitialScreen'
-                component={OnboardingSlider}
-                options={{ headerShown: false }}
-              />
-            )}
+  return (
+    <NavigationContainer>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Stack.Navigator initialRouteName='InitialScreen'>
+          {isOnboard ? (
+            <Stack.Screen name='InitialScreen' component={Home} options={{ headerShown: false }} />
+          ) : (
             <Stack.Screen
-              name='Slider'
+              name='InitialScreen'
               component={OnboardingSlider}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
-              name='WelcomeScreen'
-              component={Welcome}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen name='HomeScreen' component={Home} options={{ headerShown: false }} />
-            <Stack.Screen
-              name='NewsScreen'
-              component={NewsScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='ExportScreen'
-              component={ExportScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='ImportScreen'
-              component={ImportScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='LicensesScreen'
-              component={LicencesScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='StatisticsScreen'
-              component={StatisticsScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='OverlapScreen'
-              component={OverlapScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              key='FormWorkScreen'
-              name='FormWorkScreen'
-              component={FormWork}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              key='FormGeneralNewScreen'
-              name='FormGeneralNewScreen'
-              component={FormGeneralNew}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              key='FormGeneralActiveScreen'
-              name='FormGeneralActiveScreen'
-              component={FormGeneralActive}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              key='PrivacyScreen'
-              name='PrivacyScreen'
-              component={Privacy}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              key='AckScreen'
-              name='AckScreen'
-              component={Acknowledgements}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              key='SymptomCheckerScreen'
-              name='SymptomCheckerScreen'
-              component={SymptomChecker}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-          <FlashMessage
-            ref={ref => {
-              this.top = ref
-            }}
+          )}
+          <Stack.Screen
+            name='Slider'
+            component={OnboardingSlider}
+            options={{ headerShown: false }}
           />
-        </SafeAreaView>
-      </NavigationContainer>
-    )
-  }
+          <Stack.Screen name='WelcomeScreen' component={Welcome} options={{ headerShown: false }} />
+          <Stack.Screen name='HomeScreen' component={Home} options={{ headerShown: false }} />
+          <Stack.Screen name='NewsScreen' component={NewsScreen} options={{ headerShown: false }} />
+          <Stack.Screen
+            name='ExportScreen'
+            component={ExportScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='ImportScreen'
+            component={ImportScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='LicensesScreen'
+            component={LicencesScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='StatisticsScreen'
+            component={StatisticsScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='OverlapScreen'
+            component={OverlapScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            key='FormWorkScreen'
+            name='FormWorkScreen'
+            component={FormWork}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            key='FormGeneralNewScreen'
+            name='FormGeneralNewScreen'
+            component={FormGeneralNew}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            key='FormGeneralActiveScreen'
+            name='FormGeneralActiveScreen'
+            component={FormGeneralActive}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            key='PrivacyScreen'
+            name='PrivacyScreen'
+            component={Privacy}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            key='AckScreen'
+            name='AckScreen'
+            component={Acknowledgements}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            key='SymptomCheckerScreen'
+            name='SymptomCheckerScreen'
+            component={SymptomChecker}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+        <FlashMessage
+          ref={ref => {
+            this.top = ref
+          }}
+        />
+      </SafeAreaView>
+    </NavigationContainer>
+  )
 }
-
-export default Entry
