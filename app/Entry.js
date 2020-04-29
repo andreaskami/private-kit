@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import { Home } from './views/Home'
-import Welcome from './views/Welcome'
+import { Welcome } from './views/Welcome'
 import NewsScreen from './views/News'
 import ExportScreen from './views/Export'
 import ImportScreen from './views/Import'
