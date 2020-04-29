@@ -7,20 +7,20 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  BackHandler,
-  ScrollView
+  BackHandler
 } from 'react-native'
 
 import colors from '../constants/colors'
 import backArrow from './../assets/images/backArrow.png'
 import languages from '../locales/languages'
-import { VictoryBar, VictoryAxis, VictoryChart, VictoryTooltip } from 'victory-native'
+import { VictoryBar, VictoryAxis, VictoryChart, VictoryZoomContainer } from 'victory-native'
+import PropTypes from 'prop-types'
+
 import { getLatestStatistics } from '../services/httpClient'
 
 const width = Dimensions.get('window').width
-const height = Dimensions.get('window').height
 
-export const NotificationScreen = ({ navigation }) => {
+export const StatisticsScreen = ({ navigation }) => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -28,6 +28,15 @@ export const NotificationScreen = ({ navigation }) => {
     if (data.length === 0) return null
 
     return data[data.length - 1]
+  }, [data])
+
+  const chartData = useMemo(() => {
+    if (!data.length) return
+
+    return data.map(record => ({
+      date: record.fields.date,
+      cases: parseInt(record.fields.newCases)
+    }))
   }, [data])
 
   useEffect(() => {
@@ -89,27 +98,15 @@ export const NotificationScreen = ({ navigation }) => {
                 </View>
               </View>
             )}
-            <View style={styles.historicDataContainer}>
-              <Text style={styles.historicDataTitle}>{languages.t('label.historic_data')}</Text>
-              <View style={[styles.row]}>
-                <Text style={{ minWidth: 120 }}>{languages.t('label.date')}</Text>
-                <Text style={{ minWidth: 120 }}>{languages.t('label.new_cases')}</Text>
-                <Text>{languages.t('label.total_cases')}</Text>
-              </View>
-              <ScrollView>
-                {data.map(historicRecord => (
-                  <View key={historicRecord.id} style={[styles.row]}>
-                    <Text style={[styles.value, { minWidth: 120 }]}>
-                      {latestUpdate.fields.date}
-                    </Text>
-                    <Text style={[styles.value, { minWidth: 120 }]}>
-                      +{latestUpdate.fields.newCases}
-                    </Text>
-                    <Text style={styles.value}>{latestUpdate.fields.totalCases}</Text>
-                  </View>
-                ))}
-              </ScrollView>
-            </View>
+
+            <VictoryChart
+              width={width}
+              domainPadding={10}
+              containerComponent={<VictoryZoomContainer />}>
+              <VictoryAxis fixLabelOverlap style={{ tickLabels: { padding: 10, fontSize: 12 } }} />
+              <VictoryAxis dependentAxis />
+              <VictoryBar data={chartData} x='date' y='cases' />
+            </VictoryChart>
           </>
         )}
         {loading && (
@@ -127,8 +124,11 @@ export const NotificationScreen = ({ navigation }) => {
   )
 }
 
+StatisticsScreen.propTypes = {
+  navigation: PropTypes.object.isRequired
+}
+
 const styles = StyleSheet.create({
-  // Container covers the entire screen
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -181,28 +181,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10
   },
-  tableHeaders: {
-    justifyContent: 'space-between'
-  },
   value: {
     fontWeight: 'bold'
-  },
-  historicDataContainer: {
-    flex: 1,
-    margin: 20,
-    padding: 10,
-    borderWidth: 0.5,
-    borderColor: '#000',
-    borderRadius: 4
-  },
-  historicDataTitle: {
-    fontSize: 18,
-    marginBottom: 20
-  },
-  historicRecord: {
-    justifyContent: 'space-between',
-    textAlign: 'left'
   }
 })
-
-export default NotificationScreen
