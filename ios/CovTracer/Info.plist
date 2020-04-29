@@ -41,15 +41,15 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Not used at the moment</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We log your location to enable new opportunities for researchers studying refugee migration, wellbeing, and community traffic analysis in a privacy-preserving way.</string>
+	<string>We log your location to enable new opportunities for researchers studying wellbeing, and community traffic analysis in a privacy-preserving way.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We log your location to enable new opportunities for researchers studying refugee migration, wellbeing, and community traffic analysis in a privacy-preserving way.</string>
+	<string>We log your location to enable new opportunities for researchers studying wellbeing, and community traffic analysis in a privacy-preserving way.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We log your location to enable new opportunities for researchers studying refugee migration, wellbeing, and community traffic analysis in a privacy-preserving way.</string>
+	<string>We log your location to enable new opportunities for researchers studying wellbeing, and community traffic analysis in a privacy-preserving way.</string>
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
 	<key>NSMotionUsageDescription</key>
-	<string>We use your accelerometer for accurate location history to enable new opportunities for researchers studying refugee migration, wellbeing, and community traffic analysis in a privacy-preserving way.</string>
+	<string>We use your accelerometer for accurate location history to enable new opportunities for researchers studying wellbeing, and community traffic analysis in a privacy-preserving way.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>OpenSans-Bold.ttf</string>
