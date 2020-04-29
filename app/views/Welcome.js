@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { SafeAreaView, StyleSheet, Linking, View, Text } from 'react-native'
 
 import colors from '../constants/colors'
@@ -8,64 +8,55 @@ import PropTypes from 'prop-types'
 
 import { GetStoreData, SetStoreData } from '../helpers/General'
 
-class Welcome extends Component {
-  constructor (props) {
-    super(props)
-  }
-  componentDidMount () {
+export const Welcome = ({ navigation }) => {
+  useEffect(() => {
     GetStoreData('PARTICIPATE')
       .then(isParticipating => {
         console.log(isParticipating)
-        if (isParticipating == 'true') {
+        if (isParticipating === 'true') {
           this.props.navigation.navigate('HomeScreen', {})
         }
       })
       .catch(error => console.log(error))
+  }, [])
+
+  const willParticipate = async () => {
+    await SetStoreData('PARTICIPATE', 'true')
+    navigation.navigate('HomeScreen', {})
   }
 
-  componentWillUnmount () {}
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.main}>
+        <View style={styles.topView}>
+          <View style={styles.intro}>
+            <Text style={styles.headerTitle}>CovTracer</Text>
 
-  willParticipate () {
-    SetStoreData('PARTICIPATE', 'true').then(() => this.props.navigation.navigate('HomeScreen', {}))
-  }
-
-  render () {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.main}>
-          <View style={styles.topView}>
-            <View style={styles.intro}>
-              <Text style={styles.headerTitle}>CovTracer</Text>
-
-              <Text style={styles.sectionDescription}>{languages.t('label.private_kit')}</Text>
-              <Text style={styles.sectionDescription}>{languages.t('label.logging_message')}</Text>
-            </View>
-          </View>
-
-          <View style={styles.block}>
-            <Button
-              title={languages.t('label.start_logging')}
-              onPress={() => this.willParticipate()}
-            />
-            <Text style={{ padding: 25, justifyContent: 'center' }}>
-              {languages.t('label.not_logging_message')}
-            </Text>
+            <Text style={styles.sectionDescription}>{languages.t('label.private_kit')}</Text>
+            <Text style={styles.sectionDescription}>{languages.t('label.logging_message')}</Text>
           </View>
         </View>
 
-        <View style={styles.footer}>
-          <Text style={(styles.sectionDescription, { textAlign: 'center', paddingTop: 10 })}>
-            {languages.t('label.url_info')}{' '}
-          </Text>
-          <Text
-            style={(styles.sectionDescriptionLow, { color: 'blue', textAlign: 'center' })}
-            onPress={() => Linking.openURL('http://covid-19.rise.org.cy/')}>
-            {languages.t('label.private_kit_url')}
+        <View style={styles.block}>
+          <Button title={languages.t('label.start_logging')} onPress={willParticipate} />
+          <Text style={{ padding: 25, justifyContent: 'center' }}>
+            {languages.t('label.not_logging_message')}
           </Text>
         </View>
-      </SafeAreaView>
-    )
-  }
+      </View>
+
+      <View style={styles.footer}>
+        <Text style={(styles.sectionDescription, { textAlign: 'center', paddingTop: 10 })}>
+          {languages.t('label.url_info')}{' '}
+        </Text>
+        <Text
+          style={(styles.sectionDescriptionLow, { color: 'blue', textAlign: 'center' })}
+          onPress={() => Linking.openURL('http://covid-19.rise.org.cy/')}>
+          {languages.t('label.private_kit_url')}
+        </Text>
+      </View>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -132,5 +123,3 @@ const styles = StyleSheet.create({
 Welcome.propTypes = {
   navigation: PropTypes.object.isRequired
 }
-
-export default Welcome
