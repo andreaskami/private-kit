@@ -3,6 +3,7 @@ import { Picker, StyleSheet, Text, TextInput, ScrollView, View } from 'react-nat
 import languages from '../../locales/languages'
 import PreviousNextButtons from './PreviousNextButtons'
 import countries from '../../constants/countries.json'
+import { invalidPostalCode } from '../../helpers/formLimitations'
 
 export default function Demographics (props) {
   const { age, postalCode } = props.data
@@ -13,20 +14,11 @@ export default function Demographics (props) {
     return [age < 0, age > 100, isNaN(age)].some(Boolean)
   }, [age])
 
-  const invalidPostalCode = useMemo(() => {
-    if (postalCode === undefined || postalCode === null) return false
-
-    return [
-      postalCode <= 0,
-      postalCode > 9999,
-      isNaN(postalCode),
-      postalCode.toString().length !== 4
-    ].some(Boolean)
-  }, [postalCode])
+  const postalCodeIsInvalid = useMemo(() => invalidPostalCode(postalCode), [postalCode])
 
   const formValid = useMemo(
-    () => [!invalidAge, !invalidPostalCode, age !== null, postalCode !== null].every(Boolean),
-    [invalidAge, invalidPostalCode]
+    () => [!invalidAge, !postalCodeIsInvalid, age !== null, postalCode !== null].every(Boolean),
+    [invalidAge, postalCodeIsInvalid, age, postalCode]
   )
 
   return (
@@ -65,7 +57,7 @@ export default function Demographics (props) {
           style={styles.input}
           keyboardType='number-pad'
         />
-        {invalidPostalCode && (
+        {postalCodeIsInvalid && (
           <Text style={{ color: 'red' }}>Postal code needs to be between 0001 - 9999</Text>
         )}
       </View>

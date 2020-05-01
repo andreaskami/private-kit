@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useLayoutEffect, useEffect, useMemo } from 'react'
 import {
   Alert,
   SafeAreaView,
@@ -10,201 +10,160 @@ import {
   Picker,
   Text,
   TextInput,
-  Platform,
+  Linking,
   TouchableOpacity,
   BackHandler
 } from 'react-native'
+import SendSMS from 'react-native-sms'
+import PropTypes from 'prop-types'
 
 import { GetStoreData, SetStoreData } from '../helpers/General'
 import colors from '../constants/colors'
-import { WebView } from 'react-native-webview'
-import Button from '../components/Button'
 import backArrow from '../../app/assets/images/backArrow.png'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import { formatDate } from '../helpers/dateUtils'
-import { increaseFormCount } from '../helpers/formLimitations'
-import { showMessage } from 'react-native-flash-message'
+
+import { invalidPostalCode, invalidIdentification } from '../helpers/formLimitations'
 import languages from '../locales/languages'
 
-const width = Dimensions.get('window').width
+export const FormGeneral = ({ navigation }) => {
+  const [identification, setIdentification] = useState(null)
+  const [reason, setReason] = useState(3)
+  const [postalCode, setPostalCode] = useState(null)
 
-class FormGeneral extends Component {
-  state = {
-    name: '',
-    dateBirth: '',
-    address: '',
-    reason: '',
-    reasonOther: '',
-    showDatePicker: false
-  }
-  backToMain = () => {
-    this.props.navigation.navigate('HomeScreen', {})
+  const postalCodeIsInvalid = useMemo(() => invalidPostalCode(postalCode), [postalCode])
+
+  const identificationNumberIsInvalid = useMemo(() => invalidIdentification(identification), [
+    identification
+  ])
+
+  const formValid = useMemo(
+    () =>
+      [
+        !identificationNumberIsInvalid,
+        !postalCodeIsInvalid,
+        postalCode !== null,
+        identification !== null
+      ].every(Boolean),
+    [identificationNumberIsInvalid, postalCodeIsInvalid, identification, postalCode]
+  )
+
+  const backToMain = () => {
+    navigation.navigate('HomeScreen', {})
   }
 
-  handleBackPress = () => {
-    this.backToMain()
+  const handleBackPress = () => {
+    backToMain()
     return true
   }
 
-  componentDidMount = () => {
-    GetStoreData('FORMGENERAL', false).then(
-      state =>
-        state &&
-        this.setState({
-          ...state,
-          dateBirth: new Date(state.dateBirth),
-          reason: '',
-          reasonOther: ''
-        })
-    )
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
-  }
+  useEffect(() => {
+    GetStoreData('FORMGENERAL', false).then(state => console.log('formState'))
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress)
 
-  componentWillUnmount = () => {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress)
-  }
+    return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress)
+  }, [handleBackPress])
 
-  submitForm = async () => {
-    if (
-      this.state.name == '' ||
-      this.state.dateBirth == '' ||
-      this.state.identification == '' ||
-      this.state.address == ''
-    ) {
-      Alert.alert(
-        languages.t('label.FORMGENERAL_NOINFO_TITLE'),
-        languages.t('label.FORMGENERAL_NOINFO_MESSAGE')
-      )
-      return
-    }
-    if (this.state.reason == '') {
-      Alert.alert(
-        languages.t('label.FORMGENERAL_NOREASON_TITLE'),
-        languages.t('label.FORMGENERAL_NOREASON_MESSAGE')
-      )
-      return
-    }
-    if (this.state.reason == 8 && this.state.reasonOther == '') {
-      Alert.alert(
-        languages.t('label.FORMGENERAL_NOREASONOTHER_TITLE'),
-        languages.t('label.FORMGENERAL_NOREASONOTHER_MESSAGE')
-      )
-      return
-    }
-    const { name, dateBirth, identification, address, reason, reasonOther } = this.state
-    const formData = {
-      name,
-      dateBirth,
-      identification,
-      address,
-      reason,
-      reasonOther,
-      date: new Date()
-    }
-    await SetStoreData('FORMGENERAL', formData)
-    await increaseFormCount()
-    showMessage({
-      message: languages.t('label.FORMGENERAL_SUCCESS'),
-      type: 'success'
+  useLayoutEffect(() => {
+    GetStoreData('DECLARATION_FIELDS').then(data => {
+      const parsedData = JSON.parse(data)
+      setPostalCode(parsedData.postalCode)
+      setIdentification(parsedData.identification)
     })
-    this.backToMain()
+  }, [])
+
+  const submitForm = async () => {
+    // SendSMS.send(
+    //   {
+    //     body: 'The default body of the SMS!',
+    //     recipients: ['0123456789', '9876543210'],
+    //     successTypes: ['sent', 'queued'],
+    //     allowAndroidSendWithoutReadPermission: true
+    //   },
+    //   (completed, cancelled, error) => {
+    //     console.log(
+    //       'SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error
+    //     )
+    //   }
+    // )
+    Linking.openURL(`sms:+8998?&body=${reason}%20${identification}%20${postalCode}`)
+    SetStoreData('DECLARATION_FIELDS', { postalCode, identification })
+    // go back to main
+    // show alert ?
   }
 
-  render () {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity style={styles.backArrowTouchable} onPress={() => this.backToMain()}>
-            <Image style={styles.backArrow} source={backArrow} />
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity style={styles.backArrowTouchable} onPress={backToMain}>
+          <Image style={styles.backArrow} source={backArrow} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>{languages.t('label.FORMGENERAL_NEW')}</Text>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.main}>
+        <Text style={styles.label}>{languages.t('label.FORMGENERAL_IDENTIFICATION')}</Text>
+        <TextInput onChangeText={setIdentification} value={identification} style={styles.input} />
+        {identificationNumberIsInvalid && (
+          <Text style={{ color: 'red' }}>Up to 10 characters, no special characters allowed</Text>
+        )}
+
+        <Text style={styles.label}>{languages.t('label.FORMGENERAL_REASON')}</Text>
+        <Picker
+          onValueChange={setReason}
+          selectedValue={reason}
+          itemStyle={styles.pickerItem}
+          style={styles.picker}>
+          <Picker.Item label={languages.t('label.FORMGENERAL_REASON_1')} value={1} />
+          <Picker.Item label={languages.t('label.FORMGENERAL_REASON_2')} value={2} />
+          <Picker.Item label={languages.t('label.FORMGENERAL_REASON_3')} value={3} />
+          <Picker.Item label={languages.t('label.FORMGENERAL_REASON_4')} value={4} />
+          <Picker.Item label={languages.t('label.FORMGENERAL_REASON_5')} value={5} />
+          <Picker.Item label={languages.t('label.FORMGENERAL_REASON_6')} value={6} />
+          <Picker.Item label={languages.t('label.FORMGENERAL_REASON_7')} value={7} />
+          <Picker.Item label={languages.t('label.FORMGENERAL_REASON_8')} value={8} />
+        </Picker>
+
+        <Text style={styles.label}>Postal code</Text>
+        <TextInput
+          onChangeText={setPostalCode}
+          value={postalCode}
+          style={styles.input}
+          keyboardType='number-pad'
+        />
+        {postalCodeIsInvalid && (
+          <Text style={{ color: 'red' }}>Postal code needs to be between 0001 and 9999</Text>
+        )}
+
+        <View style={{ alignItems: 'center' }}>
+          <TouchableOpacity
+            style={[styles.submit, !formValid ? styles.disabledButton : null]}
+            onPress={submitForm}
+            disabled={!formValid}>
+            <Text style={styles.submitText}>{languages.t('label.FORMWORK_SUBMIT')}</Text>
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>{languages.t('label.FORMGENERAL_NEW')}</Text>
         </View>
-        <ScrollView contentContainerStyle={styles.main}>
-          <Text style={styles.label}>{languages.t('label.FORMGENERAL_NAME')}</Text>
-          <TextInput
-            onChangeText={name => this.setState({ name })}
-            value={this.state.name}
-            style={styles.input}
-          />
-          <Text style={styles.label}>{languages.t('label.FORMGENERAL_DATEBIRTH')}</Text>
-          <TouchableOpacity onPress={() => this.setState({ showDatePicker: true })}>
-            <Text style={{ ...styles.input, paddingTop: 10 }}>
-              {this.state.dateBirth ? formatDate(this.state.dateBirth) : '-'}
-            </Text>
-          </TouchableOpacity>
-          {this.state.showDatePicker && (
-            <DateTimePicker
-              value={this.state.dateBirth ? this.state.dateBirth : new Date()}
-              display='default'
-              onChange={(e, dateBirth) => {
-                this.setState({
-                  dateBirth,
-                  showDatePicker: Platform.OS === 'ios'
-                })
-              }}
-            />
-          )}
-          <Text style={styles.label}>{languages.t('label.FORMGENERAL_IDENTIFICATION')}</Text>
-          <TextInput
-            onChangeText={identification => this.setState({ identification })}
-            value={this.state.identification}
-            style={styles.input}
-          />
-          <Text style={styles.label}>{languages.t('label.FORMGENERAL_ADDRESS')}</Text>
-          <TextInput
-            onChangeText={address => this.setState({ address })}
-            value={this.state.address}
-            style={styles.input}
-          />
-          <Text style={styles.label}>{languages.t('label.FORMGENERAL_REASON')}</Text>
-          <Picker
-            onValueChange={reason => this.setState({ reason })}
-            selectedValue={this.state.reason}
-            style={styles.picker}>
-            <Picker.Item label={languages.t('label.FORMGENERAL_REASON_SELECT')} />
-            <Picker.Item label={languages.t('label.FORMGENERAL_REASON_1')} value={1} />
-            <Picker.Item label={languages.t('label.FORMGENERAL_REASON_2')} value={2} />
-            <Picker.Item label={languages.t('label.FORMGENERAL_REASON_3')} value={3} />
-            <Picker.Item label={languages.t('label.FORMGENERAL_REASON_4')} value={4} />
-            <Picker.Item label={languages.t('label.FORMGENERAL_REASON_5')} value={5} />
-            <Picker.Item label={languages.t('label.FORMGENERAL_REASON_6')} value={6} />
-            <Picker.Item label={languages.t('label.FORMGENERAL_REASON_7')} value={7} />
-            <Picker.Item label={languages.t('label.FORMGENERAL_REASON_8')} value={8} />
-          </Picker>
-          <Text style={{ padding: 10 }}>
-            {this.state.reason && languages.t('label.FORMGENERAL_REASON_' + this.state.reason)}
-          </Text>
-          {this.state.reason == 8 && (
-            <TextInput
-              onChangeText={reasonOther => this.setState({ reasonOther })}
-              value={this.state.reasonOther}
-              style={styles.input}
-              placeholder={languages.t('label.FORMGENERAL_REASON_OTHER')}
-            />
-          )}
-          <View style={{ alignItems: 'center' }}>
-            <TouchableOpacity style={styles.submit} onPress={this.submitForm}>
-              <Text style={styles.submitText}>{languages.t('label.FORMWORK_SUBMIT')}</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    )
-  }
+      </ScrollView>
+    </SafeAreaView>
+  )
+}
+
+FormGeneral.propTypes = {
+  navigation: PropTypes.object.isRequired
 }
 
 const styles = StyleSheet.create({
   label: {
-    fontSize: 16,
     marginTop: 20,
-    marginLeft: 5,
-    fontWeight: 'bold'
+    marginBottom: 10
+  },
+  main: {
+    padding: 20
   },
   container: {
     flex: 1,
     flexDirection: 'column',
     color: colors.PRIMARY_TEXT,
-    backgroundColor: colors.WHITE
+    backgroundColor: colors.WHITE,
+    padding: 20
   },
   submit: {
     width: '60%',
@@ -215,6 +174,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#fff',
     backgroundColor: '#665eff'
+  },
+  disabledButton: {
+    opacity: 0.5
   },
   submitText: {
     lineHeight: 40,
@@ -239,13 +201,10 @@ const styles = StyleSheet.create({
     width: 18.48
   },
   input: {
-    borderColor: '#CCCCCC',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    height: 50,
-    fontSize: 20,
-    paddingLeft: 10,
-    paddingRight: 20
+    borderWidth: 0.5,
+    borderRadius: 4,
+    color: '#000',
+    height: 40
   },
   headerTitle: {
     fontSize: 24,
@@ -254,7 +213,9 @@ const styles = StyleSheet.create({
     top: 21,
     width: '70%'
   },
-  picker: {}
+  pickerItem: {
+    fontSize: 13
+  }
 })
 
 export default FormGeneral

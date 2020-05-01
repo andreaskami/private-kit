@@ -32,3 +32,22 @@ export async function getWaitTimeLeft () {
 
   return Math.round(waitTimeInMinutes - minutesPassed)
 }
+
+export const invalidPostalCode = postalCode => {
+  if (postalCode === undefined || postalCode === null) return false
+
+  return [
+    postalCode <= 0,
+    postalCode > 9999,
+    isNaN(postalCode),
+    postalCode.toString().length !== 4
+  ].some(Boolean)
+}
+
+export const invalidIdentification = identification => {
+  if (identification === undefined || identification === null) return false
+
+  const allowedCharacters = /^[0-9a-zA-Z]+$/
+
+  return [!allowedCharacters.test(identification), identification.length > 10].some(Boolean)
+}

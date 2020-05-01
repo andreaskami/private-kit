@@ -55,6 +55,7 @@
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "2.7.0",
     "react-native-share": "^3.3.0",
+    "react-native-sms": "^1.11.0",
     "react-native-svg": "^12.1.0",
     "react-native-uuid-generator": "^6.1.1",
     "react-native-webview": "^9.3.0",

@@ -16,7 +16,6 @@ import FlashMessage from 'react-native-flash-message'
 import { SafeAreaView } from 'react-native'
 import FormWork from './views/FormWork'
 import FormGeneralNew from './views/FormGeneralNew'
-import FormGeneralActive from './views/FormGeneralActive'
 import { Acknowledgements } from './views/Acknowledgements'
 import { Privacy } from './views/Privacy'
 import SymptomChecker from './views/SymptomChecker/SymptomChecker'
@@ -89,12 +88,6 @@ export const Entry = () => {
             key='FormGeneralNewScreen'
             name='FormGeneralNewScreen'
             component={FormGeneralNew}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            key='FormGeneralActiveScreen'
-            name='FormGeneralActiveScreen'
-            component={FormGeneralActive}
             options={{ headerShown: false }}
           />
           <Stack.Screen

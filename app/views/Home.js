@@ -30,8 +30,6 @@ import logo3 from './../assets/images/logo3.png'
 import { GetStoreData, SetStoreData } from '../helpers/General'
 import languages from '../locales/languages'
 
-import CheckerButton from './CheckerButton'
-
 const width = Dimensions.get('window').width
 
 class Home extends Component {
@@ -237,7 +235,26 @@ class Home extends Component {
             )}
           </View>
 
-          <CheckerButton navigation={this.props.navigation} />
+          <View style={styles.actionButtonsView}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('SymptomCheckerScreen', {})}
+              style={styles.actionButtonsTouchable}>
+              <Text style={styles.actionButtonHead}>&#x1F50D;</Text>
+              <Text style={styles.actionButtonText}>{languages.t('label.SYMPTOM_CHECKER')}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('FormGeneralNewScreen', {})}
+              style={styles.actionButtonsTouchable}>
+              <Text style={styles.actionButtonHead}>&#9997;</Text>
+              <Text style={styles.actionButtonText}>{languages.t('label.FORMGENERAL_NEW')}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => this.news()} style={styles.actionButtonsTouchable}>
+              <Image style={styles.actionButtonImage} source={news} resizeMode={'contain'} />
+              <Text style={styles.actionButtonText}>{languages.t('label.news')}</Text>
+            </TouchableOpacity>
+          </View>
 
           <View style={styles.actionButtonsView}>
             <TouchableOpacity onPress={() => this.import()} style={styles.actionButtonsTouchable}>
@@ -252,11 +269,6 @@ class Home extends Component {
                 resizeMode={'contain'}
               />
               <Text style={styles.actionButtonText}>{languages.t('label.export')}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => this.news()} style={styles.actionButtonsTouchable}>
-              <Image style={styles.actionButtonImage} source={news} resizeMode={'contain'} />
-              <Text style={styles.actionButtonText}>{languages.t('label.news')}</Text>
             </TouchableOpacity>
           </View>
 
@@ -328,10 +340,10 @@ const styles = StyleSheet.create({
   actionButtonsView: {
     width: width * 0.7866,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flex: 2,
     alignItems: 'center',
-    marginBottom: -10
+    marginTop: 20
   },
   footer: {
     textAlign: 'center',
@@ -404,7 +416,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#454f63',
     width: width * 0.23,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginRight: 10,
+    marginLeft: 10
   },
   actionButtonImage: {
     height: 21.6,
