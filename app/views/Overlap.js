@@ -185,7 +185,7 @@ function OverlapScreen () {
                   key={num}
                   onSelect={() => setShowingLast(num)}>
                   <Text style={styles.menuOptionText}>
-                    {num === 0 ? 'Today' : `${num} days ago`}
+                    {num === 0 ? 'Today' : `${num} ${num === 1 ? 'day' : 'days'} ago`}
                   </Text>
                 </MenuOption>
               ))}
