@@ -14,7 +14,6 @@ import {
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu'
 import moment from 'moment'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import WebView from 'react-native-webview'
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import MapView from 'react-native-map-clustering'
 import colors from '../constants/colors'
