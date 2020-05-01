@@ -175,7 +175,9 @@ function OverlapScreen () {
           <Menu>
             <MenuTrigger style={{ marginLeft: 14 }}>
               <Text style={{ backgroundColor: '#EFEFEF', padding: 5 }}>
-                {showingLast === 0 ? 'Today' : `${showingLast} days ago`}
+                {showingLast === 0
+                  ? 'Today'
+                  : `${showingLast} ${showingLast === 1 ? 'day' : 'days'} ago`}
               </Text>
             </MenuTrigger>
             <MenuOptions>
