@@ -61,34 +61,31 @@ function OverlapScreen () {
     [period]
   )
 
-  const populateMarkers = useCallback(
-    async locationArray => {
-      const markersTemp = []
-      const previousMarkers = {}
-      for (var i = 0; i < locationArray.length - 1; i += 1) {
-        const coord = locationArray[i]
-        const lat = coord.latitude
-        const long = coord.longitude
-        const key = String(lat) + '|' + String(long)
-        if (key in previousMarkers) {
-          previousMarkers[key] += 1
-        } else {
-          previousMarkers[key] = 0
-          const marker = {
-            coordinate: {
-              latitude: lat,
-              longitude: long
-            },
-            key: i + 1,
-            time: coord.time
-          }
-          markersTemp.push(marker)
+  const populateMarkers = useCallback(async locationArray => {
+    const markersTemp = []
+    const previousMarkers = {}
+    for (var i = 0; i < locationArray.length - 1; i += 1) {
+      const coord = locationArray[i]
+      const lat = coord.latitude
+      const long = coord.longitude
+      const key = String(lat) + '|' + String(long)
+      if (key in previousMarkers) {
+        previousMarkers[key] += 1
+      } else {
+        previousMarkers[key] = 0
+        const marker = {
+          coordinate: {
+            latitude: lat,
+            longitude: long
+          },
+          key: i + 1,
+          time: coord.time
         }
+        markersTemp.push(marker)
       }
-      setMarkers(markers)
-    },
-    [markers]
-  )
+    }
+    setMarkers(markersTemp)
+  }, [])
 
   const getInitialState = useCallback(() => {
     try {
@@ -109,13 +106,12 @@ function OverlapScreen () {
             longitudeDelta: 0.020421
           })
           setAllLocations(locationArray)
-          populateMarkers(locationArray)
         }
       })
     } catch (error) {
       console.log(error)
     }
-  }, [populateMarkers])
+  }, [])
 
   function backToMain () {
     navigate('HomeScreen', {})
