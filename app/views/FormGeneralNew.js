@@ -86,8 +86,11 @@ export const FormGeneral = ({ navigation }) => {
     // )
     Linking.openURL(`sms:+8998?&body=${reason}%20${identification}%20${postalCode}`)
     SetStoreData('DECLARATION_FIELDS', { postalCode, identification })
-    // go back to main
-    // show alert ?
+    Alert.alert(
+      'Note',
+      'Check your messages if your request has been accepted and if the SMS sending was successful',
+      [{ text: 'OK', onPress: () => navigation.navigate('HomeScreen') }]
+    )
   }
 
   return (
