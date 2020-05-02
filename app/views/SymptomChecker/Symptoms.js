@@ -10,10 +10,15 @@ export default function Symptoms (props) {
   function toggleSymptom (id) {
     let symptoms = new Set(props.data.symptoms)
 
-    // Remove others if none
-    if (symptoms.has('none_of_the_above')) {
+    if (id === 'none_of_the_above' && symptoms.has(id)) {
+      symptoms = new Set([])
+    } else if (id === 'none_of_the_above' && !symptoms.has(id)) {
       symptoms = new Set(['none_of_the_above'])
+    } else {
+      // eslint-disable-next-line
+      symptoms.has(id) ? symptoms.delete(id) : symptoms.add(id)
     }
+
     props.dispatch({ symptoms })
   }
   return (
@@ -99,7 +104,7 @@ export default function Symptoms (props) {
 
       <PreviousNextButtons
         nextCallback={props.nextStep}
-        nextDisabled={props.data.symptoms.size == 0}
+        nextDisabled={props.data.symptoms.size === 0}
         previousCallback={props.previousStep}
         previousDisabled={false}
       />
