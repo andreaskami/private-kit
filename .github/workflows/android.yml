@@ -33,6 +33,9 @@ jobs:
       - name: AndroidX
         run: npx jetify
 
+      - name: Install old NDK
+        run: sdkmanager 'ndk;20.0.5594570'
+
       - name: Bundle app
         run: npm run android:bundle
 
