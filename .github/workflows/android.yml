@@ -33,6 +33,9 @@ jobs:
       - name: Bundle app
         run: npm run android:bundle
 
+      - name: AndroidX
+        run: npx jetify
+
       - name: Pack app
         run: npm run android:build:dev
 

@@ -1,7 +1,6 @@
 # Ixnilatis
 
-![Android](https://github.com/andreaskami/private-kit/workflows/android/badge.svg)
-![iOS](https://github.com/andreaskami/private-kit/workflows/ios/badge.svg)
+![Android CI](https://github.com/andreaskami/private-kit/workflows/Android%20CI/badge.svg)
 
 ## Android
 
