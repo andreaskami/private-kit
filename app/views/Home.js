@@ -17,6 +17,7 @@ import LocationServices from '../services/LocationService'
 import BroadcastingServices from '../services/BroadcastingService'
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation'
 import { getVersion } from 'react-native-device-info'
+import PropTypes from 'prop-types'
 
 import exportImage from './../assets/images/export.png'
 import news from './../assets/images/newspaper.png'
@@ -41,8 +42,15 @@ class Home extends Component {
     }
   }
 
-  componentDidMount () {
+  async componentDidMount () {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
+
+    const onBoardingValue = await GetStoreData('ONBOARDING_COMPLETE')
+    if (!onBoardingValue || !+onBoardingValue) {
+      this.props.navigation.navigate('OnboardingScreen')
+      return
+    }
+
     GetStoreData('PARTICIPATE')
       .then(isParticipating => {
         if (isParticipating === 'true') {
@@ -58,6 +66,7 @@ class Home extends Component {
       })
       .catch(error => console.log(error))
   }
+
   componentWillUnmount () {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress)
   }
@@ -66,6 +75,7 @@ class Home extends Component {
     BackHandler.exitApp() // works best when the goBack is async
     return true
   }
+
   export () {
     this.props.navigation.navigate('ExportScreen', {})
   }
@@ -251,14 +261,14 @@ class Home extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => this.news()} style={styles.actionButtonsTouchable}>
-              <Image style={styles.actionButtonImage} source={news} resizeMode={'contain'} />
+              <Image style={styles.actionButtonImage} source={news} resizeMode='contain' />
               <Text style={styles.actionButtonText}>{languages.t('label.news')}</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.actionButtonsView}>
             <TouchableOpacity onPress={() => this.import()} style={styles.actionButtonsTouchable}>
-              <Image style={styles.actionButtonImage} source={exportImage} resizeMode={'contain'} />
+              <Image style={styles.actionButtonImage} source={exportImage} resizeMode='contain' />
               <Text style={styles.actionButtonText}>{languages.t('label.import')}</Text>
             </TouchableOpacity>
 
@@ -266,7 +276,7 @@ class Home extends Component {
               <Image
                 style={[styles.actionButtonImage, { transform: [{ rotate: '180deg' }] }]}
                 source={exportImage}
-                resizeMode={'contain'}
+                resizeMode='contain'
               />
               <Text style={styles.actionButtonText}>{languages.t('label.export')}</Text>
             </TouchableOpacity>
@@ -360,7 +370,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     marginTop: 10,
-    //IX
+    // IX
     textAlign: 'center',
     marginBottom: 2
   },
@@ -371,7 +381,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     marginTop: 0,
-    //IX
+    // IX
     textAlign: 'center',
     marginBottom: 5
   },
@@ -440,5 +450,9 @@ const styles = StyleSheet.create({
     padding: 10
   }
 })
+
+Home.propTypes = {
+  navigation: PropTypes.object
+}
 
 export { Home }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component } from 'react'
 
 import FlashMessage from 'react-native-flash-message'
 import { SafeAreaView } from 'react-native'
@@ -18,12 +18,10 @@ import FormGeneralNew from './views/FormGeneralNew'
 import { Acknowledgements } from './views/Acknowledgements'
 import { Privacy } from './views/Privacy'
 import SymptomChecker from './views/SymptomChecker/SymptomChecker'
-import { GetStoreData } from './helpers/General'
 
 const Stack = createStackNavigator()
 
 const Pages = [
-  { name: 'Slider', component: OnboardingSlider, hasHeader: false },
   { name: 'HomeScreen', component: Home, hasHeader: false },
   { name: 'OnboardingScreen', component: OnboardingSlider, hasHeader: false },
   { name: 'NewsScreen', component: NewsScreen, hasHeader: false },
@@ -39,39 +37,45 @@ const Pages = [
   { name: 'SymptomCheckerScreen', component: SymptomChecker, hasHeader: false }
 ]
 
-export const Entry = () => {
-  const [isOnboard, setIsOnboard] = useState(false)
+export class Entry extends Component {
+  pages
 
-  const pages = Pages.map(page => (
-    <Stack.Screen
-      key={page.name}
-      name={page.name}
-      component={page.component}
-      options={{ headerShown: page.hasHeader }}
-    />
-  ))
+  constructor (props) {
+    super(props)
 
-  useEffect(() => {
-    GetStoreData('ONBOARDING_COMPLETE')
-      .then(onboardingState => {
-        setIsOnboard(onboardingState)
-      })
-      .catch(error => console.log(error))
-  }, [])
+    this.state = {
+      initialRouteName: 'Home'
+    }
 
-  return (
-    <NavigationContainer>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Stack.Navigator initialRouteName={isOnboard ? 'OnboardingScreen' : 'HomeScreen'}>
-          {pages}
-        </Stack.Navigator>
+    this.pages = Pages.map(page => (
+      <Stack.Screen
+        key={page.name}
+        name={page.name}
+        component={page.component}
+        options={{ headerShown: page.hasHeader }}
+      />
+    ))
+  }
 
-        <FlashMessage
-          ref={ref => {
-            this.top = ref
-          }}
-        />
-      </SafeAreaView>
-    </NavigationContainer>
-  )
+  // TODO: Add rootStore for dynamic loading
+  async componentDidMount () {
+    // const value = await GetStoreData('ONBOARDING_COMPLETE')
+    // console.log('ONBOARDING_COMPLETE', value)
+  }
+
+  render () {
+    return (
+      <NavigationContainer>
+        <SafeAreaView style={{ flex: 1 }}>
+          <Stack.Navigator initialRouteName={this.initialRouteName}>{this.pages}</Stack.Navigator>
+
+          <FlashMessage
+            ref={ref => {
+              this.top = ref
+            }}
+          />
+        </SafeAreaView>
+      </NavigationContainer>
+    )
+  }
 }
