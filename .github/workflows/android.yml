@@ -28,13 +28,13 @@ jobs:
           node-version: 12.x
 
       - name: Install node modules
-        run: npm install
-
-      - name: Bundle app
-        run: npm run android:bundle
+        run: npx yarn install
 
       - name: AndroidX
         run: npx jetify
+
+      - name: Bundle app
+        run: npm run android:bundle
 
       - name: Pack app
         run: npm run android:build:dev
