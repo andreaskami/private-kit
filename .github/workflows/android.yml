@@ -22,13 +22,13 @@ jobs:
           node-version: 12.x
 
       - name: Install node modules
-          run: npm ci
+        run: npm ci
 
       - name: Bundle app
-          run: npm run android:bundle
+        run: npm run android:bundle
 
       - name: Pack app
-          run: npm run android:build:dev
+        run: npm run android:build:dev
 
       - name: Upload apk
         uses: actions/upload-artifact@v1
