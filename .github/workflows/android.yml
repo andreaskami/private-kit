@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - ci-test
 
 jobs:
   build:
@@ -16,22 +17,33 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
       - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v1
-          with:
-            node-version: 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
 
       - name: Install node modules
-          run: npm ci
+        run: npx yarn install
+
+      - name: AndroidX
+        run: npx jetify
+
+      - name: Install old NDK
+        run: echo "y" | sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;20.0.5594570" --sdk_root=${ANDROID_SDK_ROOT}
 
       - name: Bundle app
-          run: npm run android:bundle
+        run: npm run android:bundle
 
       - name: Pack app
-          run: npm run android:build:dev
+        run: npm run android:build:dev
 
       - name: Upload apk
-          uses: actions/upload-artifact@v1
-          with:
-            name: edu.rise.ihnilatis.apk
-            path: android/app/build/outputs/apk/debug/app-debug.apk
+        uses: actions/upload-artifact@v1
+        with:
+          name: edu.rise.ihnilatis.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
