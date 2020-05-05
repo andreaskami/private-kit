@@ -8,6 +8,8 @@ import notificationFile from './notification.json'
 import ixnilatisOverride from './ixnilatisOverride.json'
 import ixnilatisNew from './ixnilatisNew.json'
 import statistics from './statistics.json'
+import validations from './validations.json'
+import alerts from './alerts.json'
 
 export default {
   ...intro,
@@ -19,5 +21,7 @@ export default {
   ...notificationFile,
   ...ixnilatisOverride,
   ...ixnilatisNew,
-  ...statistics
+  ...statistics,
+  ...validations,
+  ...alerts
 }

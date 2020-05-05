@@ -238,8 +238,8 @@ const Home = ({ navigation }) => {
             onPress={() => {
               if (!netInfo.isInternetReachable) {
                 Alert.alert(
-                  'Warning',
-                  'An internet connection is required before accessing this feature',
+                  languages.t('label.alert.title.warning'),
+                  languages.t('label.alert.no_internet_connection'),
                   [{ text: 'OK', onPress: () => navigation.navigate('HomeScreen') }]
                 )
                 return

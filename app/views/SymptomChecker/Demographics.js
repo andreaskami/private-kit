@@ -33,7 +33,7 @@ export default function Demographics (props) {
           style={styles.input}
           keyboardType='number-pad'
         />
-        {invalidAge && <Text style={{ color: 'red' }}>Age needs to be between 0 - 100</Text>}
+        {invalidAge && <Text style={{ color: 'red' }}>{languages.t('label.validation.age')}</Text>}
       </View>
 
       <View style={styles.inputContainer}>
@@ -58,7 +58,7 @@ export default function Demographics (props) {
           keyboardType='number-pad'
         />
         {postalCodeIsInvalid && (
-          <Text style={{ color: 'red' }}>Postal code needs to be between 0001 - 9999</Text>
+          <Text style={{ color: 'red' }}>{languages.t('label.validation.postal_code')}</Text>
         )}
       </View>
 

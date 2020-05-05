@@ -102,11 +102,9 @@ export const MovementDeclarationForm = ({ navigation }) => {
 
     if (permissionGranted) {
       SetStoreData('DECLARATION_FIELDS', { postalCode, identification })
-      Alert.alert(
-        'Note',
-        'Check your messages if your request has been accepted and if the SMS was sent successfully',
-        [{ text: 'OK', onPress: () => navigation.navigate('HomeScreen') }]
-      )
+      Alert.alert(languages.t('label.alert.title.note'), languages.t('label.alert.sms_dispatch'), [
+        { text: 'OK', onPress: () => navigation.navigate('HomeScreen') }
+      ])
     }
   }
 
@@ -123,7 +121,7 @@ export const MovementDeclarationForm = ({ navigation }) => {
         <Text style={styles.label}>{languages.t('label.FORMGENERAL_IDENTIFICATION')}</Text>
         <TextInput onChangeText={setIdentification} value={identification} style={styles.input} />
         {identificationNumberIsInvalid && (
-          <Text style={{ color: 'red' }}>Up to 10 characters, no special characters allowed</Text>
+          <Text style={{ color: 'red' }}>{languages.t('label.validation.identification')}</Text>
         )}
 
         <Text style={styles.label}>{languages.t('label.FORMGENERAL_REASON')}</Text>
@@ -150,7 +148,7 @@ export const MovementDeclarationForm = ({ navigation }) => {
           keyboardType='number-pad'
         />
         {postalCodeIsInvalid && (
-          <Text style={{ color: 'red' }}>Postal code needs to be between 0001 and 9999</Text>
+          <Text style={{ color: 'red' }}>{languages.t('label.validation.postal_code')}</Text>
         )}
 
         <View style={{ alignItems: 'center' }}>
