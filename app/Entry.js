@@ -14,7 +14,7 @@ import LicencesScreen from './views/Licenses'
 import { StatisticsScreen } from './views/Statistics'
 import { OnboardingSlider } from './views/Onboarding/Slider'
 import FormWork from './views/FormWork'
-import FormGeneralNew from './views/FormGeneralNew'
+import { MovementDeclarationForm } from './views/MovementDeclarationForm'
 import { Acknowledgements } from './views/Acknowledgements'
 import { Privacy } from './views/Privacy'
 import SymptomChecker from './views/SymptomChecker/SymptomChecker'
@@ -31,7 +31,7 @@ const Pages = [
   { name: 'StatisticsScreen', component: StatisticsScreen, hasHeader: false },
   { name: 'OverlapScreen', component: OverlapScreen, hasHeader: false },
   { name: 'FormWorkScreen', component: FormWork, hasHeader: false },
-  { name: 'FormGeneralNewScreen', component: FormGeneralNew, hasHeader: false },
+  { name: 'MovementDeclarationScreen', component: MovementDeclarationForm, hasHeader: false },
   { name: 'PrivacyScreen', component: Privacy, hasHeader: false },
   { name: 'AckScreen', component: Acknowledgements, hasHeader: false },
   { name: 'SymptomCheckerScreen', component: SymptomChecker, hasHeader: false }

@@ -1,11 +1,13 @@
-import React, { useState, useLayoutEffect, useEffect, useMemo } from 'react'
+import React, { useState, useLayoutEffect, useEffect, useMemo, useCallback } from 'react'
 import {
   Alert,
   SafeAreaView,
   StyleSheet,
   ScrollView,
   Image,
-  Dimensions,
+  NativeModules,
+  PermissionsAndroid,
+  Platform,
   View,
   Picker,
   Text,
@@ -14,7 +16,7 @@ import {
   TouchableOpacity,
   BackHandler
 } from 'react-native'
-import SendSMS from 'react-native-sms'
+
 import PropTypes from 'prop-types'
 
 import { GetStoreData, SetStoreData } from '../helpers/General'
@@ -24,7 +26,9 @@ import backArrow from '../../app/assets/images/backArrow.png'
 import { invalidPostalCode, invalidIdentification } from '../helpers/formLimitations'
 import languages from '../locales/languages'
 
-export const FormGeneral = ({ navigation }) => {
+const DirectSms = NativeModules.DirectSms
+
+export const MovementDeclarationForm = ({ navigation }) => {
   const [identification, setIdentification] = useState(null)
   const [reason, setReason] = useState(3)
   const [postalCode, setPostalCode] = useState(null)
@@ -46,17 +50,16 @@ export const FormGeneral = ({ navigation }) => {
     [identificationNumberIsInvalid, postalCodeIsInvalid, identification, postalCode]
   )
 
-  const backToMain = () => {
+  const backToMain = useCallback(() => {
     navigation.navigate('HomeScreen', {})
-  }
+  }, [navigation])
 
-  const handleBackPress = () => {
+  const handleBackPress = useCallback(() => {
     backToMain()
     return true
-  }
+  }, [backToMain])
 
   useEffect(() => {
-    GetStoreData('FORMGENERAL', false).then(state => console.log('formState'))
     BackHandler.addEventListener('hardwareBackPress', handleBackPress)
 
     return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress)
@@ -71,26 +74,40 @@ export const FormGeneral = ({ navigation }) => {
   }, [])
 
   const submitForm = async () => {
-    // SendSMS.send(
-    //   {
-    //     body: 'The default body of the SMS!',
-    //     recipients: ['0123456789', '9876543210'],
-    //     successTypes: ['sent', 'queued'],
-    //     allowAndroidSendWithoutReadPermission: true
-    //   },
-    //   (completed, cancelled, error) => {
-    //     console.log(
-    //       'SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error
-    //     )
-    //   }
-    // )
-    Linking.openURL(`sms:+8998?&body=${reason}%20${identification}%20${postalCode}`)
-    SetStoreData('DECLARATION_FIELDS', { postalCode, identification })
-    Alert.alert(
-      'Note',
-      'Check your messages if your request has been accepted and if the SMS sending was successful',
-      [{ text: 'OK', onPress: () => navigation.navigate('HomeScreen') }]
-    )
+    let permissionGranted = true
+    if (Platform.OS === 'ios') {
+      Linking.openURL(`sms:+8998?&body=${reason}%20${identification}%20${postalCode}`)
+    } else {
+      try {
+        permissionGranted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.SEND_SMS,
+          {
+            title: 'CovTracer SMS Permission',
+            message:
+              'CovTracer needs access to sending SMS so it can send SMS for movement in the background',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK'
+          }
+        )
+        if (permissionGranted === PermissionsAndroid.RESULTS.GRANTED) {
+          DirectSms.sendDirectSms('8998', `${reason} ${identification} ${postalCode}`)
+        } else {
+          console.log('SMS permission denied')
+        }
+      } catch (err) {
+        console.warn(err)
+      }
+    }
+
+    if (permissionGranted) {
+      SetStoreData('DECLARATION_FIELDS', { postalCode, identification })
+      Alert.alert(
+        'Note',
+        'Check your messages if your request has been accepted and if the SMS was sent successfully',
+        [{ text: 'OK', onPress: () => navigation.navigate('HomeScreen') }]
+      )
+    }
   }
 
   return (
@@ -149,7 +166,7 @@ export const FormGeneral = ({ navigation }) => {
   )
 }
 
-FormGeneral.propTypes = {
+MovementDeclarationForm.propTypes = {
   navigation: PropTypes.object.isRequired
 }
 
@@ -220,5 +237,3 @@ const styles = StyleSheet.create({
     fontSize: 13
   }
 })
-
-export default FormGeneral

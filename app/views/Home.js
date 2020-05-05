@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
   Linking,
   View,
   Text,
+  Alert,
   TouchableOpacity,
   Dimensions,
   Image,
@@ -20,7 +21,7 @@ import { getVersion } from 'react-native-device-info'
 import PropTypes from 'prop-types'
 
 import exportImage from './../assets/images/export.png'
-import news from './../assets/images/newspaper.png'
+import newsImage from './../assets/images/newspaper.png'
 import kebabIcon from './../assets/images/kebabIcon.png'
 import pkLogo from './../assets/images/PKLogo.png'
 
@@ -29,66 +30,60 @@ import logo2 from './../assets/images/logo2.png'
 import logo3 from './../assets/images/logo3.png'
 
 import { GetStoreData, SetStoreData } from '../helpers/General'
+import { useNetInfo } from '@react-native-community/netinfo'
+
 import languages from '../locales/languages'
 
 const width = Dimensions.get('window').width
 
-class Home extends Component {
-  constructor (props) {
-    super(props)
+const Home = ({ navigation }) => {
+  const [isLogging, setIsLogging] = useState(false)
+  const netInfo = useNetInfo()
 
-    this.state = {
-      isLogging: ''
-    }
-  }
-
-  async componentDidMount () {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
-
-    const onBoardingValue = await GetStoreData('ONBOARDING_COMPLETE')
-    if (!onBoardingValue || !+onBoardingValue) {
-      this.props.navigation.navigate('OnboardingScreen')
-      return
-    }
-
-    GetStoreData('PARTICIPATE')
-      .then(isParticipating => {
-        if (isParticipating === 'true') {
-          this.setState({
-            isLogging: true
-          })
-          this.willParticipate()
-        } else {
-          this.setState({
-            isLogging: false
-          })
-        }
-      })
-      .catch(error => console.log(error))
-  }
-
-  componentWillUnmount () {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress)
-  }
-
-  handleBackPress = () => {
+  const handleBackPress = () => {
     BackHandler.exitApp() // works best when the goBack is async
     return true
   }
 
-  export () {
-    this.props.navigation.navigate('ExportScreen', {})
+  useEffect(() => {
+    onMount()
+
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress)
+
+    GetStoreData('PARTICIPATE')
+      .then(isParticipating => {
+        if (isParticipating === 'true') {
+          setIsLogging(true)
+          willParticipate()
+        } else {
+          setIsLogging(false)
+        }
+      })
+      .catch(error => console.log(error))
+
+    return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress)
+  })
+
+  const onMount = async () => {
+    const onBoardingValue = await GetStoreData('ONBOARDING_COMPLETE')
+    if (!onBoardingValue || !+onBoardingValue) {
+      navigation.navigate('OnboardingScreen')
+    }
   }
 
-  import () {
-    this.props.navigation.navigate('ImportScreen', {})
+  const exportData = () => {
+    navigation.navigate('ExportScreen', {})
   }
 
-  overlap () {
-    this.props.navigation.navigate('OverlapScreen', {})
+  const importData = () => {
+    navigation.navigate('ImportScreen', {})
   }
 
-  willParticipate = () => {
+  const overlap = () => {
+    navigation.navigate('OverlapScreen', {})
+  }
+
+  const willParticipate = () => {
     SetStoreData('PARTICIPATE', 'true').then(() => {
       LocationServices.start()
       // BroadcastingServices.start();
@@ -99,212 +94,214 @@ class Home extends Component {
     // Fixes tripleblindmarket/private-kit#129
     BackgroundGeolocation.checkStatus(({ authorization }) => {
       if (authorization === BackgroundGeolocation.AUTHORIZED) {
-        this.setState({
-          isLogging: true
-        })
+        setIsLogging(true)
       } else if (authorization === BackgroundGeolocation.NOT_AUTHORIZED) {
-        LocationServices.stop(this.props.navigation)
-        BroadcastingServices.stop(this.props.navigation)
-        this.setState({
-          isLogging: false
-        })
+        LocationServices.stop(navigation)
+        BroadcastingServices.stop(navigation)
+        setIsLogging(false)
       }
     })
   }
 
-  news () {
-    this.props.navigation.navigate('NewsScreen', {})
+  const news = () => {
+    navigation.navigate('NewsScreen', {})
   }
 
-  licenses () {
-    this.props.navigation.navigate('LicensesScreen', {})
+  const licenses = () => {
+    navigation.navigate('LicensesScreen', {})
   }
 
-  privacy () {
-    this.props.navigation.navigate('PrivacyScreen', {})
+  const privacy = () => {
+    navigation.navigate('PrivacyScreen', {})
   }
 
-  acknowledgement () {
-    this.props.navigation.navigate('AckScreen', {})
+  const acknowledgement = () => {
+    navigation.navigate('AckScreen', {})
   }
 
-  statistics () {
-    this.props.navigation.navigate('StatisticsScreen', {})
+  const statistics = () => {
+    navigation.navigate('StatisticsScreen', {})
   }
 
-  setOptOut = () => {
-    LocationServices.stop(this.props.navigation)
-    BroadcastingServices.stop(this.props.navigation)
-    this.setState({
-      isLogging: false
-    })
+  const setOptOut = () => {
+    LocationServices.stop(navigation)
+    BroadcastingServices.stop(navigation)
+    setIsLogging(false)
   }
 
-  render () {
-    return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.main}>
-          {/* A modal menu. Currently only used for license info */}
-          <Menu
-            style={{
-              position: 'absolute',
-              alignSelf: 'flex-end',
-              zIndex: 10
-            }}>
-            <MenuTrigger style={{ marginTop: 14 }}>
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.main}>
+        {/* A modal menu. Currently only used for license info */}
+        <Menu
+          style={{
+            position: 'absolute',
+            alignSelf: 'flex-end',
+            zIndex: 10
+          }}>
+          <MenuTrigger style={{ marginTop: 14 }}>
+            <Image
+              source={kebabIcon}
+              style={{
+                width: 15,
+                height: 28,
+                padding: 14
+              }}
+            />
+          </MenuTrigger>
+          <MenuOptions>
+            <MenuOption
+              onSelect={() => {
+                statistics()
+              }}>
+              <Text style={styles.menuOptionText}>Statistics</Text>
+            </MenuOption>
+            <MenuOption
+              onSelect={() => {
+                licenses()
+              }}>
+              <Text style={styles.menuOptionText}>Licenses</Text>
+            </MenuOption>
+            <MenuOption
+              onSelect={() => {
+                privacy()
+              }}>
+              <Text style={styles.menuOptionText}>Privacy</Text>
+            </MenuOption>
+            <MenuOption
+              onSelect={() => {
+                acknowledgement()
+              }}>
+              <Text style={styles.menuOptionText}>Acknowledgements</Text>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
+
+        <View style={styles.buttonsAndLogoView}>
+          {isLogging ? (
+            <>
               <Image
-                source={kebabIcon}
+                source={pkLogo}
                 style={{
-                  width: 15,
-                  height: 28,
-                  padding: 14
+                  width: 132,
+                  height: 164.4,
+                  alignSelf: 'center',
+                  marginTop: 12
                 }}
               />
-            </MenuTrigger>
-            <MenuOptions>
-              <MenuOption
-                onSelect={() => {
-                  this.statistics()
-                }}>
-                <Text style={styles.menuOptionText}>Statistics</Text>
-              </MenuOption>
-              <MenuOption
-                onSelect={() => {
-                  this.licenses()
-                }}>
-                <Text style={styles.menuOptionText}>Licenses</Text>
-              </MenuOption>
-              <MenuOption
-                onSelect={() => {
-                  this.privacy()
-                }}>
-                <Text style={styles.menuOptionText}>Privacy</Text>
-              </MenuOption>
-              <MenuOption
-                onSelect={() => {
-                  this.acknowledgement()
-                }}>
-                <Text style={styles.menuOptionText}>Acknowledgements</Text>
-              </MenuOption>
-            </MenuOptions>
-          </Menu>
-
-          <View style={styles.buttonsAndLogoView}>
-            {this.state.isLogging ? (
-              <>
-                <Image
-                  source={pkLogo}
-                  style={{
-                    width: 132,
-                    height: 164.4,
-                    alignSelf: 'center',
-                    marginTop: 12
-                  }}
-                />
-                <TouchableOpacity
-                  onPress={() => this.setOptOut()}
-                  style={styles.stopLoggingButtonTouchable}>
-                  <Text style={styles.stopLoggingButtonText}>
-                    {languages.t('label.stop_logging')}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.overlap()}
-                  style={styles.startLoggingButtonTouchable}>
-                  <Text style={styles.startLoggingButtonText}>{languages.t('label.overlap')}</Text>
-                </TouchableOpacity>
-              </>
-            ) : (
-              <>
-                <Image
-                  source={pkLogo}
-                  style={{
-                    width: 132,
-                    height: 164.4,
-                    alignSelf: 'center',
-                    marginTop: 12,
-                    opacity: 0.3
-                  }}
-                />
-                <TouchableOpacity
-                  onPress={() => this.willParticipate()}
-                  style={styles.startLoggingButtonTouchable}>
-                  <Text style={styles.startLoggingButtonText}>
-                    {languages.t('label.start_logging')}
-                  </Text>
-                </TouchableOpacity>
-              </>
-            )}
-
-            {this.state.isLogging ? (
-              <Text style={styles.sectionDescription}>{languages.t('label.logging_message')}</Text>
-            ) : (
-              <Text style={styles.sectionDescription}>
-                {languages.t('label.not_logging_message')}
-              </Text>
-            )}
-          </View>
-
-          <View style={styles.actionButtonsView}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('SymptomCheckerScreen', {})}
-              style={styles.actionButtonsTouchable}>
-              <Text style={styles.actionButtonHead}>&#x1F50D;</Text>
-              <Text style={styles.actionButtonText}>{languages.t('label.SYMPTOM_CHECKER')}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('FormGeneralNewScreen', {})}
-              style={styles.actionButtonsTouchable}>
-              <Text style={styles.actionButtonHead}>&#9997;</Text>
-              <Text style={styles.actionButtonText}>{languages.t('label.FORMGENERAL_NEW')}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => this.news()} style={styles.actionButtonsTouchable}>
-              <Image style={styles.actionButtonImage} source={news} resizeMode='contain' />
-              <Text style={styles.actionButtonText}>{languages.t('label.news')}</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.actionButtonsView}>
-            <TouchableOpacity onPress={() => this.import()} style={styles.actionButtonsTouchable}>
-              <Image style={styles.actionButtonImage} source={exportImage} resizeMode='contain' />
-              <Text style={styles.actionButtonText}>{languages.t('label.import')}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => this.export()} style={styles.actionButtonsTouchable}>
+              <TouchableOpacity
+                onPress={() => setOptOut()}
+                style={styles.stopLoggingButtonTouchable}>
+                <Text style={styles.stopLoggingButtonText}>
+                  {languages.t('label.stop_logging')}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => overlap()}
+                style={styles.startLoggingButtonTouchable}>
+                <Text style={styles.startLoggingButtonText}>{languages.t('label.overlap')}</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <>
               <Image
-                style={[styles.actionButtonImage, { transform: [{ rotate: '180deg' }] }]}
-                source={exportImage}
-                resizeMode='contain'
+                source={pkLogo}
+                style={{
+                  width: 132,
+                  height: 164.4,
+                  alignSelf: 'center',
+                  marginTop: 12,
+                  opacity: 0.3
+                }}
               />
-              <Text style={styles.actionButtonText}>{languages.t('label.export')}</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                onPress={() => willParticipate()}
+                style={styles.startLoggingButtonTouchable}>
+                <Text style={styles.startLoggingButtonText}>
+                  {languages.t('label.start_logging')}
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
 
-          <View style={styles.footer}>
-            <View style={styles.rowContainer}>
-              <Image source={logo1} style={styles.infoCardLogo} />
-              <Image source={logo2} style={styles.infoCardLogo} />
-              <Image source={logo3} style={styles.infoCardLogo} />
-            </View>
-            <Text style={[styles.sectionDescription, { textAlign: 'center', paddingTop: 15 }]}>
-              {languages.t('label.url_info')}{' '}
+          {isLogging ? (
+            <Text style={styles.sectionDescription}>{languages.t('label.logging_message')}</Text>
+          ) : (
+            <Text style={styles.sectionDescription}>
+              {languages.t('label.not_logging_message')}
             </Text>
-            <Text
-              style={[
-                styles.sectionDescriptionLow,
-                { color: 'blue', textAlign: 'center', marginTop: 0 }
-              ]}
-              onPress={() => Linking.openURL(languages.t('label.private_kit_url'))}>
-              {languages.t('label.private_kit_url')}
-            </Text>
-            <Text style={{ textAlign: 'center' }}>{getVersion()}</Text>
+          )}
+        </View>
+
+        <View style={styles.actionButtonsView}>
+          <TouchableOpacity
+            onPress={() => {
+              if (!netInfo.isInternetReachable) {
+                Alert.alert(
+                  'Warning',
+                  'An internet connection is required before accessing this feature',
+                  [{ text: 'OK', onPress: () => navigation.navigate('HomeScreen') }]
+                )
+                return
+              }
+              navigation.navigate('SymptomCheckerScreen', {})
+            }}
+            style={styles.actionButtonsTouchable}>
+            <Text style={styles.actionButtonHead}>&#x1F50D;</Text>
+            <Text style={styles.actionButtonText}>{languages.t('label.SYMPTOM_CHECKER')}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('MovementDeclarationScreen', {})}
+            style={styles.actionButtonsTouchable}>
+            <Text style={styles.actionButtonHead}>&#9997;</Text>
+            <Text style={styles.actionButtonText}>{languages.t('label.FORMGENERAL_NEW')}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={news} style={styles.actionButtonsTouchable}>
+            <Image style={styles.actionButtonImage} source={newsImage} resizeMode='contain' />
+            <Text style={styles.actionButtonText}>{languages.t('label.news')}</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.actionButtonsView}>
+          <TouchableOpacity onPress={importData} style={styles.actionButtonsTouchable}>
+            <Image style={styles.actionButtonImage} source={exportImage} resizeMode='contain' />
+            <Text style={styles.actionButtonText}>{languages.t('label.import')}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={exportData} style={styles.actionButtonsTouchable}>
+            <Image
+              style={[styles.actionButtonImage, { transform: [{ rotate: '180deg' }] }]}
+              source={exportImage}
+              resizeMode='contain'
+            />
+            <Text style={styles.actionButtonText}>{languages.t('label.export')}</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.footer}>
+          <View style={styles.rowContainer}>
+            <Image source={logo1} style={styles.infoCardLogo} />
+            <Image source={logo2} style={styles.infoCardLogo} />
+            <Image source={logo3} style={styles.infoCardLogo} />
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    )
-  }
+          <Text style={[styles.sectionDescription, { textAlign: 'center', paddingTop: 15 }]}>
+            {languages.t('label.url_info')}{' '}
+          </Text>
+          <Text
+            style={[
+              styles.sectionDescriptionLow,
+              { color: 'blue', textAlign: 'center', marginTop: 0 }
+            ]}
+            onPress={() => Linking.openURL(languages.t('label.private_kit_url'))}>
+            {languages.t('label.private_kit_url')}
+          </Text>
+          <Text style={{ textAlign: 'center' }}>{getVersion()}</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({

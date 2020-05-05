@@ -50,9 +50,6 @@ target 'CovTracer' do
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
-  
-
-  pod 'react-native-sms', :path => '../node_modules/react-native-sms'
 
   target 'CovTracerTests' do
     inherit! :search_paths
