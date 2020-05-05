@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
   },
   symptomsContainer: {
     flex: 0,
+    maxHeight: 260,
     alignItems: 'center',
     marginTop: 20,
     marginBottom: 20
