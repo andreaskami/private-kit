@@ -120,6 +120,21 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
+    // Bump android release version
+    def versionPropsFile = file('version.properties')
+    if (!versionPropsFile.canRead()) {
+        throw new GradleException("Could not read version.properties!")
+    }
+    def Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(versionPropsFile))
+    def vCode = versionProps['VERSION_CODE'].toInteger()
+    if (System.getenv('MYAPP_RELEASE_STORE_FILE')) {
+        vCode += 1
+        versionProps['VERSION_CODE'] = vCode.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+    }
+
+    // Main
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -132,7 +147,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 14
+        versionCode vCode
         versionName "2.0.0"
     }
 
@@ -160,7 +175,6 @@ android {
                 storePassword System.getenv('MYAPP_RELEASE_STORE_PASSWORD')
                 keyAlias System.getenv('MYAPP_RELEASE_KEY_ALIAS')
                 keyPassword System.getenv('MYAPP_RELEASE_STORE_PASSWORD')
-//                 keyPassword System.getenv('MYAPP_RELEASE_KEY_PASSWORD')
             } else {
                 project.logger.lifecycle('Could not find release key')
             }
