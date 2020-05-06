@@ -5,8 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   Image,
-  PermissionsAndroid,
-  Platform,
   View,
   Picker,
   Text,
