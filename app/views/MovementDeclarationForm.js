@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   Image,
-  NativeModules,
   PermissionsAndroid,
   Platform,
   View,
@@ -25,8 +24,6 @@ import backArrow from '../../app/assets/images/backArrow.png'
 
 import { invalidPostalCode, invalidIdentification } from '../helpers/formLimitations'
 import languages from '../locales/languages'
-
-const DirectSms = NativeModules.DirectSms
 
 export const MovementDeclarationForm = ({ navigation }) => {
   const [identification, setIdentification] = useState(null)
@@ -74,38 +71,12 @@ export const MovementDeclarationForm = ({ navigation }) => {
   }, [])
 
   const submitForm = async () => {
-    let permissionGranted = true
-    if (Platform.OS === 'ios') {
-      Linking.openURL(`sms:+8998?&body=${reason}%20${identification}%20${postalCode}`)
-    } else {
-      try {
-        permissionGranted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.SEND_SMS,
-          {
-            title: 'CovTracer SMS Permission',
-            message:
-              'CovTracer needs access to sending SMS so it can send SMS for movement in the background',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK'
-          }
-        )
-        if (permissionGranted === PermissionsAndroid.RESULTS.GRANTED) {
-          DirectSms.sendDirectSms('8998', `${reason} ${identification} ${postalCode}`)
-        } else {
-          console.log('SMS permission denied')
-        }
-      } catch (err) {
-        console.warn(err)
-      }
-    }
+    Linking.openURL(`sms:+8998?&body=${reason}%20${identification}%20${postalCode}`)
 
-    if (permissionGranted) {
-      SetStoreData('DECLARATION_FIELDS', { postalCode, identification })
-      Alert.alert(languages.t('label.alert.title.note'), languages.t('label.alert.sms_dispatch'), [
-        { text: 'OK', onPress: () => navigation.navigate('HomeScreen') }
-      ])
-    }
+    SetStoreData('DECLARATION_FIELDS', { postalCode, identification })
+    Alert.alert(languages.t('label.alert.title.note'), languages.t('label.alert.sms_dispatch'), [
+      { text: 'OK', onPress: () => navigation.navigate('HomeScreen') }
+    ])
   }
 
   return (
