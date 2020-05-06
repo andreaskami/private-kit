@@ -36,8 +36,8 @@ jobs:
       - name: Install old NDK
         run: echo "y" | sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;20.0.5594570" --sdk_root=${ANDROID_SDK_ROOT}
 
-      - name: Bundle app
-        run: npm run android:bundle
+#      - name: Bundle app
+#        run: npm run android:bundle
 
       - name: Pack app
         run: npm run android:build:dev

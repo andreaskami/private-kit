@@ -18,4 +18,4 @@ export MYAPP_RELEASE_KEY_ALIAS=upload
 
 ./gradlew assembleRelease
 
-cp android/app/build/outputs/apk/release/app-release.apk edu.rise.ihnilatis.apk
+cp app/build/outputs/apk/release/app-release.apk ../edu.rise.ihnilatis.apk
