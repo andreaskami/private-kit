@@ -4,5 +4,7 @@
   "latest_update": "Latest update",
   "new_cases": "New cases",
   "total_cases": "Total cases",
+  "new_deaths": "New deaths",
+  "total_deaths": "Total deaths",
   "loading_data": "Loading data..."
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import {
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   View,
   Text,
@@ -13,7 +14,13 @@ import {
 import colors from '../constants/colors'
 import backArrow from './../assets/images/backArrow.png'
 import languages from '../locales/languages'
-import { VictoryBar, VictoryAxis, VictoryChart, VictoryZoomContainer } from 'victory-native'
+import {
+  VictoryBar,
+  VictoryAxis,
+  VictoryChart,
+  VictoryZoomContainer,
+  VictoryTooltip
+} from 'victory-native'
 import PropTypes from 'prop-types'
 
 import { getLatestStatistics } from '../services/httpClient'
@@ -35,7 +42,9 @@ export const StatisticsScreen = ({ navigation }) => {
 
     return data.map(record => ({
       date: record.fields.date,
-      cases: parseInt(record.fields.newCases)
+      cases: parseInt(record.fields.dailyCases),
+      deaths: parseInt(record.fields.dailyDeaths),
+      tests: parseInt(record.fields.dailyTests)
     }))
   }, [data])
 
@@ -81,32 +90,92 @@ export const StatisticsScreen = ({ navigation }) => {
           <>
             {latestUpdate && (
               <View style={styles.latestUpdateContainer}>
-                <View style={styles.row}>
+                <View style={[styles.row, styles.latestUpdateText]}>
                   <Text>{languages.t('label.latest_update')}: </Text>
                   <Text style={styles.value}>{latestUpdate.fields.date}</Text>
                 </View>
-                <View>
-                  <View style={styles.row}>
-                    <Text>{languages.t('label.new_cases')}: </Text>
-                    <Text style={styles.value}>+{latestUpdate.fields.newCases}</Text>
-                  </View>
+                <View style={styles.statisticsSummary}>
+                  <View style={styles.statisticsSummaryField}>
+                    <View style={styles.row}>
+                      <Text>{languages.t('label.new_cases')}: </Text>
+                      <Text style={styles.value}>+{latestUpdate.fields.dailyCases}</Text>
+                    </View>
 
-                  <View style={styles.row}>
-                    <Text>{languages.t('label.total_cases')}: </Text>
-                    <Text style={styles.value}>{latestUpdate.fields.totalCases}</Text>
+                    <View style={styles.row}>
+                      <Text>{languages.t('label.total_cases')}: </Text>
+                      <Text style={styles.value}>{latestUpdate.fields.totalCases}</Text>
+                    </View>
+                  </View>
+                  <View style={styles.statisticsSummaryField}>
+                    <View style={styles.row}>
+                      <Text>{languages.t('label.new_deaths')}: </Text>
+                      <Text style={styles.value}>{latestUpdate.fields.dailyDeaths}</Text>
+                    </View>
+                    <View style={styles.row}>
+                      <Text>{languages.t('label.total_deaths')}: </Text>
+                      <Text style={styles.value}>{latestUpdate.fields.totalDeaths}</Text>
+                    </View>
                   </View>
                 </View>
               </View>
             )}
+            <ScrollView>
+              <Text style={styles.chartName}>Daily infections</Text>
 
-            <VictoryChart
-              width={width}
-              domainPadding={10}
-              containerComponent={<VictoryZoomContainer />}>
-              <VictoryAxis fixLabelOverlap style={{ tickLabels: { padding: 10, fontSize: 12 } }} />
-              <VictoryAxis dependentAxis />
-              <VictoryBar data={chartData} x='date' y='cases' />
-            </VictoryChart>
+              <VictoryChart
+                width={width}
+                height={200}
+                domainPadding={10}
+                animate={{
+                  duration: 300
+                }}>
+                <VictoryAxis
+                  fixLabelOverlap
+                  style={{ tickLabels: { padding: 10, fontSize: 12 } }}
+                />
+                <VictoryAxis dependentAxis domain={[0, 50]} />
+                <VictoryBar
+                  data={chartData}
+                  x='date'
+                  y='cases'
+                  labelComponent={<VictoryTooltip />}
+                />
+              </VictoryChart>
+
+              <Text style={styles.chartName}>Daily deaths</Text>
+
+              <VictoryChart
+                width={width}
+                height={200}
+                domainPadding={10}
+                animate={{
+                  duration: 300
+                }}>
+                <VictoryAxis
+                  fixLabelOverlap
+                  style={{ tickLabels: { padding: 10, fontSize: 12 } }}
+                />
+                <VictoryAxis dependentAxis domain={[0, 2]} />
+                <VictoryBar data={chartData} x='date' y='deaths' />
+              </VictoryChart>
+
+              <Text style={styles.chartName}>Daily tests</Text>
+
+              <VictoryChart
+                width={width}
+                height={200}
+                domainPadding={10}
+                animate={{
+                  duration: 300
+                }}>
+                <VictoryAxis
+                  fixLabelOverlap
+                  style={{ tickLabels: { padding: 10, fontSize: 12 } }}
+                />
+                <VictoryAxis dependentAxis domain={[0, 3000]} />
+                <VictoryBar data={chartData} x='date' y='tests' />
+              </VictoryChart>
+            </ScrollView>
           </>
         )}
         {loading && (
@@ -172,16 +241,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  latestUpdateContainer: {
-    padding: 20
-  },
   row: {
     flex: 0,
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10
+    alignItems: 'center'
   },
   value: {
     fontWeight: 'bold'
-  }
+  },
+  chartName: {
+    fontSize: 16,
+    marginTop: 20,
+    alignSelf: 'center'
+  },
+  statisticsSummary: {
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  statisticsSummaryField: {
+    marginRight: 5,
+    borderWidth: 0.5,
+    borderRadius: 5,
+    padding: 10
+  },
+  latestUpdateText: { alignSelf: 'center', marginTop: 10, marginBottom: 10 }
 })
