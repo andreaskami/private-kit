@@ -267,7 +267,7 @@ const Home = ({ navigation }) => {
         <View style={styles.actionButtonsView}>
           <TouchableOpacity onPress={importData} style={styles.actionButtonsTouchable}>
             <Image style={styles.actionButtonImage} source={exportImage} resizeMode='contain' />
-            <Text style={styles.actionButtonText}>{languages.t('label.import')}</Text>
+            <Text style={styles.actionButtonText}>{languages.t('label.import.button_text')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={exportData} style={styles.actionButtonsTouchable}>
