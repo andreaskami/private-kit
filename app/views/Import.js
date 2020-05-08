@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,83 +8,130 @@ import {
   TouchableOpacity,
   BackHandler,
   Dimensions,
-  ActivityIndicator
+  Button,
+  Linking
 } from 'react-native'
 
 import colors from '../constants/colors'
-import WebView from 'react-native-webview'
 import backArrow from './../assets/images/backArrow.png'
-import { SearchAndImport } from '../helpers/GoogleTakeOutAutoImport'
+import {
+  EmptyFilePathError,
+  InvalidFileExtensionError,
+  NoRecentLocationsError,
+  importTakeoutData
+} from '../helpers/GoogleTakeOutAutoImport'
 import languages from './../locales/languages'
+import { pickFile } from '../helpers/General'
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
-class ImportScreen extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { visible: true }
-    // Autoimports if user has downloaded
-    SearchAndImport()
+
+const makeImportResults = (label = '', error = false) => ({
+  error,
+  label
+})
+
+export const ImportScreen = ({ navigation }) => {
+  const [importResults, _setImportResults] = useState(makeImportResults())
+  const setImportResults = (...args) => _setImportResults(makeImportResults(...args))
+
+  const backToMain = () => {
+    navigation.navigate('HomeScreen', {})
   }
 
-  backToMain () {
-    this.props.navigation.navigate('HomeScreen', {})
-  }
-
-  handleBackPress = () => {
-    this.props.navigation.navigate('HomeScreen', {})
+  const handleBackPress = () => {
+    navigation.navigate('HomeScreen', {})
     return true
   }
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress)
 
-  hideSpinner () {
-    this.setState({ visible: false })
+    return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress)
+  }, [])
+
+  const chooseDataFile = async () => {
+    try {
+      // reset info message
+      setImportResults()
+
+      const filePath = await pickFile()
+
+      const newLocations = await importTakeoutData(filePath)
+
+      if (newLocations.length) {
+        setImportResults(languages.t('label.import.success'))
+      } else {
+        setImportResults(languages.t('label.import.error.already_imported'))
+      }
+    } catch (err) {
+      if (err instanceof NoRecentLocationsError) {
+        setImportResults(languages.t('label.import.error.no_recent_locations'), true)
+      } else if (err instanceof InvalidFileExtensionError) {
+        setImportResults(languages.t('label.import.error.invalid_file_format'), true)
+      } else if (err instanceof EmptyFilePathError) {
+        /**
+         * If the imported file is opened from other than Google Drive folder,
+         * filepath is returned as null. Leaving a message to ensure import file
+         * is located on Google Drive.
+         */
+        setImportResults(languages.t('label.import.error.file_open_error'), true)
+      } else {
+        console.log('[ERROR] Failed to import locations', err)
+        setImportResults(languages.t('label.import.error.generic'), true)
+      }
+    }
   }
 
-  componentDidMount () {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
-  }
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity style={styles.backArrowTouchable} onPress={backToMain}>
+          <Image style={styles.backArrow} source={backArrow} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>{languages.t('label.import.title')}</Text>
+      </View>
 
-  componentWillUnmount () {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress)
-  }
-
-  render () {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity style={styles.backArrowTouchable} onPress={() => this.backToMain()}>
-            <Image style={styles.backArrow} source={backArrow} />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>{languages.t('label.import_title')}</Text>
+      <View style={styles.main}>
+        <View style={styles.subHeaderTitle}>
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.import.google.instructions_first')}
+          </Text>
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.import.google.instructions_second')}
+          </Text>
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.import.google.instructions_detailed')}
+          </Text>
         </View>
+        <View style={styles.web}>
+          <Button
+            title={languages.t('label.import.google.visit_button_text')}
+            onPress={() =>
+              Linking.openURL('https://takeout.google.com/settings/takeout/custom/location_history')
+            }
+            style={{ marginTop: 24 }}
+          />
 
-        <View style={styles.main}>
-          <View style={styles.subHeaderTitle}>
-            <Text style={styles.sectionDescription}>{languages.t('label.import_step_1')}</Text>
-            <Text style={styles.sectionDescription}>{languages.t('label.import_step_2')}</Text>
-          </View>
-          <View style={styles.web}>
-            <WebView
-              source={{
-                uri: 'https://takeout.google.com/settings/takeout/custom/location_history'
-              }}
-              onLoad={() => this.hideSpinner()}
-              style={{ marginTop: 15 }}
-            />
-            {this.state.visible && (
-              <ActivityIndicator
-                style={{
-                  position: 'absolute',
-                  top: height / 2,
-                  left: width / 2
-                }}
-                size='large'
-              />
-            )}
-          </View>
+          <Text style={styles.andThen}>And then</Text>
+
+          <Button
+            title={languages.t('label.import.secondary_button_text')}
+            onPress={chooseDataFile}
+            style={{ marginTop: 24 }}
+          />
+
+          {importResults.label ? (
+            <Text
+              style={{
+                ...styles.importResults,
+                ...(importResults && importResults.error ? styles.importResultsError : {})
+              }}>
+              {importResults.label}
+            </Text>
+          ) : null}
         </View>
-      </SafeAreaView>
-    )
-  }
+      </View>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -142,6 +189,26 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     marginTop: 12,
     fontFamily: 'OpenSans-Regular'
+  },
+  importResults: {
+    fontSize: 12,
+    lineHeight: 20,
+    marginTop: 10,
+    textAlign: 'center',
+    color: colors.VIOLET
+  },
+  importResultsError: {
+    color: colors.RED,
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 4,
+    borderColor: colors.RED
+  },
+  andThen: {
+    alignSelf: 'center',
+    fontSize: 12,
+    marginTop: 5,
+    marginBottom: 5
   }
 })
 export default ImportScreen

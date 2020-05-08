@@ -215,6 +215,8 @@ PODS:
     - React
   - react-native-ble-advertiser (0.0.14):
     - React
+  - react-native-document-picker (3.4.0):
+    - React
   - react-native-google-maps (0.27.1):
     - Google-Maps-iOS-Utils (= 2.1.0)
     - GoogleMaps (= 3.5.0)
@@ -306,7 +308,7 @@ PODS:
     - React
   - RNGestureHandler (1.6.1):
     - React
-  - RNI18n (2.0.15):
+  - RNI18n (2.0.14):
     - React
   - RNPermissions (2.1.3):
     - React
@@ -351,6 +353,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - react-native-ble-advertiser (from `../node_modules/react-native-ble-advertiser/ios`)
+  - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -433,6 +436,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-timer"
   react-native-ble-advertiser:
     :path: "../node_modules/react-native-ble-advertiser/ios"
+  react-native-document-picker:
+    :path: "../node_modules/react-native-document-picker"
   react-native-google-maps:
     :path: "../node_modules/react-native-maps"
   react-native-maps:
@@ -522,6 +527,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 512e560d0e985d0e8c479a54a4e5c147a9c83493
   react-native-background-timer: 1f7d560647b40e6a60b01c452ba29c54bf581fc4
   react-native-ble-advertiser: 612ca47452ffa8894e239c9427ee8ad64b63161c
+  react-native-document-picker: d694111879537cec2c258a1dcd2243d9df746824
   react-native-google-maps: 0a989abda71059db2caa98b9dacca7a8f38a47d0
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-netinfo: b9650ab1b8b4362b3c455b1274e4bc48223cc957
@@ -547,7 +553,7 @@ SPEC CHECKSUMS:
   RNDeviceInfo: 722dc13c269b9dbf305aa4b790d36731602e99b7
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
-  RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
+  RNI18n: ae012568644105311254f877f32e4157e063217f
   RNPermissions: 6772df08e03565f718f7e140d9fccae441b8ca8b
   RNScreens: cf198f915f8a2bf163de94ca9f5bfc8d326c3706
   RNShare: fea1801315aa8875d6db73a4010b14afcd568765
