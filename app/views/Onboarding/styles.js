@@ -5,11 +5,12 @@ const textFontSize = 14
 const stylesDef = {
   mainContainer: {
     flex: 1,
+    height: '100%',
+    justifyContent: 'center',
     backgroundColor: '#3497fc'
   },
   logo: {
     alignSelf: 'center',
-    marginTop: 10,
     marginBottom: 10,
     width: 100,
     height: 100,
@@ -73,7 +74,7 @@ const stylesDef = {
   },
 
   rowButtons: {
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
     justifyContent: 'center'
   },
