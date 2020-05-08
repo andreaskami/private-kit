@@ -58,31 +58,25 @@ export const ImportScreen = ({ navigation }) => {
       const newLocations = await importTakeoutData(filePath)
 
       if (newLocations.length) {
-        setImportResults('Recent locations has been successfully imported!')
+        setImportResults(languages.t('label.import.success'))
       } else {
-        setImportResults('Provided Takeout file has already been imported.')
+        setImportResults(languages.t('label.import.error.already_imported'))
       }
     } catch (err) {
       if (err instanceof NoRecentLocationsError) {
-        setImportResults("Takeout doesn't have any recent locations.", true)
+        setImportResults(languages.t('label.import.error.no_recent_locations'), true)
       } else if (err instanceof InvalidFileExtensionError) {
-        setImportResults(
-          'Provided file format is not supported. \nSupported formats: ".zip".',
-          true
-        )
+        setImportResults(languages.t('label.import.error.invalid_file_format'), true)
       } else if (err instanceof EmptyFilePathError) {
         /**
          * If the imported file is opened from other than Google Drive folder,
          * filepath is returned as null. Leaving a message to ensure import file
          * is located on Google Drive.
          */
-        setImportResults(
-          'Could not open the file. \nPlease, make sure the file is opened from Google Drive',
-          true
-        )
+        setImportResults(languages.t('label.import.error.file_open_error'), true)
       } else {
         console.log('[ERROR] Failed to import locations', err)
-        setImportResults('Something went wrong while importing your data.', true)
+        setImportResults(languages.t('label.import.error.generic'), true)
       }
     }
   }
@@ -110,7 +104,7 @@ export const ImportScreen = ({ navigation }) => {
         </View>
         <View style={styles.web}>
           <Button
-            title='Visit Google Takeout'
+            title={languages.t('label.import.google.visit_button_text')}
             onPress={() =>
               Linking.openURL('https://takeout.google.com/settings/takeout/custom/location_history')
             }
@@ -119,7 +113,11 @@ export const ImportScreen = ({ navigation }) => {
 
           <Text style={styles.andThen}>And then</Text>
 
-          <Button title='Import locations' onPress={chooseDataFile} style={{ marginTop: 24 }} />
+          <Button
+            title={languages.t('label.import.secondary_button_text')}
+            onPress={chooseDataFile}
+            style={{ marginTop: 24 }}
+          />
 
           {importResults.label ? (
             <Text
