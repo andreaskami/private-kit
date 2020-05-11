@@ -6,5 +6,8 @@
   "total_cases": "Σύνολο κρουσμάτων",
   "new_deaths": "Νέοι θανάτοι",
   "total_deaths": "Σύνολο θανάτων",
-  "loading_data": "Φόρτωση δεδομένων..."
+  "loading_data": "Φόρτωση δεδομένων...",
+  "daily_infections_chart_title": "Ημερήσια κρούσματα",
+  "daily_deaths_chart_title": "Ημερήσιοι θανάτοι",
+  "daily_tests_chart_title": "Ημερήσια τεστ"
 }

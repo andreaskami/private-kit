@@ -120,7 +120,9 @@ export const StatisticsScreen = ({ navigation }) => {
               </View>
             )}
             <ScrollView>
-              <Text style={styles.chartName}>Daily infections</Text>
+              <Text style={styles.chartName}>
+                {languages.t('label.daily_infections_chart_title')}
+              </Text>
 
               <VictoryChart
                 width={width}
@@ -142,7 +144,7 @@ export const StatisticsScreen = ({ navigation }) => {
                 />
               </VictoryChart>
 
-              <Text style={styles.chartName}>Daily deaths</Text>
+              <Text style={styles.chartName}>{languages.t('label.daily_deaths_chart_title')}</Text>
 
               <VictoryChart
                 width={width}
@@ -159,7 +161,7 @@ export const StatisticsScreen = ({ navigation }) => {
                 <VictoryBar data={chartData} x='date' y='deaths' />
               </VictoryChart>
 
-              <Text style={styles.chartName}>Daily tests</Text>
+              <Text style={styles.chartName}>{languages.t('label.daily_tests_chart_title')}</Text>
 
               <VictoryChart
                 width={width}

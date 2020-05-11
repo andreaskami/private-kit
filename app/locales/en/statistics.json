@@ -6,5 +6,8 @@
   "total_cases": "Total cases",
   "new_deaths": "New deaths",
   "total_deaths": "Total deaths",
-  "loading_data": "Loading data..."
+  "loading_data": "Loading data...",
+  "daily_infections_chart_title": "Daily infections",
+  "daily_deaths_chart_title": "Daily deaths",
+  "daily_tests_chart_title": "Daily tests"
 }

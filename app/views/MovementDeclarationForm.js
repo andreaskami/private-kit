@@ -109,7 +109,7 @@ export const MovementDeclarationForm = ({ navigation }) => {
           <Picker.Item label={languages.t('label.FORMGENERAL_REASON_8')} value={8} />
         </Picker>
 
-        <Text style={styles.label}>Postal code</Text>
+        <Text style={styles.label}>{languages.t('label.postal_code')}</Text>
         <TextInput
           onChangeText={setPostalCode}
           value={postalCode}
