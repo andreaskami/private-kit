@@ -118,13 +118,7 @@ export const StatisticsScreen = ({ navigation }) => {
                 {languages.t('label.daily_infections_chart_title')}
               </Text>
 
-              <VictoryChart
-                width={width}
-                height={200}
-                domainPadding={10}
-                animate={{
-                  duration: 300
-                }}>
+              <VictoryChart width={width} height={200} domainPadding={10}>
                 <VictoryAxis
                   fixLabelOverlap
                   style={{ tickLabels: { padding: 10, fontSize: 12 } }}
@@ -140,13 +134,7 @@ export const StatisticsScreen = ({ navigation }) => {
 
               <Text style={styles.chartName}>{languages.t('label.daily_deaths_chart_title')}</Text>
 
-              <VictoryChart
-                width={width}
-                height={200}
-                domainPadding={10}
-                animate={{
-                  duration: 300
-                }}>
+              <VictoryChart width={width} height={200} domainPadding={10}>
                 <VictoryAxis
                   fixLabelOverlap
                   style={{ tickLabels: { padding: 10, fontSize: 12 } }}
@@ -157,13 +145,7 @@ export const StatisticsScreen = ({ navigation }) => {
 
               <Text style={styles.chartName}>{languages.t('label.daily_tests_chart_title')}</Text>
 
-              <VictoryChart
-                width={width}
-                height={200}
-                domainPadding={10}
-                animate={{
-                  duration: 300
-                }}>
+              <VictoryChart width={width} height={200} domainPadding={10}>
                 <VictoryAxis
                   fixLabelOverlap
                   style={{ tickLabels: { padding: 10, fontSize: 12 } }}
