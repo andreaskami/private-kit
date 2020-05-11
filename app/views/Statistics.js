@@ -151,7 +151,7 @@ export const StatisticsScreen = ({ navigation }) => {
                   fixLabelOverlap
                   style={{ tickLabels: { padding: 10, fontSize: 12 } }}
                 />
-                <VictoryAxis dependentAxis domain={[0, 2]} />
+                <VictoryAxis tickValues={[0, 1, 2]} dependentAxis domain={[0, 2]} />
                 <VictoryBar data={chartData} x='date' y='deaths' />
               </VictoryChart>
 
