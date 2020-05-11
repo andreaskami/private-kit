@@ -9,7 +9,8 @@ import {
   BackHandler,
   Dimensions,
   Button,
-  Linking
+  Linking,
+  ScrollView
 } from 'react-native'
 
 import colors from '../constants/colors'
@@ -22,8 +23,7 @@ import {
 } from '../helpers/GoogleTakeOutAutoImport'
 import languages from './../locales/languages'
 import { pickFile } from '../helpers/General'
-const width = Dimensions.get('window').width
-const height = Dimensions.get('window').height
+import PropTypes from 'prop-types'
 
 const makeImportResults = (label = '', error = false) => ({
   error,
@@ -90,7 +90,7 @@ export const ImportScreen = ({ navigation }) => {
         <Text style={styles.headerTitle}>{languages.t('label.import.title')}</Text>
       </View>
 
-      <View style={styles.main}>
+      <ScrollView contentContainerStyle={styles.main}>
         <View style={styles.subHeaderTitle}>
           <Text style={styles.sectionDescription}>
             {languages.t('label.import.google.instructions_first')}
@@ -129,9 +129,13 @@ export const ImportScreen = ({ navigation }) => {
             </Text>
           ) : null}
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   )
+}
+
+ImportScreen.propTypes = {
+  navigation: PropTypes.object.isRequired
 }
 
 const styles = StyleSheet.create({

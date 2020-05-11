@@ -14,13 +14,7 @@ import {
 import colors from '../constants/colors'
 import backArrow from './../assets/images/backArrow.png'
 import languages from '../locales/languages'
-import {
-  VictoryBar,
-  VictoryAxis,
-  VictoryChart,
-  VictoryZoomContainer,
-  VictoryTooltip
-} from 'victory-native'
+import { VictoryBar, VictoryAxis, VictoryChart, VictoryTooltip } from 'victory-native'
 import PropTypes from 'prop-types'
 
 import { getLatestStatistics } from '../services/httpClient'
