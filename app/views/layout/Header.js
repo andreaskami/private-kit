@@ -25,7 +25,7 @@ export default function Header (props) {
 
 const styles = StyleSheet.create({
   headerTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'OpenSans-Bold'
   },
   headerContainer: {

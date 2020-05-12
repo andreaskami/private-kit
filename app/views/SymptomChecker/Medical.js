@@ -53,7 +53,7 @@ export default function Medical (props) {
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1
+    flex: 0
   },
   header: {
     marginTop: 10,

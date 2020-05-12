@@ -9,5 +9,6 @@
   "loading_data": "Loading data...",
   "daily_infections_chart_title": "Daily infections",
   "daily_deaths_chart_title": "Daily deaths",
-  "daily_tests_chart_title": "Daily tests"
+  "daily_tests_chart_title": "Daily tests",
+  "no_data_or_error": "No data found or an error occurred."
 }

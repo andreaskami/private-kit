@@ -108,7 +108,6 @@ export const ImportScreen = ({ navigation }) => {
             onPress={() =>
               Linking.openURL('https://takeout.google.com/settings/takeout/custom/location_history')
             }
-            style={{ marginTop: 24 }}
           />
 
           <Text style={styles.andThen}>And then</Text>
@@ -116,7 +115,6 @@ export const ImportScreen = ({ navigation }) => {
           <Button
             title={languages.t('label.import.secondary_button_text')}
             onPress={chooseDataFile}
-            style={{ marginTop: 24 }}
           />
 
           {importResults.label ? (
@@ -139,10 +137,10 @@ ImportScreen.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  // Container covers the entire screen
   container: {
     flex: 1,
-    flexDirection: 'column',
+    paddingLeft: 20,
+    paddingRight: 20,
     color: colors.PRIMARY_TEXT,
     backgroundColor: colors.WHITE
   },
@@ -152,17 +150,10 @@ const styles = StyleSheet.create({
     fontSize: 22,
     padding: 5
   },
-  web: {
-    flex: 1,
-    width: '100%'
-  },
   main: {
-    flex: 1,
-    flexDirection: 'column',
+    flex: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingLeft: 20,
-    paddingRight: 20,
     width: '100%'
   },
 
@@ -184,7 +175,7 @@ const styles = StyleSheet.create({
     width: 18.48
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'OpenSans-Bold'
   },
   sectionDescription: {

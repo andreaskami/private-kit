@@ -8,7 +8,8 @@ import {
   Platform,
   Dimensions,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  ScrollView
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
@@ -126,7 +127,7 @@ function ExportScreen ({ shareButtonDisabled }) {
         <Text style={styles.headerTitle}>{languages.t('label.export')}</Text>
       </View>
 
-      <View style={styles.main}>
+      <ScrollView contentContainerStyle={styles.main}>
         <Text style={styles.sectionDescription}>{languages.t('label.export_para_1')}</Text>
         <Text style={styles.sectionDescription}>{languages.t('label.export_para_2')}</Text>
         <TouchableOpacity
@@ -150,13 +151,12 @@ function ExportScreen ({ shareButtonDisabled }) {
           {languages.t('label.data_last_updated')}{' '}
           {pointStats ? timeSincePoint(pointStats.lastPoint) : '...'}
         </Text>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  // Container covers the entire screen
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     textAlign: 'center',
-    fontSize: 24,
+    fontSize: 20,
     padding: 0,
     fontFamily: 'OpenSans-Bold'
   },
@@ -176,10 +176,9 @@ const styles = StyleSheet.create({
     padding: 5
   },
   main: {
-    flex: 1,
+    flex: 0,
     flexDirection: 'column',
     textAlignVertical: 'top',
-    // alignItems: 'center',
     padding: 20,
     width: '96%',
     alignSelf: 'center'

@@ -1,6 +1,6 @@
 import React from 'react'
 import colors from '../../constants/colors'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
 import Demographics from './Demographics'
 import Medical from './Medical'
 import Travel from './Travel'
@@ -38,7 +38,7 @@ export default function Form (props) {
     setCurrentStep(curr => (curr - 1 >= 0 ? curr - 1 : curr))
   }
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.contentContainer}>
         {steps[currentStep] === 'demographics' && (
           <Demographics nextStep={nextStep} data={data} dispatch={dispatch} />
@@ -80,7 +80,7 @@ export default function Form (props) {
           />
         )}
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -91,8 +91,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     color: colors.PRIMARY_TEXT,
     backgroundColor: colors.WHITE
-  },
-  contentContainer: {
-    height: '80%'
   }
 })

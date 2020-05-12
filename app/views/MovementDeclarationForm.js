@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     height: 40
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 20,
     lineHeight: 26,
     fontFamily: 'OpenSans-Bold',
     top: 21,

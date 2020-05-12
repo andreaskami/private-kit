@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     width: 18.48
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'OpenSans-Bold'
   },
   sectionDescription: {

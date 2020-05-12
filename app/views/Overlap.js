@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'OpenSans-Bold'
   },
   subHeaderTitle: {

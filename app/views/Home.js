@@ -154,25 +154,25 @@ const Home = ({ navigation }) => {
               onSelect={() => {
                 statistics()
               }}>
-              <Text style={styles.menuOptionText}>Statistics</Text>
+              <Text style={styles.menuOptionText}>{languages.t('label.statistics')}</Text>
             </MenuOption>
             <MenuOption
               onSelect={() => {
                 licenses()
               }}>
-              <Text style={styles.menuOptionText}>Licenses</Text>
+              <Text style={styles.menuOptionText}>{languages.t('label.Licenses')}</Text>
             </MenuOption>
             <MenuOption
               onSelect={() => {
                 privacy()
               }}>
-              <Text style={styles.menuOptionText}>Privacy</Text>
+              <Text style={styles.menuOptionText}>{languages.t('label.privacy')}</Text>
             </MenuOption>
             <MenuOption
               onSelect={() => {
                 acknowledgement()
               }}>
-              <Text style={styles.menuOptionText}>Acknowledgements</Text>
+              <Text style={styles.menuOptionText}>{languages.t('label.Acknowledgements')}</Text>
             </MenuOption>
           </MenuOptions>
         </Menu>
@@ -434,7 +434,7 @@ const styles = StyleSheet.create({
   actionButtonText: {
     opacity: 0.56,
     fontFamily: 'OpenSans-Bold',
-    fontSize: 12,
+    fontSize: 10,
     lineHeight: 17,
     letterSpacing: 0,
     textAlign: 'center',

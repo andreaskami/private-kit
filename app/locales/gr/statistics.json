@@ -9,5 +9,6 @@
   "loading_data": "Φόρτωση δεδομένων...",
   "daily_infections_chart_title": "Ημερήσια κρούσματα",
   "daily_deaths_chart_title": "Ημερήσιοι θανάτοι",
-  "daily_tests_chart_title": "Ημερήσια τεστ"
+  "daily_tests_chart_title": "Ημερήσια τεστ",
+  "no_data_or_error": "Δεν βρέθηκαν δεδομένα ή υπήρξε κάποιο τεχνικό πρόβλημα."
 }

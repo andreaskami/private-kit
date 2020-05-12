@@ -130,12 +130,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE
   },
   valueName: {
-    fontSize: 20,
-    fontWeight: '800'
+    fontSize: 16,
+    fontWeight: '700'
   },
   value: {
-    fontSize: 20,
-    fontWeight: '200'
+    fontSize: 16,
+    fontWeight: '300'
   },
 
   buttonTouchable: {
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     padding: 20
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'OpenSans-Bold'
   },
   headerContainer: {

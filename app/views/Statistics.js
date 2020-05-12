@@ -14,7 +14,7 @@ import {
 import colors from '../constants/colors'
 import backArrow from './../assets/images/backArrow.png'
 import languages from '../locales/languages'
-import { VictoryBar, VictoryAxis, VictoryChart, VictoryTooltip } from 'victory-native'
+import { VictoryBar, VictoryAxis, VictoryChart } from 'victory-native'
 import PropTypes from 'prop-types'
 
 import { getLatestStatistics } from '../services/httpClient'
@@ -25,22 +25,28 @@ export const StatisticsScreen = ({ navigation }) => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const latestUpdate = useMemo(() => {
-    if (data.length === 0) return null
-
-    return data[data.length - 1]
-  }, [data])
-
   const chartData = useMemo(() => {
-    if (!data.length) return
+    if (!data.length) return []
 
-    return data.map(record => ({
-      date: record.fields.date,
-      cases: parseInt(record.fields.dailyCases),
-      deaths: parseInt(record.fields.dailyDeaths),
-      tests: parseInt(record.fields.dailyTests)
-    }))
+    return data
+      .map(record => ({
+        date: record.fields.date,
+        cases: parseInt(record.fields.dailyCases),
+        deaths: parseInt(record.fields.dailyDeaths),
+        totalDeaths: parseInt(record.fields.totalDeaths),
+        tests: parseInt(record.fields.dailyTests),
+        totalCases: parseInt(record.fields.totalCases)
+      }))
+      .filter(record =>
+        Object.values(record).find(recordValue => recordValue !== undefined && recordValue !== null)
+      )
   }, [data])
+
+  const latestUpdate = useMemo(() => {
+    if (chartData.length === 0) return null
+
+    return chartData[chartData.length - 1]
+  }, [chartData])
 
   useEffect(() => {
     fetchStatistics()
@@ -68,6 +74,8 @@ export const StatisticsScreen = ({ navigation }) => {
     navigation.navigate('HomeScreen', {})
   }
 
+  console.log({ chartData })
+  console.log({ latestUpdate })
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -86,28 +94,28 @@ export const StatisticsScreen = ({ navigation }) => {
               <View style={styles.latestUpdateContainer}>
                 <View style={[styles.row, styles.latestUpdateText]}>
                   <Text>{languages.t('label.latest_update')}: </Text>
-                  <Text style={styles.value}>{latestUpdate.fields.date}</Text>
+                  <Text style={styles.value}>{latestUpdate.date}</Text>
                 </View>
                 <View style={styles.statisticsSummary}>
                   <View style={styles.statisticsSummaryField}>
                     <View style={styles.row}>
                       <Text>{languages.t('label.new_cases')}: </Text>
-                      <Text style={styles.value}>+{latestUpdate.fields.dailyCases}</Text>
+                      <Text style={styles.value}>+{latestUpdate.cases}</Text>
                     </View>
 
                     <View style={styles.row}>
                       <Text>{languages.t('label.total_cases')}: </Text>
-                      <Text style={styles.value}>{latestUpdate.fields.totalCases}</Text>
+                      <Text style={styles.value}>{latestUpdate.totalCases}</Text>
                     </View>
                   </View>
                   <View style={styles.statisticsSummaryField}>
                     <View style={styles.row}>
                       <Text>{languages.t('label.new_deaths')}: </Text>
-                      <Text style={styles.value}>{latestUpdate.fields.dailyDeaths}</Text>
+                      <Text style={styles.value}>{latestUpdate.deaths}</Text>
                     </View>
                     <View style={styles.row}>
                       <Text>{languages.t('label.total_deaths')}: </Text>
-                      <Text style={styles.value}>{latestUpdate.fields.totalDeaths}</Text>
+                      <Text style={styles.value}>{latestUpdate.totalDeaths}</Text>
                     </View>
                   </View>
                 </View>
@@ -124,12 +132,7 @@ export const StatisticsScreen = ({ navigation }) => {
                   style={{ tickLabels: { padding: 10, fontSize: 12 } }}
                 />
                 <VictoryAxis dependentAxis domain={[0, 50]} />
-                <VictoryBar
-                  data={chartData}
-                  x='date'
-                  y='cases'
-                  labelComponent={<VictoryTooltip />}
-                />
+                <VictoryBar data={chartData} x='date' y='cases' />
               </VictoryChart>
 
               <Text style={styles.chartName}>{languages.t('label.daily_deaths_chart_title')}</Text>
@@ -158,12 +161,12 @@ export const StatisticsScreen = ({ navigation }) => {
         )}
         {loading && (
           <View style={styles.loadingIndicator}>
-            <Text>Loading data...</Text>
+            <Text>{languages.t('label.loading_data')}</Text>
           </View>
         )}
         {!loading && data.length === 0 && (
           <View>
-            <Text>No data found or an error occurred.</Text>
+            <Text>{languages.t('label.no_data_or_error')}</Text>
           </View>
         )}
       </View>
@@ -187,7 +190,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'OpenSans-Bold'
   },
   pageTitle: {

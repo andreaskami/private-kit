@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'OpenSans-Bold'
   },
   headerContainer: {

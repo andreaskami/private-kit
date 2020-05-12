@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'OpenSans-Bold'
   },
   headerContainer: {
