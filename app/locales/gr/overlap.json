@@ -6,5 +6,13 @@
   "overlap_no_results_button_label": "Φόρτωση δημόσιων δεδομένων",
   "overlap_found_button_label": "Τα δημόσια δεδομένα έχουν φορτωθεί",
   "nCoV2019_url_info": "Για περισσότερες πληροφορίες όσον αφορά τα δημόσια δεδομένα του χάρτη",
-  "nCoV2019_url": "github.com/beoutbreakprepared/nCoV2019"
+  "nCoV2019_url": "github.com/beoutbreakprepared/nCoV2019",
+  "period_morning": "Πρωί",
+  "period_all_day": "Όλη την μέρα",
+  "period_afternoon": "Απόγευμα",
+  "period_evening": "Βράδυ",
+  "days": "μέρες",
+  "day": "μέρα",
+  "ago": "πρίν",
+  "today": "Σήμερα"
 }

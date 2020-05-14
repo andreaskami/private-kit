@@ -6,5 +6,13 @@
   "overlap_no_results_button_label": "Public Data Loaded",
   "overlap_found_button_label": "Public Data Loaded",
   "nCoV2019_url_info": "For more information on the dataset for this map",
-  "nCoV2019_url": "github.com/beoutbreakprepared/nCoV2019"
+  "nCoV2019_url": "github.com/beoutbreakprepared/nCoV2019",
+  "period_morning": "Morning",
+  "period_all_day": "All day",
+  "period_afternoon": "Afternoon",
+  "period_evening": "Evening",
+  "days": "days",
+  "day": "day",
+  "ago": "ago",
+  "today": "Today"
 }

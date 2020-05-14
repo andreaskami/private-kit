@@ -172,8 +172,10 @@ function MapScreen () {
             <MenuTrigger style={{ marginLeft: 14 }}>
               <Text style={{ backgroundColor: '#EFEFEF', padding: 5 }}>
                 {showingLast === 0
-                  ? 'Today'
-                  : `${showingLast} ${showingLast === 1 ? 'day' : 'days'} ago`}
+                  ? languages.t('label.today')
+                  : `${showingLast} ${
+                      showingLast === 1 ? languages.t('label.day') : languages.t('label.days')
+                    } ${languages.t('label.ago')}`}
               </Text>
             </MenuTrigger>
             <MenuOptions>
@@ -183,7 +185,11 @@ function MapScreen () {
                   key={num}
                   onSelect={() => setShowingLast(num)}>
                   <Text style={styles.menuOptionText}>
-                    {num === 0 ? 'Today' : `${num} ${num === 1 ? 'day' : 'days'} ago`}
+                    {num === 0
+                      ? languages.t('label.today')
+                      : `${num} ${
+                          num === 1 ? languages.t('label.day') : languages.t('label.days')
+                        } ${languages.t('label.ago')}`}
                   </Text>
                 </MenuOption>
               ))}
@@ -203,7 +209,12 @@ function MapScreen () {
               <Text style={{ backgroundColor: '#EFEFEF', padding: 5 }}>{period}</Text>
             </MenuTrigger>
             <MenuOptions>
-              {['All day', 'Morning', 'Afternoon', 'Evening'].map(selectedPeriod => (
+              {[
+                languages.t('label.period_all_day'),
+                languages.t('label.period_morning'),
+                languages.t('label.period_afternoon'),
+                languages.t('label.period_evening')
+              ].map(selectedPeriod => (
                 <MenuOption
                   style={selectedPeriod === period ? styles.menuOptionSelected : null}
                   key={selectedPeriod}
