@@ -79,25 +79,22 @@ const Home = ({ navigation }) => {
     navigation.navigate('ImportScreen', {})
   }
 
-  const overlap = () => {
-    navigation.navigate('OverlapScreen', {})
+  const mapLocations = () => {
+    navigation.navigate('MapScreen', {})
   }
 
-  const willParticipate = () => {
-    SetStoreData('PARTICIPATE', 'true').then(() => {
-      LocationServices.start()
-      // BroadcastingServices.start();
-    })
+  const willParticipate = async () => {
+    await SetStoreData('PARTICIPATE', 'true')
 
     // Check and see if they actually authorized in the system dialog.
     // If not, stop services and set the state to !isLogging
     // Fixes tripleblindmarket/private-kit#129
     BackgroundGeolocation.checkStatus(({ authorization }) => {
       if (authorization === BackgroundGeolocation.AUTHORIZED) {
+        LocationServices.start()
         setIsLogging(true)
       } else if (authorization === BackgroundGeolocation.NOT_AUTHORIZED) {
         LocationServices.stop(navigation)
-        BroadcastingServices.stop(navigation)
         setIsLogging(false)
       }
     })
@@ -125,7 +122,6 @@ const Home = ({ navigation }) => {
 
   const setOptOut = () => {
     LocationServices.stop(navigation)
-    BroadcastingServices.stop(navigation)
     setIsLogging(false)
   }
 
@@ -196,9 +192,7 @@ const Home = ({ navigation }) => {
                   {languages.t('label.stop_logging')}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => overlap()}
-                style={styles.startLoggingButtonTouchable}>
+              <TouchableOpacity onPress={mapLocations} style={styles.startLoggingButtonTouchable}>
                 <Text style={styles.startLoggingButtonText}>{languages.t('label.overlap')}</Text>
               </TouchableOpacity>
             </>

@@ -31,7 +31,7 @@ const INITIAL_REGION = {
   longitudeDelta: 0.01
 }
 
-function OverlapScreen () {
+function MapScreen () {
   const [markers, setMarkers] = useState([])
   const [allLocations, setAllLocations] = useState([])
   const [showingLast, setShowingLast] = useState(0)
@@ -343,4 +343,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default OverlapScreen
+export { MapScreen }

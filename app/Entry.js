@@ -9,7 +9,7 @@ import { Home } from './views/Home'
 import NewsScreen from './views/News'
 import ExportScreen from './views/Export'
 import ImportScreen from './views/Import'
-import OverlapScreen from './views/Overlap'
+import { MapScreen } from './views/Map'
 import LicencesScreen from './views/Licenses'
 import { StatisticsScreen } from './views/Statistics'
 import { OnboardingSlider } from './views/Onboarding/Slider'
@@ -29,7 +29,7 @@ const Pages = [
   { name: 'ImportScreen', component: ImportScreen, hasHeader: false },
   { name: 'LicensesScreen', component: LicencesScreen, hasHeader: false },
   { name: 'StatisticsScreen', component: StatisticsScreen, hasHeader: false },
-  { name: 'OverlapScreen', component: OverlapScreen, hasHeader: false },
+  { name: 'MapScreen', component: MapScreen, hasHeader: false },
   { name: 'FormWorkScreen', component: FormWork, hasHeader: false },
   { name: 'MovementDeclarationScreen', component: MovementDeclarationForm, hasHeader: false },
   { name: 'PrivacyScreen', component: Privacy, hasHeader: false },
