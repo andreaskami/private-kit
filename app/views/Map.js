@@ -31,11 +31,18 @@ const INITIAL_REGION = {
   longitudeDelta: 0.01
 }
 
+const periods = {
+  ALL_DAY: languages.t('label.period_all_day'),
+  MORNING: languages.t('label.period_morning'),
+  AFTERNOON: languages.t('label.period_afternoon'),
+  EVENING: languages.t('label.period_evening')
+}
+
 function MapScreen () {
   const [markers, setMarkers] = useState([])
   const [allLocations, setAllLocations] = useState([])
   const [showingLast, setShowingLast] = useState(0)
-  const [period, setPeriod] = useState('All day')
+  const [period, setPeriod] = useState(periods.ALL_DAY)
 
   const [initialRegion, setInitialRegion] = useState(INITIAL_REGION)
   const { navigate } = useNavigation()
@@ -45,15 +52,15 @@ function MapScreen () {
     timestamp => {
       const timestampHour = moment(timestamp).format('HH')
 
-      if (period === 'All day') return true
+      if (period === periods.ALL_DAY) return true
 
       let timestampPeriod
       if (timestampHour === 0 || timestampHour < 12) {
-        timestampPeriod = 'Morning'
+        timestampPeriod = periods.MORNING
       } else if (timestampHour < 19) {
-        timestampPeriod = 'Afternoon'
+        timestampPeriod = periods.AFTERNOON
       } else {
-        timestampPeriod = 'Evening'
+        timestampPeriod = periods.EVENING
       }
 
       return timestampPeriod === period
@@ -136,9 +143,9 @@ function MapScreen () {
       .subtract(showingLast, 'd')
       .format('D')
 
-    const filteredLocations = allLocations.filter(
-      marker => moment(marker.time).format('D') === date && filterByPeriod(marker.time)
-    )
+    const filteredLocations = allLocations
+      .filter(marker => moment(marker.time).format('D') === date)
+      .filter(marker => filterByPeriod(marker.time))
 
     populateMarkers(filteredLocations)
   }, [showingLast, period, allLocations, filterByPeriod, populateMarkers])
