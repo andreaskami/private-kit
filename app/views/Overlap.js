@@ -50,10 +50,10 @@ function OverlapScreen () {
       let timestampPeriod
       if (timestampHour === 0 || timestampHour < 12) {
         timestampPeriod = 'Morning'
-      } else if (timestampHour <= 19) {
+      } else if (timestampHour < 19) {
         timestampPeriod = 'Afternoon'
       } else {
-        timestampPeriod = 'Night'
+        timestampPeriod = 'Evening'
       }
 
       return timestampPeriod === period
