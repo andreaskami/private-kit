@@ -142,8 +142,17 @@ const Home = ({ navigation }) => {
           LocationServices.start()
           setIsLogging(true)
         } else {
-          LocationServices.stop()
-          setIsLogging(false)
+          Alert.alert(languages.t('label.ACCESS1'), languages.t('label.ACCESS3'), [
+            {
+              text: languages.t('label.yes'),
+              onPress: () => BackgroundGeolocation.showAppSettings()
+            },
+            {
+              text: languages.t('label.no'),
+              onPress: () => console.log('No Pressed'),
+              style: 'cancel'
+            }
+          ])
         }
       }
     })
