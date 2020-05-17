@@ -76,8 +76,8 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "index.js",
-    enableHermes: false,  // clean and rebuild if changing
+        entryFile: "index.js",
+        enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -119,19 +119,37 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
-android {
-    // Bump android release version
-    def versionPropsFile = file('version.properties')
-    if (!versionPropsFile.canRead()) {
-        throw new GradleException("Could not read version.properties!")
+ext.loadFileProps = { filename ->
+    def f = file(filename)
+    if (!f.canRead()) {
+        throw new GradleException("Could not read " + filename)
     }
-    def Properties versionProps = new Properties()
-    versionProps.load(new FileInputStream(versionPropsFile))
+    def Properties props = new Properties()
+    props.load(new FileInputStream(f))
+
+    return props
+}
+
+android {
+    def appId = "edu.rise.ihnilatis"
+    if (!System.getenv('MYAPP_RELEASE_STORE_FILE')) {
+        appId += "dev"
+    }
+
+    // Bump android release version
+    def versionProps = loadFileProps('version.properties')
     def vCode = versionProps['VERSION_CODE'].toInteger()
     if (System.getenv('MYAPP_RELEASE_STORE_FILE')) {
         vCode += 1
         versionProps['VERSION_CODE'] = vCode.toString()
-        versionProps.store(versionPropsFile.newWriter(), null)
+        versionProps.store(file('version.properties').newWriter(), null)
+    }
+
+    // Load google maps key
+    def metaProps = loadFileProps('meta.properties')
+    def gmapsKey = metaProps['GMAPS_KEY']
+    if (System.getenv('GMAPS_KEY')) {
+        gmapsKey = System.getenv('GMAPS_KEY')
     }
 
     // Main
@@ -143,12 +161,15 @@ android {
     }
 
     defaultConfig {
-        applicationId "edu.rise.ihnilatis"
+        applicationId appId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
         versionCode vCode
         versionName "2.0.0"
+        manifestPlaceholders = [
+                gmapsKey: gmapsKey
+        ]
     }
 
     splits {
@@ -175,9 +196,8 @@ android {
                 storePassword System.getenv('MYAPP_RELEASE_STORE_PASSWORD')
                 keyAlias System.getenv('MYAPP_RELEASE_KEY_ALIAS')
                 keyPassword System.getenv('MYAPP_RELEASE_STORE_PASSWORD')
-            } else {
-                project.logger.lifecycle('Could not find release key')
             }
+            // throw new GradleException("Could not find release key!")
         }
     }
 
@@ -187,8 +207,6 @@ android {
         }
 
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://facebook.github.io/react-native/docs/signed-apk-android.
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -232,35 +250,35 @@ dependencies {
     }
 
     implementation(project(':react-native-maps')){
-       exclude group: 'com.google.android.gms', module: 'play-services-base'
-       exclude group: 'com.google.android.gms', module: 'play-services-maps'
+        exclude group: 'com.google.android.gms', module: 'play-services-base'
+        exclude group: 'com.google.android.gms', module: 'play-services-maps'
     }
     implementation 'com.google.android.gms:play-services-base:10.0.1'
     implementation 'com.google.android.gms:play-services-maps:10.0.1'
 }
 
- // Just to fix the app start crash error
- allprojects {
+// Just to fix the app start crash error
+allprojects {
     repositories {
-    //start here
-    configurations.all {
- resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-   def requested = details.requested
-       if (requested.group == 'com.google.android.gms') {
-          details.useVersion '12.0.1'
-       }
-       if (requested.group == 'com.google.firebase') {
-          details.useVersion '12.0.1'
-         }
-       }
-     }
-    //end
-     jcenter()
-       maven {
-         url "https://maven.google.com"
-       }
-     }
- }
+        //start here
+        configurations.all {
+            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+                def requested = details.requested
+                if (requested.group == 'com.google.android.gms') {
+                    details.useVersion '12.0.1'
+                }
+                if (requested.group == 'com.google.firebase') {
+                    details.useVersion '12.0.1'
+                }
+            }
+        }
+        //end
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+    }
+}
 
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
