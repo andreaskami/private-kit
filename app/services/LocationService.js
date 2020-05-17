@@ -1,18 +1,16 @@
 import { GetStoreData, SetStoreData } from '../helpers/General'
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation'
-import { Alert, Platform, Linking } from 'react-native'
-import { PERMISSIONS, check, RESULTS, request } from 'react-native-permissions'
-import PushNotificationIOS from '@react-native-community/push-notification-ios'
+import { Platform, Alert, Linking } from 'react-native'
 import PushNotification from 'react-native-push-notification'
 import languages from '../locales/languages'
 
-let instanceCount = 0
+const LOCATION_DISABLED_NOTIFICATION = '55'
+let isBackgroundGeolocationConfigured = false
 
 export class LocationData {
   constructor () {
+    // The desired location interval, and the minimum acceptable interval
     this.locationInterval = 60000 * 5 // Time (in milliseconds) between location information polls.  E.g. 60000*5 = 5 minutes
-    // DEBUG: Reduce Time intervall for faster debugging
-    // this.locationInterval = 5000;
   }
 
   getLocationData () {
@@ -89,45 +87,123 @@ export class LocationData {
 }
 
 export default class LocationServices {
-  static start () {
+  static async start () {
     const locationData = new LocationData()
 
-    instanceCount += 1
-    if (instanceCount > 1) {
+    // handles edge cases around Android where start might get called again even though
+    // the service is already created.  Make sure the listeners are still bound and exit
+    if (isBackgroundGeolocationConfigured) {
       BackgroundGeolocation.start()
       return
     }
 
     PushNotification.configure({
       // (required) Called when a remote or local notification is opened or received
-      onNotification: function (notification) {
-        console.log('NOTIFICATION:', notification)
-        // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
-        notification.finish(PushNotificationIOS.FetchResult.NoData)
-      },
-      requestPermissions: true
+      // onNotification (notification) {
+      //   console.log('NOTIFICATION:', notification)
+      //   // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
+      //   notification.finish(PushNotificationIOS.FetchResult.NoData)
+      // },
+      // Setting the permissions to true causes a crash on Android, because that configuration requires Firebase
+      // https://github.com/zo0r/react-native-push-notification#usage
+      requestPermissions: Platform.OS === 'ios'
     })
 
-    // PushNotificationIOS.requestPermissions();
     BackgroundGeolocation.configure({
+      maxLocations: 0,
       desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
       stationaryRadius: 5,
       distanceFilter: 5,
       notificationTitle: languages.t('label.ENABLED'),
       notificationText: languages.t('label.intro2_para1'),
-      debug: false, // when true, it beeps every time a loc is read
+      debug: false,
       startOnBoot: true,
       stopOnTerminate: false,
       locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
-
       interval: locationData.locationInterval,
       fastestInterval: locationData.locationInterval,
       activitiesInterval: locationData.locationInterval,
-
       activityType: 'AutomotiveNavigation',
       pauseLocationUpdates: false,
       saveBatteryOnBackground: true,
       stopOnStillActivity: false
+    })
+
+    BackgroundGeolocation.on('error', error => {
+      console.log('[ERROR] BackgroundGeolocation error:', error)
+    })
+
+    BackgroundGeolocation.on('start', () => {
+      console.log('[INFO] BackgroundGeolocation service has been started')
+    })
+
+    BackgroundGeolocation.on('authorization', status => {
+      console.log('[INFO] BackgroundGeolocation authorization status: ' + status)
+
+      if (status === BackgroundGeolocation.AUTHORIZED) {
+        // TODO: this should not restart if user opted out
+        BackgroundGeolocation.start() // force running, if not already running
+        BackgroundGeolocation.checkStatus(geolocationStatus => {
+          if (!geolocationStatus.locationServicesEnabled) {
+            PushNotification.localNotification({
+              id: LOCATION_DISABLED_NOTIFICATION,
+              title: languages.t('label.TRACKDISABLED'),
+              message: languages.t('label.NEEDSLOCSERVICES')
+            })
+          } else {
+            PushNotification.cancelLocalNotifications({
+              id: LOCATION_DISABLED_NOTIFICATION
+            })
+          }
+        })
+      }
+    })
+
+    BackgroundGeolocation.on('background', () => {
+      console.log('[INFO] App is in background')
+      BackgroundGeolocation.start()
+    })
+
+    BackgroundGeolocation.on('foreground', () => {
+      console.log('[INFO] App is in foreground')
+    })
+
+    BackgroundGeolocation.on('abort_requested', () => {
+      console.log('[INFO] Server responded with 285 Updates Not Required')
+      // Here we can decide whether we want stop the updates or not.
+      // If you've configured the server to return 285, then it means the server does not require further update.
+      // So the normal thing to do here would be to `BackgroundGeolocation.stop()`.
+      // But you might be counting on it to receive location updates in the UI, so you could just reconfigure and set `url` to null.
+    })
+
+    BackgroundGeolocation.on('http_authorization', () => {
+      console.log('[INFO] App needs to authorize the http requests')
+    })
+
+    BackgroundGeolocation.on('stop', () => {
+      PushNotification.localNotification({
+        title: languages.t('label.TRACKDISABLED'),
+        message: languages.t('label.NEEDSLOCSERVICES')
+      })
+      console.log('[INFO] stop')
+    })
+
+    BackgroundGeolocation.on('stationary', stationaryLocation => {
+      // handle stationary locations here
+      // Actions.sendLocation(stationaryLocation);
+      BackgroundGeolocation.startTask(taskKey => {
+        // execute long running task
+        // eg. ajax post location
+        // IMPORTANT: task has to be ended by endTask
+
+        // For capturing stationaryLocation. Note that it hasn't been
+        // tested as I couldn't produce stationaryLocation callback in emulator
+        // but since the plugin documentation mentions it, no reason to keep
+        // it empty I believe.
+        locationData.saveLocation(stationaryLocation)
+        BackgroundGeolocation.endTask(taskKey)
+      })
+      console.log('[INFO] stationaryLocation:', stationaryLocation)
     })
 
     BackgroundGeolocation.on('location', location => {
@@ -162,162 +238,37 @@ export default class LocationServices {
       })
     }
 
-    BackgroundGeolocation.on('stationary', stationaryLocation => {
-      // handle stationary locations here
-      // Actions.sendLocation(stationaryLocation);
-      BackgroundGeolocation.startTask(taskKey => {
-        // execute long running task
-        // eg. ajax post location
-        // IMPORTANT: task has to be ended by endTask
+    const {
+      authorization,
+      isRunning,
+      locationServicesEnabled
+    } = await this.getBackgroundGeoStatus()
 
-        // For capturing stationaryLocation. Note that it hasn't been
-        // tested as I couldn't produce stationaryLocation callback in emulator
-        // but since the plugin documentation mentions it, no reason to keep
-        // it empty I believe.
-        locationData.saveLocation(stationaryLocation)
-        BackgroundGeolocation.endTask(taskKey)
-      })
-      console.log('[INFO] stationaryLocation:', stationaryLocation)
-    })
+    console.log('[INFO] BackgroundGeolocation service is running', isRunning)
+    console.log('[INFO] BackgroundGeolocation services enabled', locationServicesEnabled)
+    console.log('[INFO] BackgroundGeolocation auth status: ' + authorization)
 
-    BackgroundGeolocation.on('error', error => {
-      console.log('[ERROR] BackgroundGeolocation error:', error)
-    })
-
-    BackgroundGeolocation.on('start', () => {
-      console.log('[INFO] BackgroundGeolocation service has been started')
-    })
-
-    BackgroundGeolocation.on('stop', () => {
-      console.log('[INFO] BackgroundGeolocation service has been stopped')
-    })
-
-    BackgroundGeolocation.on('authorization', status => {
-      console.log('[INFO] BackgroundGeolocation authorization status: ' + status)
-
-      if (status !== BackgroundGeolocation.AUTHORIZED) {
-        // we need to set delay or otherwise alert may not be shown
-        setTimeout(
-          () =>
-            Alert.alert(languages.t('label.ACCESS1'), languages.t('label.ACCESS3'), [
-              {
-                text: languages.t('label.yes'),
-                onPress: () => BackgroundGeolocation.showAppSettings()
-              },
-              {
-                text: languages.t('label.no'),
-                onPress: () => console.log('No Pressed'),
-                style: 'cancel'
-              }
-            ]),
-          1000
-        )
-      } else {
-        BackgroundGeolocation.start() //triggers start on start event
-
-        // TODO: We reach this point on Android when location services are toggled off/on.
-        //       When this fires, check if they are off and show a Notification in the tray
-      }
-    })
-
-    BackgroundGeolocation.on('background', () => {
-      console.log('[INFO] App is in background')
-    })
-
-    BackgroundGeolocation.on('foreground', () => {
-      console.log('[INFO] App is in foreground')
-    })
-
-    BackgroundGeolocation.on('abort_requested', () => {
-      console.log('[INFO] Server responded with 285 Updates Not Required')
-      // Here we can decide whether we want stop the updates or not.
-      // If you've configured the server to return 285, then it means the server does not require further update.
-      // So the normal thing to do here would be to `BackgroundGeolocation.stop()`.
-      // But you might be counting on it to receive location updates in the UI, so you could just reconfigure and set `url` to null.
-    })
-
-    BackgroundGeolocation.on('http_authorization', () => {
-      console.log('[INFO] App needs to authorize the http requests')
-    })
-
-    BackgroundGeolocation.on('stop', () => {
-      PushNotification.localNotification({
-        title: languages.t('label.TRACKDISABLED'),
-        message: languages.t('label.NEEDSLOCSERVICES')
-      })
-      console.log('[INFO] stop')
-    })
-
-    BackgroundGeolocation.on('stationary', () => {
-      console.log('[INFO] stationary')
-    })
-
-    BackgroundGeolocation.checkStatus(status => {
-      console.log('[INFO] BackgroundGeolocation service is running', status.isRunning)
-      console.log('[INFO] BackgroundGeolocation services enabled', status.locationServicesEnabled)
-      console.log('[INFO] BackgroundGeolocation auth status: ' + status.authorization)
-
-      BackgroundGeolocation.start() //triggers start on start event
-
-      if (!status.locationServicesEnabled) {
-        // we need to set delay or otherwise alert may not be shown
-        setTimeout(
-          () =>
-            Alert.alert(languages.t('label.ACCESS2'), languages.t('label.ACCESS3'), [
-              {
-                text: languages.t('label.yes'),
-                onPress: () => {
-                  if (Platform.OS === 'android') {
-                    // showLocationSettings() only works for android
-                    BackgroundGeolocation.showLocationSettings()
-                  } else {
-                    Linking.openURL('App-Prefs:Privacy') // Deeplinking method for iOS
-                  }
-                }
-              },
-              {
-                text: languages.t('label.no'),
-                onPress: () => console.log('No Pressed'),
-                style: 'cancel'
-              }
-            ]),
-          1000
-        )
-      } else if (!status.authorization) {
-        // we need to set delay or otherwise alert may not be shown
-        setTimeout(
-          () =>
-            Alert.alert(languages.t('label.ACCESS1'), languages.t('label.ACCESS3'), [
-              {
-                text: languages.t('label.yes'),
-                onPress: () => BackgroundGeolocation.showAppSettings()
-              },
-              {
-                text: languages.t('label.no'),
-                onPress: () => console.log('No Pressed'),
-                style: 'cancel'
-              }
-            ]),
-          1000
-        )
-      }
-      // else if (!status.isRunning) {
-      // } // commented as it was not being used
-    })
-
-    // you can also just start without checking for status
-    // BackgroundGeolocation.start();
+    BackgroundGeolocation.start()
+    isBackgroundGeolocationConfigured = true
   }
 
-  static stop (nav) {
-    // unregister all event listeners
+  static async stop () {
     PushNotification.localNotification({
       title: languages.t('label.TRACKDISABLED'),
       message: languages.t('label.NEEDSLOCSERVICES')
     })
     BackgroundGeolocation.removeAllListeners()
     BackgroundGeolocation.stop()
-    instanceCount -= 1
-    SetStoreData('PARTICIPATE', 'false').then(() => nav.navigate('HomeScreen', {}))
+    isBackgroundGeolocationConfigured = false
+    await SetStoreData('PARTICIPATE', 'false')
+  }
+
+  static async getBackgroundGeoStatus () {
+    return new Promise((resolve, reject) => {
+      BackgroundGeolocation.checkStatus(
+        status => resolve(status),
+        e => reject(e)
+      )
+    })
   }
 }

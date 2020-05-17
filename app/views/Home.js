@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  Platform,
   ScrollView,
   BackHandler
 } from 'react-native'
@@ -19,6 +20,7 @@ import BroadcastingServices from '../services/BroadcastingService'
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation'
 import { getVersion } from 'react-native-device-info'
 import PropTypes from 'prop-types'
+import { PERMISSIONS, RESULTS, check, request, openSettings } from 'react-native-permissions'
 
 import exportImage from './../assets/images/export.png'
 import newsImage from './../assets/images/newspaper.png'
@@ -45,9 +47,49 @@ const Home = ({ navigation }) => {
     return true
   }
 
+  const locationPermission = useMemo(() => {
+    if (Platform.OS === 'ios') {
+      return PERMISSIONS.IOS.LOCATION_ALWAYS
+    } else {
+      return PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
+    }
+  }, [])
+
+  const checkCurrentState = useCallback(async () => {
+    // If user has location enabled & permissions, start logging
+    const isParticipating = await GetStoreData('PARTICIPATE', false)
+
+    if (isParticipating) {
+      check(locationPermission)
+        .then(result => {
+          console.log(`Permission: ${result}`)
+          switch (result) {
+            case RESULTS.GRANTED:
+              LocationServices.start()
+              return
+            case RESULTS.UNAVAILABLE:
+            case RESULTS.BLOCKED:
+              console.log('NO LOCATION')
+              LocationServices.stop()
+          }
+        })
+        .catch(error => {
+          console.log('error checking location: ' + error)
+        })
+    } else {
+      LocationServices.stop()
+    }
+  }, [locationPermission])
+
+  const requestLocationPermission = async () => {
+    const status = await request(locationPermission)
+
+    return status === RESULTS.GRANTED
+  }
+
   useEffect(() => {
     onMount()
-
+    checkCurrentState()
     BackHandler.addEventListener('hardwareBackPress', handleBackPress)
 
     GetStoreData('PARTICIPATE')
@@ -84,18 +126,25 @@ const Home = ({ navigation }) => {
   }
 
   const willParticipate = async () => {
+    await checkCurrentState()
     await SetStoreData('PARTICIPATE', 'true')
 
-    // Check and see if they actually authorized in the system dialog.
-    // If not, stop services and set the state to !isLogging
-    // Fixes tripleblindmarket/private-kit#129
-    BackgroundGeolocation.checkStatus(({ authorization }) => {
+    BackgroundGeolocation.checkStatus(async ({ authorization }) => {
+      console.log({ authorization: authorization === BackgroundGeolocation.AUTHORIZED })
+      console.log({ authCode: authorization })
       if (authorization === BackgroundGeolocation.AUTHORIZED) {
         LocationServices.start()
         setIsLogging(true)
-      } else if (authorization === BackgroundGeolocation.NOT_AUTHORIZED) {
-        LocationServices.stop(navigation)
-        setIsLogging(false)
+      } else if (authorization === 99 || authorization === BackgroundGeolocation.NOT_AUTHORIZED) {
+        // code 99 = authorization is not determined (ios)
+        const permissionGranted = await requestLocationPermission()
+        if (permissionGranted) {
+          LocationServices.start()
+          setIsLogging(true)
+        } else {
+          LocationServices.stop()
+          setIsLogging(false)
+        }
       }
     })
   }
@@ -121,7 +170,7 @@ const Home = ({ navigation }) => {
   }
 
   const setOptOut = () => {
-    LocationServices.stop(navigation)
+    LocationServices.stop()
     setIsLogging(false)
   }
 
