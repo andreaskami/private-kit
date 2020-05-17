@@ -139,8 +139,6 @@ ImportScreen.propTypes = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingLeft: 20,
-    paddingRight: 20,
     color: colors.PRIMARY_TEXT,
     backgroundColor: colors.WHITE
   },
@@ -154,7 +152,9 @@ const styles = StyleSheet.create({
     flex: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    paddingLeft: 20,
+    paddingRight: 20
   },
 
   headerContainer: {

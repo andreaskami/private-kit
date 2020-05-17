@@ -149,8 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     color: colors.PRIMARY_TEXT,
-    backgroundColor: colors.WHITE,
-    padding: 20
+    backgroundColor: colors.WHITE
   },
   submit: {
     width: '60%',
@@ -173,7 +172,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
-    height: 80,
+    height: 60,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(189, 195, 199,0.6)'
   },
