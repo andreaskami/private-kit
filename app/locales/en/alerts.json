@@ -1,10 +1,9 @@
 {
-    "alert": {
-        "title": {
-            "note": "Note",
-            "warning": "Warning"
-        },
-        "sms_dispatch": "Check your messages if your request has been accepted and if the SMS was sent successfully",
-        "no_internet_connection": "An internet connection is required before accessing this feature"
-    }
+  "alert": {
+    "title": {
+      "note": "Note",
+      "warning": "Warning"
+    },
+    "no_internet_connection": "An internet connection is required before accessing this feature"
+  }
 }

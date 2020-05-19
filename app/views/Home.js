@@ -303,13 +303,6 @@ const Home = ({ navigation }) => {
             <Text style={styles.actionButtonText}>{languages.t('label.SYMPTOM_CHECKER')}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => navigation.navigate('MovementDeclarationScreen', {})}
-            style={styles.actionButtonsTouchable}>
-            <Text style={styles.actionButtonHead}>&#9997;</Text>
-            <Text style={styles.actionButtonText}>{languages.t('label.FORMGENERAL_NEW')}</Text>
-          </TouchableOpacity>
-
           <TouchableOpacity onPress={news} style={styles.actionButtonsTouchable}>
             <Image style={styles.actionButtonImage} source={newsImage} resizeMode='contain' />
             <Text style={styles.actionButtonText}>{languages.t('label.news')}</Text>
