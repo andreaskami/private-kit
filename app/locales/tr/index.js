@@ -7,6 +7,8 @@ import overlapFile from './overlap.json'
 import notificationFile from './notification.json'
 import ixnilatisOverride from './ixnilatisOverride.json'
 import ixnilatisNew from './ixnilatisNew.json'
+import statistics from './statistics.json'
+import validations from './validations.json'
 
 export default {
   ...intro,
@@ -17,5 +19,7 @@ export default {
   ...licensesFile,
   ...notificationFile,
   ...ixnilatisOverride,
-  ...ixnilatisNew
+  ...ixnilatisNew,
+  ...statistics,
+  ...validations
 }
