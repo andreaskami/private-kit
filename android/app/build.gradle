@@ -166,7 +166,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
         versionCode vCode
-        versionName "2.0.0"
+        versionName "2.0.1"
         manifestPlaceholders = [
                 gmapsKey: gmapsKey
         ]
