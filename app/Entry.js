@@ -12,7 +12,7 @@ import ImportScreen from './views/Import'
 import { MapScreen } from './views/Map'
 import LicencesScreen from './views/Licenses'
 import { StatisticsScreen } from './views/Statistics'
-import { OnboardingSlider } from './views/Onboarding/Slider'
+import { Onboarding } from './views/Onboarding/Onboarding'
 import FormWork from './views/FormWork'
 import { Acknowledgements } from './views/Acknowledgements'
 import { Privacy } from './views/Privacy'
@@ -22,7 +22,7 @@ const Stack = createStackNavigator()
 
 const Pages = [
   { name: 'HomeScreen', component: Home, hasHeader: false },
-  { name: 'OnboardingScreen', component: OnboardingSlider, hasHeader: false },
+  { name: 'OnboardingScreen', component: Onboarding, hasHeader: false },
   { name: 'NewsScreen', component: NewsScreen, hasHeader: false },
   { name: 'ExportScreen', component: ExportScreen, hasHeader: false },
   { name: 'ImportScreen', component: ImportScreen, hasHeader: false },

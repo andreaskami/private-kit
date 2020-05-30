@@ -5,7 +5,7 @@ permissions_path = '../node_modules/react-native-permissions/ios'
 
 target 'CovTracer' do
 
-
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways.podspec"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse.podspec"
   pod 'Permission-Motion', :path => "#{permissions_path}/Motion.podspec"
