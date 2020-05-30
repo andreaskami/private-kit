@@ -107,8 +107,9 @@ const Home = ({ navigation }) => {
   })
 
   const onMount = async () => {
-    const onBoardingValue = await GetStoreData('ONBOARDING_COMPLETE')
-    if (!onBoardingValue || !+onBoardingValue) {
+    const onBoardingValue = await GetStoreData('ONBOARDING_COMPLETE', false)
+
+    if (!onBoardingValue) {
       navigation.navigate('OnboardingScreen')
     }
   }
