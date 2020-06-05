@@ -76,6 +76,7 @@ export const Onboarding = ({ navigation }) => {
 
   const finish = async () => {
     await SetStoreData('ONBOARDING_COMPLETE', true)
+    await SetStoreData('LOGGING', Boolean(permissions.location))
 
     navigation.navigate('HomeScreen')
   }

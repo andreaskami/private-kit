@@ -314,6 +314,8 @@ PODS:
     - React
   - RNPermissions (2.1.3):
     - React
+  - RNReanimated (1.9.0):
+    - React
   - RNScreens (2.7.0):
     - React
   - RNShare (3.3.0):
@@ -385,6 +387,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -497,6 +500,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-i18n"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNShare:
@@ -561,6 +566,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNI18n: ae012568644105311254f877f32e4157e063217f
   RNPermissions: 6772df08e03565f718f7e140d9fccae441b8ca8b
+  RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
   RNScreens: cf198f915f8a2bf163de94ca9f5bfc8d326c3706
   RNShare: fea1801315aa8875d6db73a4010b14afcd568765
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e

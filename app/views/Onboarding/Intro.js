@@ -1,10 +1,9 @@
 import React from 'react'
-import { View, ScrollView, SafeAreaView, Image } from 'react-native'
 import PropTypes from 'prop-types'
 
 import languages from '../../locales/languages'
 import styled from 'styled-components/native'
-import { Button, Layout, Text } from '@ui-kitten/components'
+import { Text } from '@ui-kitten/components'
 
 export const Intro = ({ currentStep }) => (
   <Root>
