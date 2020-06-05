@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import FlashMessage from 'react-native-flash-message'
 import { SafeAreaView } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
-import { Home } from './views/Home'
+import { HomeScreen } from './views/Home/Home'
 import NewsScreen from './views/News'
 import ExportScreen from './views/Export'
 import ImportScreen from './views/Import'
@@ -13,67 +13,58 @@ import { MapScreen } from './views/Map'
 import LicencesScreen from './views/Licenses'
 import { StatisticsScreen } from './views/Statistics'
 import { Onboarding } from './views/Onboarding/Onboarding'
-import FormWork from './views/FormWork'
 import { Acknowledgements } from './views/Acknowledgements'
 import { Privacy } from './views/Privacy'
 import SymptomChecker from './views/SymptomChecker/SymptomChecker'
+import { DrawerContent } from './DrawerContent'
 
-const Stack = createStackNavigator()
+const Drawer = createDrawerNavigator()
 
 const Pages = [
-  { name: 'HomeScreen', component: Home, hasHeader: false },
-  { name: 'OnboardingScreen', component: Onboarding, hasHeader: false },
-  { name: 'NewsScreen', component: NewsScreen, hasHeader: false },
-  { name: 'ExportScreen', component: ExportScreen, hasHeader: false },
-  { name: 'ImportScreen', component: ImportScreen, hasHeader: false },
-  { name: 'LicensesScreen', component: LicencesScreen, hasHeader: false },
-  { name: 'StatisticsScreen', component: StatisticsScreen, hasHeader: false },
+  { name: 'HomeScreen', component: HomeScreen, hasHeader: false },
   { name: 'MapScreen', component: MapScreen, hasHeader: false },
-  { name: 'FormWorkScreen', component: FormWork, hasHeader: false },
+  { name: 'SymptomCheckerScreen', component: SymptomChecker, hasHeader: false },
+  // group 1
+  { name: 'NewsScreen', component: NewsScreen, hasHeader: false },
+  { name: 'StatisticsScreen', component: StatisticsScreen, hasHeader: false },
+  // group 2
+  { name: 'ImportScreen', component: ImportScreen, hasHeader: false },
+  { name: 'ExportScreen', component: ExportScreen, hasHeader: false },
+  // group 3
   { name: 'PrivacyScreen', component: Privacy, hasHeader: false },
+  { name: 'LicensesScreen', component: LicencesScreen, hasHeader: false },
   { name: 'AckScreen', component: Acknowledgements, hasHeader: false },
-  { name: 'SymptomCheckerScreen', component: SymptomChecker, hasHeader: false }
+  // routes not shown in drawer go here
+  { name: 'OnboardingScreen', component: Onboarding, hasHeader: false }
 ]
 
-export class Entry extends Component {
-  pages
+const initialRouteName = 'Home'
 
-  constructor (props) {
-    super(props)
+export const Entry = () => {
+  const pages = Pages.map(page => (
+    <Drawer.Screen
+      key={page.name}
+      name={page.name}
+      component={page.component}
+      options={{ headerShown: page.hasHeader }}
+    />
+  ))
 
-    this.state = {
-      initialRouteName: 'Home'
-    }
+  return (
+    <NavigationContainer>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Drawer.Navigator
+          initialRouteName={initialRouteName}
+          drawerContent={props => <DrawerContent {...props} />}>
+          {pages}
+        </Drawer.Navigator>
 
-    this.pages = Pages.map(page => (
-      <Stack.Screen
-        key={page.name}
-        name={page.name}
-        component={page.component}
-        options={{ headerShown: page.hasHeader }}
-      />
-    ))
-  }
-
-  // TODO: Add rootStore for dynamic loading
-  async componentDidMount () {
-    // const value = await GetStoreData('ONBOARDING_COMPLETE')
-    // console.log('ONBOARDING_COMPLETE', value)
-  }
-
-  render () {
-    return (
-      <NavigationContainer>
-        <SafeAreaView style={{ flex: 1 }}>
-          <Stack.Navigator initialRouteName={this.initialRouteName}>{this.pages}</Stack.Navigator>
-
-          <FlashMessage
-            ref={ref => {
-              this.top = ref
-            }}
-          />
-        </SafeAreaView>
-      </NavigationContainer>
-    )
-  }
+        {/* <FlashMessage
+          ref={ref => {
+            this.top = ref
+          }}
+        /> */}
+      </SafeAreaView>
+    </NavigationContainer>
+  )
 }
