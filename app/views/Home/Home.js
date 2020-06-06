@@ -36,7 +36,7 @@ import { useNetInfo } from '@react-native-community/netinfo'
 import languages from '../../locales/languages'
 
 import styled from 'styled-components/native'
-import { Layout, Text, Button } from '@ui-kitten/components'
+import { Layout, Text, Button, Icon } from '@ui-kitten/components'
 import { Logo } from '../../components/Logo'
 import { BackgroundShape } from './BackgroundShape'
 
@@ -68,7 +68,9 @@ export const HomeScreen = ({ navigation }) => {
     <Root>
       <BackgroundShape />
       <Header>
-        <Text>Header</Text>
+        <TouchableOpacity onPress={navigation.toggleDrawer}>
+          <MenuTriggerIcon name='menu-outline' fill='#3366ff' />
+        </TouchableOpacity>
       </Header>
       <Body>
         <AppLogo />
@@ -103,7 +105,10 @@ const Root = styled(Layout)`
   padding: 20px;
 `
 
-const Header = styled.View``
+const Header = styled.View`
+  width: 100%;
+  position: relative;
+`
 
 const Body = styled.View``
 
@@ -157,6 +162,13 @@ const ViewRecentLocationsButton = styled.TouchableOpacity`
 const ViewRecentLocationsButtonText = styled(Text)`
   font-size: 12px;
   color: #bdbdbd;
+`
+
+const MenuTriggerIcon = styled(Icon)`
+  position: absolute;
+  left: 0;
+  width: 32px;
+  height: 32px;
 `
 
 HomeScreen.propTypes = {
