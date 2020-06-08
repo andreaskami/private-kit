@@ -3,18 +3,18 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "install:pod": "cd ios && pod install",
-    "postinstall": "patch-package",
-    "postversion": "react-native-version",
     "android": "react-native run-android",
-    "android:bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "android:build": "./scripts/build-android.sh",
     "android:build:dev": "cd android; ./gradlew assembleDebug --stacktrace",
+    "android:bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
+    "format": "prettier-standard --format",
+    "install:pod": "cd ios && pod install",
     "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
     "lint": "eslint .",
-    "format": "prettier-standard --format"
+    "postinstall": "patch-package && npx jetify",
+    "postversion": "react-native-version",
+    "start": "react-native start",
+    "test": "jest"
   },
   "husky": {
     "hooks": {
