@@ -1,5 +1,11 @@
-import {AsyncStorage} from 'react-native';
-import _ from 'lodash';
+import AsyncStorage from '@react-native-community/async-storage'
+import DocumentPicker from 'react-native-document-picker';
+
+if (global.__DEV__) {
+  global.clearAsyncStorage = () => {
+    AsyncStorage.clear().then(() => console.log('Cleared'))
+  }
+}
 
 /**
  * Get Data from Store
@@ -8,19 +14,19 @@ import _ from 'lodash';
  * @param {string} key
  * @param {boolean} isString
  */
-export async function GetStoreData(key, isString = true) {
-	try {
-		let data =  await AsyncStorage.getItem(key);
+export async function GetStoreData (key, isString = true) {
+  try {
+    const data = await AsyncStorage.getItem(key)
 
-		if (isString) {
-			return data;
-		}
+    if (isString) {
+      return data
+    }
 
-		return JSON.parse(data);
-	} catch (error) {
-		console.log(error.message);
-	}
-	return false;
+    return JSON.parse(data)
+  } catch (error) {
+    console.log(error.message)
+  }
+  return false
 }
 
 /**
@@ -31,15 +37,30 @@ export async function GetStoreData(key, isString = true) {
  * @param {object} item
  */
 export async function SetStoreData (key, item) {
-	try {
-		//we want to wait for the Promise returned by AsyncStorage.setItem()
-		//to be resolved to the actual value before returning the value
-		if (typeof item !== 'string') {
-			item = JSON.stringify(item);
-		}
+  try {
+    // we want to wait for the Promise returned by AsyncStorage.setItem()
+    // to be resolved to the actual value before returning the value
+    const payload = typeof item !== 'string' ? JSON.stringify(item) : item
 
-		return await AsyncStorage.setItem(key, item);
-	} catch (error) {
-		console.log(error.message);
-	}
+    return await AsyncStorage.setItem(key, payload)
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+export async function pickFile() {
+  // Pick a single file - returns actual path on Android, file:// uri on iOS
+  try {
+    const res = await DocumentPicker.pick({
+      type: [DocumentPicker.types.zip, DocumentPicker.types.allFiles],
+      usePath: true,
+    });
+    return res.uri;
+  } catch (err) {
+    if (DocumentPicker.isCancel(err)) {
+      // User cancelled the picker, exit any dialogs or menus and move on
+    } else {
+      throw err;
+    }
+  }
 }

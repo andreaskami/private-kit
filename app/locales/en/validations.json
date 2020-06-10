@@ -1,0 +1,8 @@
+{
+  "validation": {
+    "identification": "Up to 10 characters, no special characters allowed",
+    "postal_code": "Postal code needs to be between 0001 and 9999",
+    "age": "Age needs to be between 0 - 100"
+  }
+  
+}

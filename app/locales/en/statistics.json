@@ -1,0 +1,14 @@
+{
+  "statistics": "Statistics",
+  "statistics_title": "COVID-19 statistics of daily incidents",
+  "latest_update": "Latest update",
+  "new_cases": "New cases",
+  "total_cases": "Total cases",
+  "new_deaths": "New deaths",
+  "total_deaths": "Total deaths",
+  "loading_data": "Loading data...",
+  "daily_infections_chart_title": "Daily infections",
+  "daily_deaths_chart_title": "Daily deaths",
+  "daily_tests_chart_title": "Daily tests",
+  "no_data_or_error": "No data found or an error occurred."
+}

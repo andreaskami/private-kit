@@ -1,199 +1,209 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
-  Linking,
   View,
   Text,
-  Alert
-} from 'react-native';
+  Image,
+  TouchableOpacity,
+  BackHandler,
+  Dimensions,
+  Button,
+  Linking,
+  ScrollView
+} from 'react-native'
 
-import colors from "../constants/colors";
-import { WebView } from 'react-native-webview';
-import Button from "../components/Button";
-import NegButton from "../components/NegButton";
-import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
+import colors from '../constants/colors'
+import backArrow from './../assets/images/backArrow.png'
+import {
+  EmptyFilePathError,
+  InvalidFileExtensionError,
+  NoRecentLocationsError,
+  importTakeoutData
+} from '../helpers/GoogleTakeOutAutoImport'
+import languages from './../locales/languages'
+import { pickFile } from '../helpers/General'
+import PropTypes from 'prop-types'
 
-class ImportScreen extends Component {
-    constructor(props) {
-        super(props);
+const makeImportResults = (label = '', error = false) => ({
+  error,
+  label
+})
+
+export const ImportScreen = ({ navigation }) => {
+  const [importResults, _setImportResults] = useState(makeImportResults())
+  const setImportResults = (...args) => _setImportResults(makeImportResults(...args))
+
+  const backToMain = () => {
+    navigation.navigate('HomeScreen', {})
+  }
+
+  const handleBackPress = () => {
+    navigation.navigate('HomeScreen', {})
+    return true
+  }
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress)
+
+    return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress)
+  }, [])
+
+  const chooseDataFile = async () => {
+    try {
+      // reset info message
+      setImportResults()
+
+      const filePath = await pickFile()
+
+      const newLocations = await importTakeoutData(filePath)
+
+      if (newLocations.length) {
+        setImportResults(languages.t('label.import.success'))
+      } else {
+        setImportResults(languages.t('label.import.error.already_imported'))
+      }
+    } catch (err) {
+      if (err instanceof NoRecentLocationsError) {
+        setImportResults(languages.t('label.import.error.no_recent_locations'), true)
+      } else if (err instanceof InvalidFileExtensionError) {
+        setImportResults(languages.t('label.import.error.invalid_file_format'), true)
+      } else if (err instanceof EmptyFilePathError) {
+        /**
+         * If the imported file is opened from other than Google Drive folder,
+         * filepath is returned as null. Leaving a message to ensure import file
+         * is located on Google Drive.
+         */
+        setImportResults(languages.t('label.import.error.file_open_error'), true)
+      } else {
+        console.log('[ERROR] Failed to import locations', err)
+        setImportResults(languages.t('label.import.error.generic'), true)
+      }
     }
-    componentDidMount() {
+  }
 
-        /*BackgroundGeolocation.on('location', (location) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity style={styles.backArrowTouchable} onPress={backToMain}>
+          <Image style={styles.backArrow} source={backArrow} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>{languages.t('label.import.title')}</Text>
+      </View>
 
+      <ScrollView contentContainerStyle={styles.main}>
+        <View style={styles.subHeaderTitle}>
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.import.google.instructions_first')}
+          </Text>
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.import.google.instructions_second')}
+          </Text>
+          <Text style={styles.sectionDescription}>
+            {languages.t('label.import.google.instructions_detailed')}
+          </Text>
+        </View>
+        <View style={styles.web}>
+          <Button
+            title={languages.t('label.import.google.visit_button_text')}
+            onPress={() =>
+              Linking.openURL('https://takeout.google.com/settings/takeout/custom/location_history')
+            }
+          />
 
-            GetStoreData('LOCATION_DATA')
-            .then(locationArray => {
-                var locationData;
+          <Text style={styles.andThen}>And then</Text>
 
-                if (locationArray !== null) {
-                  locationData = JSON.parse(locationArray);
-                } else {
-                  locationData = [];
-                }
+          <Button
+            title={languages.t('label.import.secondary_button_text')}
+            onPress={chooseDataFile}
+          />
 
-                locationData.push(location);
-                SetStoreData('LOCATION_DATA', locationData);
-            });
+          {importResults.label ? (
+            <Text
+              style={{
+                ...styles.importResults,
+                ...(importResults && importResults.error ? styles.importResultsError : {})
+              }}>
+              {importResults.label}
+            </Text>
+          ) : null}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  )
+}
 
-            // to perform long running operation on iOS
-            // you need to create background task
-            BackgroundGeolocation.startTask(taskKey => {
-                // execute long running task
-                // eg. ajax post location
-                // IMPORTANT: task has to be ended by endTask
-                BackgroundGeolocation.endTask(taskKey);
-            });
-        });
-
-        BackgroundGeolocation.on('stationary', (stationaryLocation) => {
-            // handle stationary locations here
-            // Actions.sendLocation(stationaryLocation);
-            console.log('[INFO] stationaryLocation:', stationaryLocation);
-        });
-
-        BackgroundGeolocation.on('error', (error) => {
-        console.log('[ERROR] BackgroundGeolocation error:', error);
-        });
-
-        BackgroundGeolocation.on('start', () => {
-        console.log('[INFO] BackgroundGeolocation service has been started');
-        });
-
-        BackgroundGeolocation.on('stop', () => {
-        console.log('[INFO] BackgroundGeolocation service has been stopped');
-        });
-
-        BackgroundGeolocation.on('authorization', (status) => {
-        console.log('[INFO] BackgroundGeolocation authorization status: ' + status);
-        if (status !== BackgroundGeolocation.AUTHORIZED) {
-            // we need to set delay or otherwise alert may not be shown
-            setTimeout(() =>
-            Alert.alert('App requires location tracking permission', 'Would you like to open app settings?', [
-                { text: 'Yes', onPress: () => BackgroundGeolocation.showAppSettings() },
-                { text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel' }
-            ]), 1000);
-        }
-        });
-
-        BackgroundGeolocation.on('background', () => {
-        console.log('[INFO] App is in background');
-        });
-
-        BackgroundGeolocation.on('foreground', () => {
-        console.log('[INFO] App is in foreground');
-        });
-
-        BackgroundGeolocation.on('abort_requested', () => {
-        console.log('[INFO] Server responded with 285 Updates Not Required');
-
-        // Here we can decide whether we want stop the updates or not.
-        // If you've configured the server to return 285, then it means the server does not require further update.
-        // So the normal thing to do here would be to `BackgroundGeolocation.stop()`.
-        // But you might be counting on it to receive location updates in the UI, so you could just reconfigure and set `url` to null.
-        });
-
-        BackgroundGeolocation.on('http_authorization', () => {
-        console.log('[INFO] App needs to authorize the http requests');
-        });
-
-        // you can also just start without checking for status
-        // BackgroundGeolocation.start();*/
-    }
-
-    componentWillUnmount() {
-        // unregister all event listeners
-        BackgroundGeolocation.removeAllListeners();
-    }
-
-    render() {
-        return (
-            <>
-            <View style={styles.main}>
-                <View style={styles.headerTitle}>
-                        <Text style={styles.sectionDescription, {fontSize: 22, marginTop: 8}}>Import Data:</Text>
-                </View>
-                <View style={styles.subHeaderTitle}>
-                        <Text style={styles.sectionDescription, {fontSize: 18, marginTop: 8}}>Rolling out soon</Text>
-                </View>
-                <View style={styles.web}>
-                    <WebView
-                        source= {{ uri: 'http://privatekit.mit.edu' }}
-                        style= {{ marginTop: 15, marginLeft: 15}}
-                    />
-                </View>
-            </View>
-            <View style={styles.footer}>
-                <Text style={styles.sectionDescription, { textAlign: 'center', paddingTop: 15 }}>For more information visit the Private Kit hompage:</Text>
-                <Text style={styles.sectionDescription, { color: 'blue', textAlign: 'center' }} onPress={() => Linking.openURL('https://privatekit.mit.edu')}>privatekit.mit.edu</Text>
-            </View>
-        </>
-        )
-    }
+ImportScreen.propTypes = {
+  navigation: PropTypes.object.isRequired
 }
 
 const styles = StyleSheet.create({
-    // Container covers the entire screen
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        color: colors.PRIMARY_TEXT,
-        backgroundColor: colors.APP_BACKGROUND,
-    },
-    headerTitle: {
-        textAlign: 'center',
-        fontWeight: "bold",
-        fontSize: 38,
-        padding: 0
-    },
-    subHeaderTitle: {
-        textAlign: 'center',
-        fontWeight: "bold",
-        fontSize: 22,
-        padding: 5
-    },
-    web: {
-        flex: 1,
-        width: "95%"
-    },
-    main: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: "95%"
-    },
-    block: {
-      margin: 20,
-      width: "100%"
-    },
-    topView: {
-        flex: 1,
-    },
-    footer: {
-        textAlign: 'center',
-        fontSize: 12,
-        fontWeight: '600',
-        padding: 4,
-        paddingBottom: 10
-    },
-    intro: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'stretch',
-    },
-    sectionDescription: {
-      fontSize: 18,
-      lineHeight: 24,
-      fontWeight: '400',
-      marginTop: 20,
-      marginLeft: 10,
-      marginRight: 10
-    }
-  });
-export default ImportScreen;
+  container: {
+    flex: 1,
+    color: colors.PRIMARY_TEXT,
+    backgroundColor: colors.WHITE
+  },
+  subHeaderTitle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 22,
+    padding: 5
+  },
+  main: {
+    flex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+
+  headerContainer: {
+    flexDirection: 'row',
+    height: 60,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(189, 195, 199,0.6)',
+    alignItems: 'center'
+  },
+  backArrowTouchable: {
+    width: 60,
+    height: 60,
+    paddingTop: 21,
+    paddingLeft: 20
+  },
+  backArrow: {
+    height: 18,
+    width: 18.48
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontFamily: 'OpenSans-Bold'
+  },
+  sectionDescription: {
+    fontSize: 16,
+    lineHeight: 24,
+    textAlignVertical: 'center',
+    marginTop: 12,
+    fontFamily: 'OpenSans-Regular'
+  },
+  importResults: {
+    fontSize: 12,
+    lineHeight: 20,
+    marginTop: 10,
+    textAlign: 'center',
+    color: colors.VIOLET
+  },
+  importResultsError: {
+    color: colors.RED,
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 4,
+    borderColor: colors.RED
+  },
+  andThen: {
+    alignSelf: 'center',
+    fontSize: 12,
+    marginTop: 5,
+    marginBottom: 5
+  }
+})
+export default ImportScreen

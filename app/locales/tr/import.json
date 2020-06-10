@@ -1,0 +1,22 @@
+﻿{
+  "import": {
+    "title": "Konum bilgilerini ekle",
+    "success": "Yeni konum bilgileri başarıyla eklendi! ",
+    "button_text": "Ekle",
+    "secondary_button_text": "Konum bilgilerini ekle",
+    "error": {
+      "generic": "Verilerinin eklenmesi sırasında hata oluştu.",
+      "already_imported": "Sunulan Takeout dosyası zaten eklenmişti.",
+      "file_open_error": "Dosya açılamadı. \nLütfen dosyanın Google Drive'dan açılmış olduğundan emin ol.",
+      "invalid_file_format": "Sağlanan dosya formatı desteklenmiyor. \nSupported formats: \".zip\".",
+      "no_recent_locations": "Takeout bünyesinde yeni konum bilgisi bulunmuyor."
+    },
+    "google": {
+      "instructions_first": "Google'dan konum bilgisi eklemek yeni konum bilgilerini oluşturmada sana avantaj sağlayacak.",
+      "instructions_second": "Eklemeden önce ilk olarak Google'dan konum verilerini \"İndirmelisin\". ",
+      "instructions_detailed": "Google Takeout'u ziyaret et ve şu ayarları kullanarak Konum Geçmişini aktar: \n\n1. Aktarma metodu: \"Sürücüye ekle\" \n2. Sıklık: \"Bir kez aktar\" \n3. Dosya türü & büyüklüğü: \".zip\" ve \"1GB\"\n4. Aktarım hazır olduğu zaman Google bir email gönderecek \n5. Google Drive'dan konum bilgilerini eklemek amacıyla buraya geri dön",
+      "title": "Google Maps",
+      "visit_button_text": "Google Takeout'u ziyaret et"
+    }
+  }
+}

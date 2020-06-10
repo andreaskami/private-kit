@@ -1,0 +1,13 @@
+{
+  "start_logging": "KAYDA BAŞLA",
+  "stop_logging": "KAYDI DURDUR",
+  "logging_message": "Şu anda her beş dakikada bir konumunu gizlilik çerçevesinde kaydetmektedir. Konum bilgilerin cihazından çıkış YAPAMAZ.",
+  "not_logging_message": "NOT: Bu düğmeye bastıktan sonra Private Kit için konumuna erişim vermen istenebilir",
+  "import": "Ekle",
+  "export": "Aktar",
+  "news": "Haberler",
+  "latest_news": "En son haberler",
+  "url_info": "Daha fazla bilgi için Private Kit web sayfasını ziyaret et:",
+  "private_kit_url": "privatekit.mit.edu",
+  "overlap": "TEKRAR EDEN KONUMLARI KONTROL ET"
+}

@@ -1,0 +1,14 @@
+{
+  "statistics": "İstatistikler",
+  "statistics_title": "Günlük COVID-19 istatistikleri",
+  "latest_update": "En güncel haberler",
+  "new_cases": "Yeni vakalar",
+  "total_cases": "Toplam vaka",
+  "new_deaths": "Yeni ölümler",
+  "total_deaths": "Toplam ölüm",
+  "loading_data": "Veri yükleniyor... ",
+  "daily_infections_chart_title": "Günlük enfekte sayısı",
+  "daily_deaths_chart_title": "Günlük ölüm sayısı",
+  "daily_tests_chart_title": "Günlük test sayısı",
+  "no_data_or_error": "Veri bulunamadı veya bir hata oluştu."
+}

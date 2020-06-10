@@ -76,8 +76,8 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "index.js",
-    enableHermes: false,  // clean and rebuild if changing
+        entryFile: "index.js",
+        enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -119,7 +119,40 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
+ext.loadFileProps = { filename ->
+    def f = file(filename)
+    if (!f.canRead()) {
+        throw new GradleException("Could not read " + filename)
+    }
+    def Properties props = new Properties()
+    props.load(new FileInputStream(f))
+
+    return props
+}
+
 android {
+    def appId = "edu.rise.ihnilatis"
+    if (!System.getenv('MYAPP_RELEASE_STORE_FILE')) {
+        appId += "dev"
+    }
+
+    // Bump android release version
+    def versionProps = loadFileProps('version.properties')
+    def vCode = versionProps['VERSION_CODE'].toInteger()
+    if (System.getenv('MYAPP_RELEASE_STORE_FILE')) {
+        vCode += 1
+        versionProps['VERSION_CODE'] = vCode.toString()
+        versionProps.store(file('version.properties').newWriter(), null)
+    }
+
+    // Load google maps key
+    def metaProps = loadFileProps('meta.properties')
+    def gmapsKey = metaProps['GMAPS_KEY']
+    if (System.getenv('GMAPS_KEY')) {
+        gmapsKey = System.getenv('GMAPS_KEY')
+    }
+
+    // Main
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -128,12 +161,17 @@ android {
     }
 
     defaultConfig {
-        applicationId "edu.mit.privatekit"
+        applicationId appId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "0.0.3"
+        multiDexEnabled true
+        versionCode vCode
+        versionName "2.0.1"
+        manifestPlaceholders = [
+                gmapsKey: gmapsKey
+        ]
     }
+
     splits {
         abi {
             reset()
@@ -142,6 +180,7 @@ android {
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -149,32 +188,35 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+
         release {
-            if (project.hasProperty('PRIVATEKIT_RELEASE_STORE_FILE')) {
-                project.logger.lifecycle('Signing app with ' + PRIVATEKIT_RELEASE_STORE_FILE)
-                storeFile file(PRIVATEKIT_RELEASE_STORE_FILE)
-                storePassword PRIVATEKIT_RELEASE_STORE_PASSWORD
-                keyAlias PRIVATEKIT_RELEASE_KEY_ALIAS
-                keyPassword PRIVATEKIT_RELEASE_KEY_PASSWORD
-            } else {
-                project.logger.lifecycle('Could not find release key')
+            if (System.getenv('MYAPP_RELEASE_STORE_FILE')) {
+                project.logger.lifecycle('Signing app with MYAPP_RELEASE_STORE_FILE')
+                storeFile file(System.getenv('MYAPP_RELEASE_STORE_FILE'))
+                storePassword System.getenv('MYAPP_RELEASE_STORE_PASSWORD')
+                keyAlias System.getenv('MYAPP_RELEASE_KEY_ALIAS')
+                keyPassword System.getenv('MYAPP_RELEASE_STORE_PASSWORD')
             }
+            // throw new GradleException("Could not find release key!")
         }
-        
     }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
+
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://facebook.github.io/react-native/docs/signed-apk-android.
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
-    // applicationVariants are e.g. debug, release
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
@@ -191,11 +233,13 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-svg')
     implementation project(':react-native-webview')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation project(':@mauron85_react-native-background-geolocation')
     implementation "androidx.annotation:annotation:1.1.0"
+
+    compile project(':react-native-fs')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
@@ -203,6 +247,36 @@ dependencies {
         releaseImplementation files(hermesPath + "hermes-release.aar")
     } else {
         implementation jscFlavor
+    }
+
+    implementation(project(':react-native-maps')){
+        exclude group: 'com.google.android.gms', module: 'play-services-base'
+        exclude group: 'com.google.android.gms', module: 'play-services-maps'
+    }
+    implementation 'com.google.android.gms:play-services-base:10.0.1'
+    implementation 'com.google.android.gms:play-services-maps:10.0.1'
+}
+
+// Just to fix the app start crash error
+allprojects {
+    repositories {
+        //start here
+        configurations.all {
+            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+                def requested = details.requested
+                if (requested.group == 'com.google.android.gms') {
+                    details.useVersion '12.0.1'
+                }
+                if (requested.group == 'com.google.firebase') {
+                    details.useVersion '12.0.1'
+                }
+            }
+        }
+        //end
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 

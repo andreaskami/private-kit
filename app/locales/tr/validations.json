@@ -1,0 +1,7 @@
+{
+  "validation": {
+    "identification": "10 karaktere kadar, özel karakterler kullanılamaz",
+    "postal_code": "Posta kodu 0001 ve 9999 arasında olmalı",
+    "age": "Yaş 0-100 arasında olmalı"
+  }
+}
