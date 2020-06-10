@@ -228,6 +228,17 @@ const Home = ({ navigation }) => {
               }}>
               <Text style={styles.menuOptionText}>{languages.t('label.Acknowledgements')}</Text>
             </MenuOption>
+            <MenuOption
+              onSelect={() => {
+                SetStoreData('LOCATION_DATA', [])
+                Alert.alert(
+                  languages.t('label.alert.title.warning'),
+                  languages.t('label.alert.data_cleared'),
+                  [{ text: 'OK'}]
+                )
+              }}>
+              <Text style={styles.menuOptionText}>{languages.t('label.clearData')}</Text>
+            </MenuOption>
           </MenuOptions>
         </Menu>
 
