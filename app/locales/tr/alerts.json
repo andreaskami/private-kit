@@ -1,0 +1,10 @@
+{
+  "alert": {
+    "title": {
+      "note": "Not",
+      "warning": "Uyarı"
+    },
+    "no_internet_connection": "İnternet bağlantısı sağlanamadı. Devam etmeden internete bağlı olduğunuzdan emin olun",
+    "data_cleared": "Οι τοποθεσίες διαγράφηκαν."
+  }
+}
