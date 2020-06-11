@@ -14,7 +14,7 @@ npm run android
 ### Release
 
 ```console
-MYAPP_RELEASE_STORE_FILE=/xxx.jks npm run android:build
+GMAPS_KEY=xxx MYAPP_RELEASE_STORE_FILE=/xxx.jks npm run android:build
 ```
 
 ## iOS
