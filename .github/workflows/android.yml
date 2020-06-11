@@ -3,8 +3,8 @@ name: Android CI
 on:
   push:
     branches:
+      - master
       - develop
-      - ci-test
 
 jobs:
   build:
@@ -25,31 +25,27 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
 
       - name: Install node modules
         run: npx yarn install
 
-      - name: AndroidX
-        run: npx jetify
-
       - name: Install old NDK
         run: echo "y" | sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;20.0.5594570" --sdk_root=${ANDROID_SDK_ROOT}
-
-#      - name: Bundle app
-#        run: npm run android:bundle
 
       - name: Pack app
         run: npm run android:build:dev
 
-#      - name: Upload apk
-#        uses: actions/upload-artifact@v1
-#        with:
-#          name: edu.rise.ihnilatis.apk
-#          path: android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload apk to artifacts
+        uses: actions/upload-artifact@v1
+        if: github.ref == 'refs/heads/develop'
+        with:
+          name: edu.rise.ihnilatis.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload artifact to App Center
         uses: wzieba/AppCenter-Github-Action@v1.0.0
+        if: github.ref == 'refs/heads/master'
         with:
           appName: CovTracer/Android-Debug-CI
           token: ${{ secrets.APP_CENTER_TOKEN }}
