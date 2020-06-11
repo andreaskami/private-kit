@@ -50,12 +50,12 @@ export class LocationData {
       // Always work in UTC, not the local time in the locationData
       const nowUTC = new Date().toISOString()
       const unixtimeUTC = Date.parse(nowUTC)
-      const unixtimeUTC_28daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 28
+      const unixtimeUTC_14daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 14
 
-      // Curate the list of points, only keep the last 28 days
+      // Curate the list of points, only keep the last 14 days
       const curated = []
       for (let i = 0; i < locationArray.length; i++) {
-        if (locationArray[i]['time'] > unixtimeUTC_28daysAgo) {
+        if (locationArray[i]['time'] > unixtimeUTC_14daysAgo) {
           curated.push(locationArray[i])
         }
       }

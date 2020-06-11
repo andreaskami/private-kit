@@ -4,6 +4,7 @@
       "note": "Note",
       "warning": "Warning"
     },
-    "no_internet_connection": "An internet connection is required before accessing this feature"
+    "no_internet_connection": "An internet connection is required before accessing this feature",
+    "data_cleared": "Data cleared"
   }
 }
